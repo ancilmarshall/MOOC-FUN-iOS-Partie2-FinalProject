@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="LHPBook" representedClassName="LHPBook" syncable="YES">
+        <attribute name="titleString" attributeType="String" syncable="YES"/>
+        <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="LHPQuestion" inverseName="book" inverseEntity="LHPQuestion" syncable="YES"/>
+    </entity>
+    <entity name="LHPQuestion" representedClassName="LHPQuestion" syncable="YES">
+        <attribute name="noID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="questionID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="questionString" attributeType="String" syncable="YES"/>
+        <attribute name="yesID" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="book" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="LHPBook" inverseName="questions" inverseEntity="LHPBook" syncable="YES"/>
+    </entity>
+    <entity name="LHPScore" representedClassName="LHPScore" syncable="YES">
+        <attribute name="scoreValue" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="usernameString" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="LHPBook" positionX="-63" positionY="-18" width="128" height="73"/>
+        <element name="LHPQuestion" positionX="160" positionY="54" width="128" height="118"/>
+        <element name="LHPScore" positionX="-56" positionY="243" width="128" height="73"/>
+    </elements>
+</model>

@@ -2,44 +2,64 @@
 //  AppDelegate.m
 //  LivreHeros
 //
-//  Created by Ancil on 6/26/15.
+//  Created by Ancil on 6/25/15.
 //  Copyright (c) 2015 Ancil Marshall. All rights reserved.
 //
 
 #import "AppDelegate.h"
+#import <CoreData/CoreData.h>
 
 @interface AppDelegate ()
-
+@property (nonatomic,strong,readwrite) NSManagedObjectContext* managedObjectContext;
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+
+    NSURL* storeURL = [self SQLiteStoreURL];
+    self.managedObjectContext = [self contextForStoreAtURL:storeURL];
     return YES;
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+#pragma mark - Shared AppDelegate helper function
++ (AppDelegate*) sharedDelegate;
+{
+    id<UIApplicationDelegate> delegate = [[UIApplication sharedApplication] delegate];
+    NSAssert([delegate isKindOfClass:[AppDelegate class]], @"Expected to use our app delegate class");
+    return (AppDelegate *)delegate;
+    
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+# pragma mark - CoreData helper functions
+- (NSURL *)SQLiteStoreURL;
+{
+    NSArray *URLs = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
+                                                           inDomains:NSUserDomainMask];
+    NSAssert([URLs count] > 0, @"Expected to find a document URL");
+    NSURL *documentDirectory = URLs[0];
+    return [[documentDirectory URLByAppendingPathComponent:@"livreHeros"]
+            URLByAppendingPathExtension:@"sqlite"];
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+- (NSManagedObjectContext*)contextForStoreAtURL:(NSURL *)storeURL;
+{
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Model" withExtension:@"momd"];
+    NSManagedObjectModel *mom = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    NSPersistentStoreCoordinator *psc = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
+    
+    NSError *error = nil;
+    NSString *storeType = (storeURL == nil) ? NSInMemoryStoreType : NSSQLiteStoreType;
+    if (![psc addPersistentStoreWithType:storeType configuration:nil URL:storeURL options:nil error:&error]) {
+        NSLog(@"Couldn't add store (type=%@): %@", storeType, error);
+        return nil;
+    }
+    
+    NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    moc.persistentStoreCoordinator = psc;
+    return moc;
 }
 
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
 
 @end
