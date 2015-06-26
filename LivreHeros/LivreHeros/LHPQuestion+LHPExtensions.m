@@ -12,16 +12,17 @@
 @implementation LHPQuestion (LHPExtensions)
 
 # pragma mark - Entity Management
-+(void)insertQuestion:(NSString*)text index:(NSUInteger)index yesIndex:(NSUInteger)yesIndex noIndex:(NSUInteger)noIndex;
++(LHPQuestion*)insertQuestion:(NSString*)text index:(NSUInteger)index yesIndex:(NSUInteger)yesIndex noIndex:(NSUInteger)noIndex book:(LHPBook *)book;
 {
     NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
-    LHPQuestion* newQuestion =
+    LHPQuestion* question =
     [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([LHPQuestion class]) inManagedObjectContext:moc];
     
-    newQuestion.text = text;
-    newQuestion.index = index;
-    newQuestion.yesIndex = yesIndex;
-    newQuestion.noIndex = noIndex;
+    question.text = text;
+    question.index = index;
+    question.yesIndex = yesIndex;
+    question.noIndex = noIndex;
+    question.book = book; //make the relationship connection
     
     // use performBlock to ensure that the block is performed on the correct queue of the moc
     // which is unknown in this instance.
@@ -34,11 +35,16 @@
         }
         
     }];
+    
+    return question;
 }
 
 +(LHPQuestion*)questionEntityForIndex:(NSUInteger)index;
 {
-    NSAssert(index>0,@"Qid must be an integer greater than zero");
+    // There is no question with index 0. Indicates there are no more questions available. End of book
+    if (index == 0) {
+        return nil;
+    }
     
     NSFetchRequest* fetchRequest = [NSFetchRequest
         fetchRequestWithEntityName:NSStringFromClass([self class])];
@@ -64,7 +70,11 @@
 
 +(NSString*)questionForIndex:(NSUInteger)index;
 {
-    return [LHPQuestion questionEntityForIndex:index].text;
+    if (index == 0) {
+        return nil;
+    } else {
+        return [LHPQuestion questionEntityForIndex:index].text;
+    }
 }
 
 +(NSUInteger)yesIndexForIndex:(NSUInteger)index;

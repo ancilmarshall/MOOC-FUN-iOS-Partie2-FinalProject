@@ -14,6 +14,7 @@
 @interface LHPBook : NSManagedObject
 
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSNumber * currentIndexNSNumber;
 @property (nonatomic, retain) NSOrderedSet *questions;
 @end
 

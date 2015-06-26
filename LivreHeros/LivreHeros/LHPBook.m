@@ -13,6 +13,7 @@
 @implementation LHPBook
 
 @dynamic title;
+@dynamic currentIndexNSNumber;
 @dynamic questions;
 
 @end
