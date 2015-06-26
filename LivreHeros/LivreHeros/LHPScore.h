@@ -12,7 +12,7 @@
 
 @interface LHPScore : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * scoreValue;
+@property (nonatomic, retain) NSNumber * scoreNSNumber;
 @property (nonatomic, retain) NSString * username;
 
 @end

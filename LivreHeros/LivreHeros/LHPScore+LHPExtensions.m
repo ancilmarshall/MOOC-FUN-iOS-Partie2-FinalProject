@@ -12,12 +12,12 @@
 
 -(NSUInteger)score;
 {
-    return [self.scoreValue unsignedIntegerValue];
+    return [self.scoreNSNumber unsignedIntegerValue];
 }
 
 -(void)setScore:(NSUInteger)score;
 {
-    self.scoreValue = @(score);
+    self.scoreNSNumber = @(score);
 }
 
 @end

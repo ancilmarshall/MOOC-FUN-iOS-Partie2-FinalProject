@@ -12,10 +12,10 @@
 
 @implementation LHPQuestion
 
-@dynamic noID;
-@dynamic questionID;
-@dynamic question;
-@dynamic yesID;
+@dynamic noIndexNSNumber;
+@dynamic indexNSNumber;
+@dynamic text;
+@dynamic yesIndexNSNumber;
 @dynamic book;
 
 @end

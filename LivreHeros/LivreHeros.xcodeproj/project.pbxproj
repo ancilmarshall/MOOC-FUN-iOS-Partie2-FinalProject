@@ -17,9 +17,9 @@
 		1D54046F1B3D40C800561712 /* LHPQuestion+LHPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404681B3D40C800561712 /* LHPQuestion+LHPExtensions.m */; };
 		1D5404711B3D40C800561712 /* LHPScore+LHPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D54046C1B3D40C800561712 /* LHPScore+LHPExtensions.m */; };
 		1D5404741B3D40DE00561712 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404721B3D40DE00561712 /* Model.xcdatamodeld */; };
-		1D5404771B3D42C800561712 /* LHPQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404761B3D42C800561712 /* LHPQuestion.m */; };
-		1D54047A1B3D451F00561712 /* LHPBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404791B3D451F00561712 /* LHPBook.m */; };
-		1D54047D1B3D451F00561712 /* LHPScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D54047C1B3D451F00561712 /* LHPScore.m */; };
+		1D5404801B3D653900561712 /* LHPBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D54047F1B3D653900561712 /* LHPBook.m */; };
+		1D5404861B3D653900561712 /* LHPScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404851B3D653900561712 /* LHPScore.m */; };
+		1D5404891B3D678200561712 /* LHPQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404881B3D678200561712 /* LHPQuestion.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,12 +51,12 @@
 		1D54046B1B3D40C800561712 /* LHPScore+LHPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LHPScore+LHPExtensions.h"; sourceTree = "<group>"; };
 		1D54046C1B3D40C800561712 /* LHPScore+LHPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LHPScore+LHPExtensions.m"; sourceTree = "<group>"; };
 		1D5404731B3D40DE00561712 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		1D5404751B3D42C800561712 /* LHPQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPQuestion.h; sourceTree = "<group>"; };
-		1D5404761B3D42C800561712 /* LHPQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPQuestion.m; sourceTree = "<group>"; };
-		1D5404781B3D451F00561712 /* LHPBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPBook.h; sourceTree = "<group>"; };
-		1D5404791B3D451F00561712 /* LHPBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPBook.m; sourceTree = "<group>"; };
-		1D54047B1B3D451F00561712 /* LHPScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPScore.h; sourceTree = "<group>"; };
-		1D54047C1B3D451F00561712 /* LHPScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPScore.m; sourceTree = "<group>"; };
+		1D54047E1B3D653900561712 /* LHPBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPBook.h; sourceTree = "<group>"; };
+		1D54047F1B3D653900561712 /* LHPBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPBook.m; sourceTree = "<group>"; };
+		1D5404841B3D653900561712 /* LHPScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPScore.h; sourceTree = "<group>"; };
+		1D5404851B3D653900561712 /* LHPScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPScore.m; sourceTree = "<group>"; };
+		1D5404871B3D678200561712 /* LHPQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPQuestion.h; sourceTree = "<group>"; };
+		1D5404881B3D678200561712 /* LHPQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPQuestion.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,15 +98,15 @@
 		1D54043C1B3D3E4600561712 /* LivreHeros */ = {
 			isa = PBXGroup;
 			children = (
+				1D5404871B3D678200561712 /* LHPQuestion.h */,
+				1D5404881B3D678200561712 /* LHPQuestion.m */,
+				1D5404841B3D653900561712 /* LHPScore.h */,
+				1D5404851B3D653900561712 /* LHPScore.m */,
+				1D54047E1B3D653900561712 /* LHPBook.h */,
+				1D54047F1B3D653900561712 /* LHPBook.m */,
 				1D5404721B3D40DE00561712 /* Model.xcdatamodeld */,
-				1D5404781B3D451F00561712 /* LHPBook.h */,
-				1D5404791B3D451F00561712 /* LHPBook.m */,
-				1D5404751B3D42C800561712 /* LHPQuestion.h */,
-				1D5404761B3D42C800561712 /* LHPQuestion.m */,
 				1D5404671B3D40C800561712 /* LHPQuestion+LHPExtensions.h */,
 				1D5404681B3D40C800561712 /* LHPQuestion+LHPExtensions.m */,
-				1D54047B1B3D451F00561712 /* LHPScore.h */,
-				1D54047C1B3D451F00561712 /* LHPScore.m */,
 				1D54046B1B3D40C800561712 /* LHPScore+LHPExtensions.h */,
 				1D54046C1B3D40C800561712 /* LHPScore+LHPExtensions.m */,
 				1D5404411B3D3E4600561712 /* AppDelegate.h */,
@@ -248,13 +248,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D5404461B3D3E4600561712 /* ViewController.m in Sources */,
+				1D5404801B3D653900561712 /* LHPBook.m in Sources */,
 				1D5404711B3D40C800561712 /* LHPScore+LHPExtensions.m in Sources */,
 				1D5404431B3D3E4600561712 /* AppDelegate.m in Sources */,
-				1D54047A1B3D451F00561712 /* LHPBook.m in Sources */,
 				1D5404741B3D40DE00561712 /* Model.xcdatamodeld in Sources */,
+				1D5404861B3D653900561712 /* LHPScore.m in Sources */,
+				1D5404891B3D678200561712 /* LHPQuestion.m in Sources */,
 				1D54046F1B3D40C800561712 /* LHPQuestion+LHPExtensions.m in Sources */,
-				1D54047D1B3D451F00561712 /* LHPScore.m in Sources */,
-				1D5404771B3D42C800561712 /* LHPQuestion.m in Sources */,
 				1D5404401B3D3E4600561712 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,10 +13,10 @@
 
 @interface LHPQuestion : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * noID;
-@property (nonatomic, retain) NSNumber * questionID;
-@property (nonatomic, retain) NSString * question;
-@property (nonatomic, retain) NSNumber * yesID;
+@property (nonatomic, retain) NSNumber * noIndexNSNumber;
+@property (nonatomic, retain) NSNumber * indexNSNumber;
+@property (nonatomic, retain) NSString * text;
+@property (nonatomic, retain) NSNumber * yesIndexNSNumber;
 @property (nonatomic, retain) LHPBook *book;
 
 @end

@@ -11,7 +11,7 @@
 
 @implementation LHPScore
 
-@dynamic scoreValue;
+@dynamic scoreNSNumber;
 @dynamic username;
 
 @end

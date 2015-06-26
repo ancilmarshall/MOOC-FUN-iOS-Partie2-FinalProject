@@ -12,16 +12,16 @@
 @implementation LHPQuestion (LHPExtensions)
 
 # pragma mark - Entity Management
-+(void)insertQuestion:(NSString*)question qid:(NSUInteger)qid yes:(NSUInteger)yes no:(NSUInteger)no;
++(void)insertQuestion:(NSString*)text index:(NSUInteger)index yesIndex:(NSUInteger)yesIndex noIndex:(NSUInteger)noIndex;
 {
     NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
     LHPQuestion* newQuestion =
     [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([LHPQuestion class]) inManagedObjectContext:moc];
     
-    newQuestion.question = question;
-    newQuestion.qid = qid;
-    newQuestion.yes = yes;
-    newQuestion.no = no;
+    newQuestion.text = text;
+    newQuestion.index = index;
+    newQuestion.yesIndex = yesIndex;
+    newQuestion.noIndex = noIndex;
     
     // use performBlock to ensure that the block is performed on the correct queue of the moc
     // which is unknown in this instance.
@@ -36,62 +36,79 @@
     }];
 }
 
-+(NSString*)questionForQid:(NSUInteger)qid;
++(LHPQuestion*)questionEntityForIndex:(NSUInteger)index;
 {
-    NSAssert(qid>0,@"Qid must be an integer greater than zero");
+    NSAssert(index>0,@"Qid must be an integer greater than zero");
     
     NSFetchRequest* fetchRequest = [NSFetchRequest
         fetchRequestWithEntityName:NSStringFromClass([self class])];
     fetchRequest.predicate = [NSPredicate
-        predicateWithFormat:@"%K == %@", NSStringFromSelector(@selector(questionID)), @(qid)];;
-    //fetchRequest.fetchLimit = 1;
+        predicateWithFormat:@"%K == %@", NSStringFromSelector(@selector(text)), @(index)];;
     
-    NSError* error = nil;
     NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
+    __block NSArray* fetchResult = nil;
+    [moc performBlock:^{
+        
+        NSError* error = nil;
+        fetchResult = [moc executeFetchRequest:fetchRequest error:&error];
+        if (!fetchResult){
+            NSLog(@"Error finding question for id: %tu, %@",index,[error localizedDescription]);
+        }
+        NSAssert([fetchResult count] == 1,@"Expected only one entity in the CoreData model");
+        NSAssert([[fetchResult firstObject] isKindOfClass:[self class]],@"Expected fetch result to be this class");
+    }];
     
-    NSArray* fetchResult = [moc executeFetchRequest:fetchRequest error:&error];
-    if (!fetchResult){
-        NSLog(@"Error finding question for id: %tu, %@",qid,[error localizedDescription]);
-    }
-    NSAssert([fetchResult count] == 1,@"Expected only one entity in the CoreData model");
-    NSAssert([[fetchResult firstObject] isKindOfClass:[self class]],@"Expected fetch result to be this class");
+    return (LHPQuestion*)[fetchResult firstObject];
     
-    LHPQuestion* question = (LHPQuestion*)[fetchResult firstObject];
-    NSLog(@"Question for id: %tu is: %@",qid,question.question);
-    
-    return question.question;
 }
+
++(NSString*)questionForIndex:(NSUInteger)index;
+{
+    return [LHPQuestion questionEntityForIndex:index].text;
+}
+
++(NSUInteger)yesIndexForIndex:(NSUInteger)index;
+{
+    return [LHPQuestion questionEntityForIndex:index].yesIndex;
+}
+
++(NSUInteger)noIndexForIndex:(NSUInteger)index;
+{
+    return [LHPQuestion questionEntityForIndex:index].noIndex;
+}
+
+
 #pragma mark - Simplification Accessor Methods
 
--(NSUInteger)qid;
+-(NSUInteger)index;
 {
-    return [self.questionID unsignedIntegerValue];
+    return [self.indexNSNumber unsignedIntegerValue];
 }
 
--(void)setQid:(NSUInteger)qid;
+-(void)setIndex:(NSUInteger)index;
 {
-    self.questionID = @(qid);
+    self.indexNSNumber = @(index);
 }
 
 
--(NSUInteger)no;
+-(NSUInteger)noIndex;
 {
-    return [self.noID unsignedIntegerValue];
+    return [self.noIndexNSNumber unsignedIntegerValue];
 }
 
--(void)setNo:(NSUInteger)no;
+-(void)setNoIndex:(NSUInteger)index;
 {
-    self.noID = @(no);
+    self.noIndexNSNumber = @(index);
 }
 
--(NSUInteger)yes;
+-(NSUInteger)yesIndex;
 {
-    return [self.yesID unsignedIntegerValue];
+    return [self.yesIndexNSNumber unsignedIntegerValue];
 }
 
--(void)setYes:(NSUInteger)yes;
+-(void)setYesIndex:(NSUInteger)index;
 {
-    self.yesID = @(yes);
+    self.yesIndexNSNumber = @(index);
 }
 
 @end

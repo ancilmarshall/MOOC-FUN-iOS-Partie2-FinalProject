@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 #import "LHPQuestion+LHPExtensions.h"
+#import "LHPBook.h"
 
 @interface ViewController ()
 
@@ -25,37 +26,38 @@
 -(IBAction)populateData:(id)sender;
 {
     [LHPQuestion insertQuestion:@"What is the color of red"
-                            qid:1
-                            yes:2
-                             no:3];
+                          index:1
+                       yesIndex:2
+                        noIndex:3];
     
     [LHPQuestion insertQuestion:@"What is the color of green"
-                            qid:2
-                            yes:3
-                             no:4];
+                          index:2
+                       yesIndex:3
+                        noIndex:4];
     
     [LHPQuestion insertQuestion:@"What is the color of blue"
-                            qid:3
-                            yes:0
-                             no:0];
+                          index:3
+                       yesIndex:0
+                        noIndex:0];
     
     [LHPQuestion insertQuestion:@"What is the color of black"
-                            qid:4
-                            yes:0
-                             no:0];
+                          index:4
+                       yesIndex:0
+                        noIndex:0];
+    
 }
 
 -(IBAction)performFetch:(id)sender;
 {
   
     NSFetchRequest* fetchRequest = [[NSFetchRequest alloc]
-                                    initWithEntityName:NSStringFromClass([LHPQuestion class])];
+                                    initWithEntityName:NSStringFromClass([LHPBook class])];
     
     //Note: Must fetch using a selector in the actual model, not a property in the category
-    fetchRequest.sortDescriptors =
-    @[ [NSSortDescriptor
-        sortDescriptorWithKey:NSStringFromSelector(@selector(questionID))
-        ascending:YES] ];
+//    fetchRequest.sortDescriptors =
+//    @[ [NSSortDescriptor
+//        sortDescriptorWithKey:NSStringFromSelector(@selector(questionID))
+//        ascending:YES] ];
     
     NSError* error;
     NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
@@ -66,7 +68,6 @@
     
     NSLog(@"Number of items in Question mananaged object: %tu",[questions count]);
     
-    [LHPQuestion questionForQid:2];
 
     
 }

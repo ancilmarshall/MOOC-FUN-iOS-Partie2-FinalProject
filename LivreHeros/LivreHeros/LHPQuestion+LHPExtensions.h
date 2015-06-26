@@ -9,12 +9,14 @@
 #import "LHPQuestion.h"
 
 @interface LHPQuestion (LHPExtensions)
-@property (nonatomic,assign) NSUInteger qid;
-@property (nonatomic,assign) NSUInteger no;
-@property (nonatomic,assign) NSUInteger yes;
+@property (nonatomic,assign) NSUInteger index;
+@property (nonatomic,assign) NSUInteger noIndex;
+@property (nonatomic,assign) NSUInteger yesIndex;
 
-+(void)insertQuestion:(NSString*)question qid:(NSUInteger)qid yes:(NSUInteger)yes no:(NSUInteger)no;
-+(NSString*)questionForQid:(NSUInteger)qid;
-
++(void)insertQuestion:(NSString*)text index:(NSUInteger)index yesIndex:(NSUInteger)yesIndex noIndex:(NSUInteger)noIndex;
++(NSString*)questionForIndex:(NSUInteger)index;
++(NSUInteger)yesIndexForIndex:(NSUInteger)index;
++(NSUInteger)noIndexForIndex:(NSUInteger)index;
++(LHPQuestion*)questionEntityForIndex:(NSUInteger)index;
 
 @end
