@@ -28,22 +28,38 @@
 +(LHPBook*)insertBook;
 {
     NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
-    LHPBook* book =
-        [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([LHPBook class])
+    
+    //perform fetch to inquire if book is available in the data store
+    //since this function is peformed only once per app execution, ok to do this fetch here
+    NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([LHPBook class])];
+    __block LHPBook* book = nil;
+    
+    //Note: Need to perform this synchronously to check that book is nil after the block executes
+    [moc performBlockAndWait:^{
+        
+        NSError* error = nil;
+        NSArray* fetchResult = [moc executeFetchRequest:request error:&error];
+        NSAssert([fetchResult count]<=1,@"Expected 0 or 1 initial fetch results for Book object: %tu",[fetchResult count]);
+        if (error != nil){
+            NSLog(@"Error fetching initial book request: %@",[error localizedDescription]);
+        }
+        
+        if ([fetchResult count] == 1){
+            book = (LHPBook*)[fetchResult firstObject];
+        }
+        
+    }];
+    
+    if (book != nil){
+        return book;
+    }
+    
+    book = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([LHPBook class])
                                       inManagedObjectContext:moc];
     
     book.title = @"LivreHeros";
     
-    // use performBlock to ensure that the block is performed on the correct queue of the moc
-    [moc performBlock:^{
-        
-        NSError* error = nil;
-        if (![moc save:&error])
-        {
-            NSLog(@"Problem saving context: %@",[error localizedDescription]);
-        }
-        
-    }];
+    [LHPBook save];
     
     return book;
 }
@@ -65,10 +81,10 @@
                           //using KVC pattern (although, it's only 2 lines of code anyway... )
     
 
-    [self save];
+    [LHPBook save];
 }
 
--(void)save;
++(void)save;
 {
     NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
 
@@ -101,7 +117,7 @@ typedef enum {
     LHPQuestion* nextQuestion = [LHPQuestion questionEntityForIndex:nextIndex];
     self.currentIndex = nextIndex;
     
-    [self save];
+    [LHPBook save];
     
     return nextQuestion.text;
 }

@@ -27,10 +27,10 @@
 {
     LHPBook* book = [LHPBook sharedInstance];
     
-    [book addQuestion:@"What is the color of red" index:1 yes:2 no:3];
-    [book addQuestion:@"What is the color of green" index:2 yes:3 no:4];
-    [book addQuestion:@"What is the color of blue" index:3 yes:0 no:0];
-    [book addQuestion:@"What is the color of black" index:4 yes:0 no:0];
+//    [book addQuestion:@"What is the color of red" index:1 yes:2 no:3];
+//    [book addQuestion:@"What is the color of green" index:2 yes:3 no:4];
+//    [book addQuestion:@"What is the color of blue" index:3 yes:0 no:0];
+//    [book addQuestion:@"What is the color of black" index:4 yes:0 no:0];
     
 }
 
