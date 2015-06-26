@@ -20,5 +20,7 @@ typedef enum {
 +(instancetype)sharedInstance;
 -(void)addQuestion:(NSString*)text index:(NSUInteger)index yes:(NSUInteger)yesIndex no:(NSUInteger)noIndex;
 -(NSString*)getNextQuestion:(UserResponse)response;
+-(NSString*)getCurrentQuestion;
+-(void)restart;
 
 @end

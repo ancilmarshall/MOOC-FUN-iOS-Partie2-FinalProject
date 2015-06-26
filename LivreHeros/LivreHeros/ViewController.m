@@ -13,25 +13,22 @@
 #import "LHPBook+LHPExtensions.h"
 
 @interface ViewController ()
-
+@property (nonatomic,strong) LHPBook* book;
+@property (nonatomic,weak) IBOutlet UILabel* questionLabel;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    self.book = [LHPBook sharedInstance];
+    
+    [self restart:nil];
 }
 
 -(IBAction)populateData:(id)sender;
 {
-    LHPBook* book = [LHPBook sharedInstance];
-    
-    [book addQuestion:@"What is the color of red" index:1 yes:2 no:3];
-    [book addQuestion:@"What is the color of green" index:2 yes:3 no:4];
-    [book addQuestion:@"What is the color of blue" index:3 yes:0 no:0];
-    [book addQuestion:@"What is the color of black" index:4 yes:0 no:0];
-    
+    //do nothing
 }
 
 -(IBAction)performFetch:(id)sender;
@@ -40,12 +37,6 @@
     NSFetchRequest* fetchRequest = [[NSFetchRequest alloc]
                                     initWithEntityName:NSStringFromClass([LHPBook class])];
     
-    //Note: Must fetch using a selector in the actual model, not a property in the category
-//    fetchRequest.sortDescriptors =
-//    @[ [NSSortDescriptor
-//        sortDescriptorWithKey:NSStringFromSelector(@selector(indexNSNumber))
-//        ascending:YES] ];
-    
     NSError* error;
     NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
     NSArray* arr = [moc executeFetchRequest:fetchRequest error:&error];
@@ -53,13 +44,29 @@
         NSLog(@"Error fetching question data: %@",[error localizedDescription]);
     }
     
-    NSLog(@"Number of items in Question mananaged object: %tu",[arr count]);
+    NSLog(@"%@",self.book);
     
-    NSLog(@"%@",[LHPBook sharedInstance]);
+    NSLog(@"%@",[self.book getNextQuestion:kUserResponseYes]);
     
-    NSLog(@"%@",[[LHPBook sharedInstance] getNextQuestion:kUserResponseYes]);
 }
 
+-(IBAction)restart:(id)sender;
+{
+    [self.book restart];
+    self.questionLabel.text = [self.book getCurrentQuestion];
 
+}
+
+-(IBAction)yes:(id)sender;
+{
+    NSString* question = [self.book getNextQuestion:kUserResponseYes];
+    self.questionLabel.text = (question) ? question : @"Book is complete";
+}
+
+-(IBAction)no:(id)sender;
+{
+    NSString* question = [self.book getNextQuestion:kUserResponseNo];
+    self.questionLabel.text = (question) ? question : @"Book is complete";
+}
 
 @end

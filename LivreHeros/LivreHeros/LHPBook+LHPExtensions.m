@@ -56,6 +56,12 @@
         book = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([LHPBook class])
                                           inManagedObjectContext:moc];
         book.title = @"LivreHeros";
+        
+        [book addQuestion:@"What is the color of red" index:1 yes:2 no:3];
+        [book addQuestion:@"What is the color of green" index:2 yes:3 no:4];
+        [book addQuestion:@"What is the color of blue" index:3 yes:0 no:0];
+        [book addQuestion:@"What is the color of black" index:4 yes:0 no:0];
+        
         [LHPBook save];
     }
     
@@ -82,6 +88,11 @@
     [LHPBook save];
 }
 
+-(void)restart;
+{
+    self.currentIndex = 1;
+}
+
 +(void)save;
 {
     NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
@@ -99,9 +110,6 @@
 }
 
 #pragma mark - Book Sequence Methods
-
-
-
 
 -(NSString*)getNextQuestion:(UserResponse)response;
 {
@@ -121,6 +129,16 @@
     return nextQuestion.text;
 }
 
+-(NSString*)getCurrentQuestion;
+{
+    //exit immediately if inces is 0, meaning end of book
+    if (self.currentIndex == 0){
+        return nil;
+    }
+    LHPQuestion* currentQuestion = [LHPQuestion questionEntityForIndex:self.currentIndex];
+    return currentQuestion.text;
+    
+}
 
 # pragma mark - Category convenient accessors
 
