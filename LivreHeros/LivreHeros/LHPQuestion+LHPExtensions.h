@@ -14,6 +14,7 @@
 @property (nonatomic,assign) NSUInteger yes;
 
 +(void)insertQuestion:(NSString*)question qid:(NSUInteger)qid yes:(NSUInteger)yes no:(NSUInteger)no;
++(NSString*)questionForQid:(NSUInteger)qid;
 
 
 @end

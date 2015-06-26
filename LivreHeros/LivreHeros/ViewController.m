@@ -20,6 +20,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
    
+}
+
+-(IBAction)populateData:(id)sender;
+{
     [LHPQuestion insertQuestion:@"What is the color of red"
                             qid:1
                             yes:2
@@ -30,8 +34,15 @@
                             yes:3
                              no:4];
     
-
+    [LHPQuestion insertQuestion:@"What is the color of blue"
+                            qid:3
+                            yes:0
+                             no:0];
     
+    [LHPQuestion insertQuestion:@"What is the color of black"
+                            qid:4
+                            yes:0
+                             no:0];
 }
 
 -(IBAction)performFetch:(id)sender;
@@ -54,6 +65,9 @@
     }
     
     NSLog(@"Number of items in Question mananaged object: %tu",[questions count]);
+    
+    [LHPQuestion questionForQid:2];
+
     
 }
 
