@@ -9,6 +9,5 @@
 #import "LHPScore.h"
 
 @interface LHPScore (LHPExtensions)
-@property (nonatomic,strong) NSString* username;
 @property (nonatomic,assign) NSUInteger score;
 @end

@@ -10,16 +10,6 @@
 
 @implementation LHPScore (LHPExtensions)
 
--(NSString*)username;
-{
-    return self.usernameString;
-}
-
--(void)setUsername:(NSString*)username;
-{
-    self.usernameString = username;
-}
-
 -(NSUInteger)score;
 {
     return [self.scoreValue unsignedIntegerValue];

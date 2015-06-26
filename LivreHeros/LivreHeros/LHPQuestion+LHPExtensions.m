@@ -49,15 +49,6 @@
     self.questionID = @(qid);
 }
 
--(NSString*)question;
-{
-    return self.questionString;
-}
-
--(void)setQuestion:(NSString *)question;
-{
-    self.questionString = question;
-}
 
 -(NSUInteger)no;
 {

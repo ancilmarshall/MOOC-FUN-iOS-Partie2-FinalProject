@@ -10,7 +10,6 @@
 
 @interface LHPQuestion (LHPExtensions)
 @property (nonatomic,assign) NSUInteger qid;
-@property (nonatomic,strong) NSString* question;
 @property (nonatomic,assign) NSUInteger no;
 @property (nonatomic,assign) NSUInteger yes;
 

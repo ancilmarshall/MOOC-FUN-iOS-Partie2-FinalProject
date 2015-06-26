@@ -2,7 +2,7 @@
 //  LHPScore.h
 //  LivreHeros
 //
-//  Created by Ancil on 6/25/15.
+//  Created by Ancil on 6/26/15.
 //  Copyright (c) 2015 Ancil Marshall. All rights reserved.
 //
 
@@ -12,7 +12,7 @@
 
 @interface LHPScore : NSManagedObject
 
-@property (nonatomic, retain) NSString * usernameString;
 @property (nonatomic, retain) NSNumber * scoreValue;
+@property (nonatomic, retain) NSString * username;
 
 @end
