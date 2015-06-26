@@ -49,11 +49,11 @@
     NSFetchRequest* fetchRequest = [NSFetchRequest
         fetchRequestWithEntityName:NSStringFromClass([self class])];
     fetchRequest.predicate = [NSPredicate
-        predicateWithFormat:@"%K == %@", NSStringFromSelector(@selector(text)), @(index)];;
+        predicateWithFormat:@"%K == %@", NSStringFromSelector(@selector(indexNSNumber)), @(index)];;
     
     NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
     __block NSArray* fetchResult = nil;
-    [moc performBlock:^{
+    [moc performBlockAndWait:^{
         
         NSError* error = nil;
         fetchResult = [moc executeFetchRequest:fetchRequest error:&error];
@@ -120,5 +120,17 @@
 {
     self.yesIndexNSNumber = @(index);
 }
+
+#pragma mark - Helper functions
+//override description
+-(NSString*)description;
+{
+    NSString* str = [NSString
+        stringWithFormat:@"\nQuestionEntity: %tu \n\tYes:  %tu \n\tNo:   %tu\n\tText: %@",
+                     self.index,self.yesIndex,self.noIndex,self.text];
+    return str;
+}
+
+
 
 @end

@@ -12,6 +12,8 @@
 
 @implementation LHPBook (LHPExtensions)
 
+
+
 #pragma mark - Initialization
 // only allow one instance of the LHPBook class for this app
 +(instancetype) sharedInstance;
@@ -50,16 +52,12 @@
         
     }];
     
-    if (book != nil){
-        return book;
+    if (book == nil) {
+        book = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([LHPBook class])
+                                          inManagedObjectContext:moc];
+        book.title = @"LivreHeros";
+        [LHPBook save];
     }
-    
-    book = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([LHPBook class])
-                                      inManagedObjectContext:moc];
-    
-    book.title = @"LivreHeros";
-    
-    [LHPBook save];
     
     return book;
 }
@@ -102,14 +100,15 @@
 
 #pragma mark - Book Sequence Methods
 
-typedef enum {
-    kUserResponseNo = 0,
-    kUserResponseYes
-} UserResponse;
+
 
 
 -(NSString*)getNextQuestion:(UserResponse)response;
 {
+    //exit immediately if inces is 0, meaning end of book
+    if (self.currentIndex == 0){
+        return nil;
+    }
     
     LHPQuestion* currentQuestion = [LHPQuestion questionEntityForIndex:self.currentIndex];
     NSUInteger nextIndex = (response == kUserResponseYes) ? currentQuestion.yesIndex: currentQuestion.noIndex;
@@ -136,7 +135,19 @@ typedef enum {
 }
 
 
+#pragma mark - Helper functions
 
+-(NSString*)description;
+{
+    LHPBook* book = [LHPBook sharedInstance];
+    NSOrderedSet* questions = book.questions;
+    NSMutableString* str = [NSMutableString new];
+    [str appendFormat:@"\nBook title:%@\n\tCurrent Index: %tu\n",self.title,self.currentIndex];
+    for ( LHPQuestion* question in questions ){
+        [str appendFormat:@"%@\n",question];
+    }
+    return str;
+}
 
 
 
