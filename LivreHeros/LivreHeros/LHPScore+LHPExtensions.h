@@ -10,4 +10,8 @@
 
 @interface LHPScore (LHPExtensions)
 @property (nonatomic,assign) NSUInteger score;
++(void)addScore:(NSUInteger)value username:(NSString*)username;
++(NSArray*)fetchScores;
++(void)deleteScore:(LHPScore*)score;
++(void)deleteAllScores;
 @end

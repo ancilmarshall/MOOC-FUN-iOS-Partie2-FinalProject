@@ -2,7 +2,7 @@
 //  LHPBook.m
 //  LivreHeros
 //
-//  Created by Ancil on 6/26/15.
+//  Created by Ancil on 6/27/15.
 //  Copyright (c) 2015 Ancil Marshall. All rights reserved.
 //
 
@@ -12,8 +12,9 @@
 
 @implementation LHPBook
 
-@dynamic title;
 @dynamic currentIndexNSNumber;
+@dynamic title;
+@dynamic currentScoreNSNumber;
 @dynamic questions;
 
 @end

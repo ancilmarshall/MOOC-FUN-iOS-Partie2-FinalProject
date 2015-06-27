@@ -20,7 +20,7 @@
 		1D5404861B3D653900561712 /* LHPScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404851B3D653900561712 /* LHPScore.m */; };
 		1D5404891B3D678200561712 /* LHPQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404881B3D678200561712 /* LHPQuestion.m */; };
 		1D54048C1B3D6A4900561712 /* LHPBook+LHPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D54048B1B3D6A4900561712 /* LHPBook+LHPExtensions.m */; };
-		1D54048F1B3DABD500561712 /* LHPBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D54048E1B3DABD500561712 /* LHPBook.m */; };
+		1D5404921B3EC0E700561712 /* LHPBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404911B3EC0E700561712 /* LHPBook.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,8 +58,8 @@
 		1D5404881B3D678200561712 /* LHPQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPQuestion.m; sourceTree = "<group>"; };
 		1D54048A1B3D6A4900561712 /* LHPBook+LHPExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LHPBook+LHPExtensions.h"; sourceTree = "<group>"; };
 		1D54048B1B3D6A4900561712 /* LHPBook+LHPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LHPBook+LHPExtensions.m"; sourceTree = "<group>"; };
-		1D54048D1B3DABD500561712 /* LHPBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPBook.h; sourceTree = "<group>"; };
-		1D54048E1B3DABD500561712 /* LHPBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPBook.m; sourceTree = "<group>"; };
+		1D5404901B3EC0E700561712 /* LHPBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPBook.h; sourceTree = "<group>"; };
+		1D5404911B3EC0E700561712 /* LHPBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPBook.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,8 +102,8 @@
 			isa = PBXGroup;
 			children = (
 				1D5404721B3D40DE00561712 /* Model.xcdatamodeld */,
-				1D54048D1B3DABD500561712 /* LHPBook.h */,
-				1D54048E1B3DABD500561712 /* LHPBook.m */,
+				1D5404901B3EC0E700561712 /* LHPBook.h */,
+				1D5404911B3EC0E700561712 /* LHPBook.m */,
 				1D5404871B3D678200561712 /* LHPQuestion.h */,
 				1D5404881B3D678200561712 /* LHPQuestion.m */,
 				1D5404841B3D653900561712 /* LHPScore.h */,
@@ -259,7 +259,7 @@
 				1D5404861B3D653900561712 /* LHPScore.m in Sources */,
 				1D54048C1B3D6A4900561712 /* LHPBook+LHPExtensions.m in Sources */,
 				1D5404891B3D678200561712 /* LHPQuestion.m in Sources */,
-				1D54048F1B3DABD500561712 /* LHPBook.m in Sources */,
+				1D5404921B3EC0E700561712 /* LHPBook.m in Sources */,
 				1D54046F1B3D40C800561712 /* LHPQuestion+LHPExtensions.m in Sources */,
 				1D5404401B3D3E4600561712 /* main.m in Sources */,
 			);
@@ -454,6 +454,7 @@
 				1D54045F1B3D3E4600561712 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1D5404601B3D3E4600561712 /* Build configuration list for PBXNativeTarget "LivreHerosTests" */ = {
 			isa = XCConfigurationList;
@@ -462,6 +463,7 @@
 				1D5404621B3D3E4600561712 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

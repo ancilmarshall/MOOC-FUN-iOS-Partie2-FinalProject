@@ -11,6 +11,7 @@
 #import <CoreData/CoreData.h>
 #import "LHPQuestion+LHPExtensions.h"
 #import "LHPBook+LHPExtensions.h"
+#import "LHPScore+LHPExtensions.h"
 
 @interface ViewController ()
 @property (nonatomic,strong) LHPBook* book;
@@ -23,7 +24,13 @@
     [super viewDidLoad];
     self.book = [LHPBook sharedInstance];
     
-    [self restart:nil];
+    //always continue questions from saved state of the book/game upon loading
+    //except if book was completed on previous execution
+    if (self.book.currentIndex == 0){
+        [self restart:nil];
+    } else {
+        self.questionLabel.text = [self.book getCurrentQuestion];
+    }
 }
 
 -(IBAction)populateData:(id)sender;
@@ -44,9 +51,12 @@
         NSLog(@"Error fetching question data: %@",[error localizedDescription]);
     }
     
-    NSLog(@"%@",self.book);
+    [LHPScore addScore:20 username:@"augustus"];
     
-    NSLog(@"%@",[self.book getNextQuestion:kUserResponseYes]);
+    NSArray* scores = [LHPScore fetchScores];
+    for (LHPScore* score in scores){
+        NSLog(@"%@",score);
+    }
     
 }
 

@@ -33,6 +33,20 @@
 }
 
 # pragma mark - CoreData helper functions
+
+-(void)saveToPersistentStore;
+{
+    // use performBlock to ensure that the block is performed on the correct queue of the moc
+    [self.managedObjectContext performBlock:^{
+        
+        NSError* error = nil;
+        if (![self.managedObjectContext save:&error])
+        {
+            NSLog(@"Problem saving context: %@",[error localizedDescription]);
+        }
+    }];
+}
+
 - (NSURL *)SQLiteStoreURL;
 {
     NSArray *URLs = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory

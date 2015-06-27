@@ -24,17 +24,7 @@
     question.noIndex = noIndex;
     question.book = book; //make the relationship connection
     
-    // use performBlock to ensure that the block is performed on the correct queue of the moc
-    // which is unknown in this instance.
-    [moc performBlock:^{
-        
-        NSError* error = nil;
-        if (![moc save:&error])
-        {
-            NSLog(@"Problem saving context: %@",[error localizedDescription]);
-        }
-        
-    }];
+    [[AppDelegate sharedDelegate] saveToPersistentStore];
     
     return question;
 }

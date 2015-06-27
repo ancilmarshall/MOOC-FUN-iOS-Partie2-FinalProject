@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LHPBook+LHPExtensions.h"
 #import "LHPQuestion+LHPExtensions.h"
+#import "LHPScore+LHPExtensions.h"
 
 @implementation LHPBook (LHPExtensions)
 
@@ -56,13 +57,22 @@
         book = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([LHPBook class])
                                           inManagedObjectContext:moc];
         book.title = @"LivreHeros";
+        book.currentIndex = 1; //although set as default in IB, setting programatically here as well
         
         [book addQuestion:@"What is the color of red" index:1 yes:2 no:3];
         [book addQuestion:@"What is the color of green" index:2 yes:3 no:4];
         [book addQuestion:@"What is the color of blue" index:3 yes:0 no:0];
         [book addQuestion:@"What is the color of black" index:4 yes:0 no:0];
         
-        [LHPBook save];
+        //add scores for testing purposes
+        [LHPScore addScore:1 username:@"ancil"];
+        [LHPScore addScore:2 username:@"brandon"];
+        [LHPScore addScore:3 username:@"darien"];
+        [LHPScore addScore:4 username:@"cyril"];
+        [LHPScore addScore:5 username:@"shirley"];
+        [LHPScore addScore:6 username:@"eutrice"];
+        
+        [[AppDelegate sharedDelegate] saveToPersistentStore];
     }
     
     return book;
@@ -84,36 +94,24 @@
                           //involves getting the NSMutableOrderedSet from the book and adding the question
                           //using KVC pattern (although, it's only 2 lines of code anyway... )
     
-
-    [LHPBook save];
+    [[AppDelegate sharedDelegate] saveToPersistentStore];
 }
 
 -(void)restart;
 {
     self.currentIndex = 1;
+    self.currentScore = 0;
 }
 
-+(void)save;
-{
-    NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
-
-    // use performBlock to ensure that the block is performed on the correct queue of the moc
-    [moc performBlock:^{
-        
-        NSError* error = nil;
-        if (![moc save:&error])
-        {
-            NSLog(@"Problem saving context: %@",[error localizedDescription]);
-        }
-
-    }];
-}
 
 #pragma mark - Book Sequence Methods
 
 -(NSString*)getNextQuestion:(UserResponse)response;
 {
-    //exit immediately if inces is 0, meaning end of book
+    //increment the current score or level value
+    self.currentScore += 1;
+    
+    //exit immediately if index is 0, meaning end of book
     if (self.currentIndex == 0){
         return nil;
     }
@@ -124,7 +122,7 @@
     LHPQuestion* nextQuestion = [LHPQuestion questionEntityForIndex:nextIndex];
     self.currentIndex = nextIndex;
     
-    [LHPBook save];
+    [[AppDelegate sharedDelegate] saveToPersistentStore];
     
     return nextQuestion.text;
 }
@@ -152,6 +150,15 @@
     self.currentIndexNSNumber = @(currentIndex);
 }
 
+-(NSUInteger)currentScore;
+{
+    return [self.currentScoreNSNumber unsignedIntegerValue];
+}
+
+-(void)setCurrentScore:(NSUInteger)currentScore;
+{
+    self.currentScoreNSNumber = @(currentScore);
+}
 
 #pragma mark - Helper functions
 

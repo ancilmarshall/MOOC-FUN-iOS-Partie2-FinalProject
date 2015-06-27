@@ -14,7 +14,7 @@
 @property (strong, nonatomic,readonly) NSManagedObjectContext* managedObjectContext;
 
 + (AppDelegate*) sharedDelegate;
-
+-(void)saveToPersistentStore;
 
 @end
 
