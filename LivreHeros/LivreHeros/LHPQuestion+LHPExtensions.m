@@ -50,8 +50,8 @@
         if (!fetchResult){
             NSLog(@"Error finding question for id: %tu, %@",index,[error localizedDescription]);
         }
-        NSAssert([fetchResult count] == 1,@"Expected only one entity in the CoreData model");
-        NSAssert([[fetchResult firstObject] isKindOfClass:[self class]],@"Expected fetch result to be this class");
+        //NSAssert([fetchResult count] == 1,@"Expected only one entity in the CoreData model");
+        //NSAssert([[fetchResult firstObject] isKindOfClass:[self class]],@"Expected fetch result to be this class");
     }];
     
     return (LHPQuestion*)[fetchResult firstObject];

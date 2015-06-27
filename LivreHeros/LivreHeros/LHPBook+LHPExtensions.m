@@ -59,11 +59,6 @@
         book.title = @"LivreHeros";
         book.currentIndex = 1; //although set as default in IB, setting programatically here as well
         
-        [book addQuestion:@"What is the color of red" index:1 yes:2 no:3];
-        [book addQuestion:@"What is the color of green" index:2 yes:3 no:4];
-        [book addQuestion:@"What is the color of blue" index:3 yes:0 no:0];
-        [book addQuestion:@"What is the color of black" index:4 yes:0 no:0];
-        
         //add scores for testing purposes
         [LHPScore addScore:1 username:@"ancil"];
         [LHPScore addScore:2 username:@"brandon"];

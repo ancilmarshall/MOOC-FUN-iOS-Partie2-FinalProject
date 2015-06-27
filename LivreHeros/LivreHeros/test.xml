@@ -1,0 +1,38 @@
+<histoire>
+     <etape>
+          <id>1</id>
+          <texte>Is blue the color of the sky?</texte>
+          <oui>2</oui>
+          <non>3</non>
+     </etape>
+     <etape>
+          <id>2</id>
+          <texte>Is 2 greater than 5?</texte>
+          <oui>4</oui>
+          <non>5</non>
+     </etape>
+     <etape>
+          <id>3</id>
+          <texte>Is Messi better than Ronaldo?</texte>
+          <oui>4</oui>
+          <non>6</non>
+     </etape>
+     <etape>
+          <id>4</id>
+          <texte>Do you want to be a journalist?</texte>
+          <oui>5</oui>
+          <non>6</non>
+     </etape>
+     <etape>
+          <id>5</id>
+          <texte>Is there more than one universe?</texte>
+          <oui>0</oui>
+          <non>0</non>
+     </etape>
+     <etape>
+          <id>6</id>
+          <texte>Was Einstein correct?</texte>
+          <oui>0</oui>
+          <non>0</non>
+     </etape>
+</histoire>

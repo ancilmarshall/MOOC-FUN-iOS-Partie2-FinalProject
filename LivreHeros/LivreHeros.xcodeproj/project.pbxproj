@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D15305D1B3EF0B6003B8C8B /* test.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1D15305C1B3EF0B6003B8C8B /* test.xml */; };
+		1D1530601B3EF175003B8C8B /* LHPXMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D15305F1B3EF175003B8C8B /* LHPXMLParserDelegate.m */; };
 		1D5404401B3D3E4600561712 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D54043F1B3D3E4600561712 /* main.m */; };
 		1D5404431B3D3E4600561712 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404421B3D3E4600561712 /* AppDelegate.m */; };
 		1D5404461B3D3E4600561712 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404451B3D3E4600561712 /* ViewController.m */; };
@@ -34,6 +36,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D15305C1B3EF0B6003B8C8B /* test.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.xml; sourceTree = "<group>"; };
+		1D15305E1B3EF175003B8C8B /* LHPXMLParserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPXMLParserDelegate.h; sourceTree = "<group>"; };
+		1D15305F1B3EF175003B8C8B /* LHPXMLParserDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPXMLParserDelegate.m; sourceTree = "<group>"; };
 		1D54043A1B3D3E4600561712 /* LivreHeros.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LivreHeros.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D54043E1B3D3E4600561712 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1D54043F1B3D3E4600561712 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -101,6 +106,7 @@
 		1D54043C1B3D3E4600561712 /* LivreHeros */ = {
 			isa = PBXGroup;
 			children = (
+				1D15305C1B3EF0B6003B8C8B /* test.xml */,
 				1D5404721B3D40DE00561712 /* Model.xcdatamodeld */,
 				1D5404901B3EC0E700561712 /* LHPBook.h */,
 				1D5404911B3EC0E700561712 /* LHPBook.m */,
@@ -118,6 +124,8 @@
 				1D5404421B3D3E4600561712 /* AppDelegate.m */,
 				1D5404441B3D3E4600561712 /* ViewController.h */,
 				1D5404451B3D3E4600561712 /* ViewController.m */,
+				1D15305E1B3EF175003B8C8B /* LHPXMLParserDelegate.h */,
+				1D15305F1B3EF175003B8C8B /* LHPXMLParserDelegate.m */,
 				1D5404471B3D3E4600561712 /* Main.storyboard */,
 				1D54044A1B3D3E4600561712 /* Images.xcassets */,
 				1D54044C1B3D3E4600561712 /* LaunchScreen.xib */,
@@ -235,6 +243,7 @@
 				1D5404491B3D3E4600561712 /* Main.storyboard in Resources */,
 				1D54044E1B3D3E4600561712 /* LaunchScreen.xib in Resources */,
 				1D54044B1B3D3E4600561712 /* Images.xcassets in Resources */,
+				1D15305D1B3EF0B6003B8C8B /* test.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +267,7 @@
 				1D5404741B3D40DE00561712 /* Model.xcdatamodeld in Sources */,
 				1D5404861B3D653900561712 /* LHPScore.m in Sources */,
 				1D54048C1B3D6A4900561712 /* LHPBook+LHPExtensions.m in Sources */,
+				1D1530601B3EF175003B8C8B /* LHPXMLParserDelegate.m in Sources */,
 				1D5404891B3D678200561712 /* LHPQuestion.m in Sources */,
 				1D5404921B3EC0E700561712 /* LHPBook.m in Sources */,
 				1D54046F1B3D40C800561712 /* LHPQuestion+LHPExtensions.m in Sources */,

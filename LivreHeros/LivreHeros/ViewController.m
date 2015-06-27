@@ -12,6 +12,7 @@
 #import "LHPQuestion+LHPExtensions.h"
 #import "LHPBook+LHPExtensions.h"
 #import "LHPScore+LHPExtensions.h"
+#import "LHPXMLParserDelegate.h"
 
 @interface ViewController ()
 @property (nonatomic,strong) LHPBook* book;
@@ -23,6 +24,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.book = [LHPBook sharedInstance];
+    
+    NSURL* xmlURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"xml"];
+    NSLog(@"xmlURL: %@",xmlURL);
+    
+    LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
+    NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
+    xmlParser.delegate = xmlParserDelegate;
+    
+    [xmlParser parse];
     
     //always continue questions from saved state of the book/game upon loading
     //except if book was completed on previous execution
@@ -51,12 +61,7 @@
         NSLog(@"Error fetching question data: %@",[error localizedDescription]);
     }
     
-    [LHPScore addScore:20 username:@"augustus"];
-    
-    NSArray* scores = [LHPScore fetchScores];
-    for (LHPScore* score in scores){
-        NSLog(@"%@",score);
-    }
+    NSLog(@"%@",(LHPBook*)[arr firstObject]);
     
 }
 
