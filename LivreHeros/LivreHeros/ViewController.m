@@ -13,6 +13,7 @@
 #import "LHPBook+LHPExtensions.h"
 #import "LHPScore+LHPExtensions.h"
 #import "LHPXMLParserDelegate.h"
+#import "LHPSessionManager.h"
 
 @interface ViewController ()
 @property (nonatomic,strong) LHPBook* book;
@@ -23,10 +24,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [[LHPSessionManager sharedInstance] downloadXMLFile];
+    
     self.book = [LHPBook sharedInstance];
     
-    NSURL* xmlURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"xml"];
-    NSLog(@"xmlURL: %@",xmlURL);
+    //NSURL* xmlURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"xml"];
+    
+    NSURL* xmlURL = [[LHPSessionManager sharedInstance] appDocumentsURL];
+    NSLog(@"\n%@",xmlURL);
+
+    NSString* str = [NSString stringWithContentsOfURL:xmlURL encoding:NSUTF8StringEncoding error:NULL];
+    NSLog(@"\n%@",str);
     
     LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
     NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
@@ -41,6 +50,7 @@
     } else {
         self.questionLabel.text = [self.book getCurrentQuestion];
     }
+    
 }
 
 -(IBAction)populateData:(id)sender;

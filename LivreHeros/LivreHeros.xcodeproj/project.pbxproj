@@ -23,6 +23,7 @@
 		1D5404891B3D678200561712 /* LHPQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404881B3D678200561712 /* LHPQuestion.m */; };
 		1D54048C1B3D6A4900561712 /* LHPBook+LHPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D54048B1B3D6A4900561712 /* LHPBook+LHPExtensions.m */; };
 		1D5404921B3EC0E700561712 /* LHPBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404911B3EC0E700561712 /* LHPBook.m */; };
+		1D9F3CC41B4024E3003FADC0 /* LHPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9F3CC31B4024E3003FADC0 /* LHPSessionManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,8 @@
 		1D54048B1B3D6A4900561712 /* LHPBook+LHPExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "LHPBook+LHPExtensions.m"; sourceTree = "<group>"; };
 		1D5404901B3EC0E700561712 /* LHPBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPBook.h; sourceTree = "<group>"; };
 		1D5404911B3EC0E700561712 /* LHPBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPBook.m; sourceTree = "<group>"; };
+		1D9F3CC21B4024E3003FADC0 /* LHPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPSessionManager.h; sourceTree = "<group>"; };
+		1D9F3CC31B4024E3003FADC0 /* LHPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPSessionManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,30 +109,17 @@
 		1D54043C1B3D3E4600561712 /* LivreHeros */ = {
 			isa = PBXGroup;
 			children = (
-				1D15305C1B3EF0B6003B8C8B /* test.xml */,
-				1D5404721B3D40DE00561712 /* Model.xcdatamodeld */,
-				1D5404901B3EC0E700561712 /* LHPBook.h */,
-				1D5404911B3EC0E700561712 /* LHPBook.m */,
-				1D5404871B3D678200561712 /* LHPQuestion.h */,
-				1D5404881B3D678200561712 /* LHPQuestion.m */,
-				1D5404841B3D653900561712 /* LHPScore.h */,
-				1D5404851B3D653900561712 /* LHPScore.m */,
-				1D54048A1B3D6A4900561712 /* LHPBook+LHPExtensions.h */,
-				1D54048B1B3D6A4900561712 /* LHPBook+LHPExtensions.m */,
-				1D5404671B3D40C800561712 /* LHPQuestion+LHPExtensions.h */,
-				1D5404681B3D40C800561712 /* LHPQuestion+LHPExtensions.m */,
-				1D54046B1B3D40C800561712 /* LHPScore+LHPExtensions.h */,
-				1D54046C1B3D40C800561712 /* LHPScore+LHPExtensions.m */,
+				1D9F3CC01B402474003FADC0 /* Core Data Model */,
 				1D5404411B3D3E4600561712 /* AppDelegate.h */,
 				1D5404421B3D3E4600561712 /* AppDelegate.m */,
 				1D5404441B3D3E4600561712 /* ViewController.h */,
 				1D5404451B3D3E4600561712 /* ViewController.m */,
-				1D15305E1B3EF175003B8C8B /* LHPXMLParserDelegate.h */,
-				1D15305F1B3EF175003B8C8B /* LHPXMLParserDelegate.m */,
+				1D9F3CC11B4024A0003FADC0 /* XLM Parser */,
 				1D5404471B3D3E4600561712 /* Main.storyboard */,
 				1D54044A1B3D3E4600561712 /* Images.xcassets */,
 				1D54044C1B3D3E4600561712 /* LaunchScreen.xib */,
 				1D54043D1B3D3E4600561712 /* Supporting Files */,
+				1D9F3CC51B4024ED003FADC0 /* URL Session Manager */,
 			);
 			path = LivreHeros;
 			sourceTree = "<group>";
@@ -158,6 +148,45 @@
 				1D5404581B3D3E4600561712 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1D9F3CC01B402474003FADC0 /* Core Data Model */ = {
+			isa = PBXGroup;
+			children = (
+				1D5404721B3D40DE00561712 /* Model.xcdatamodeld */,
+				1D5404901B3EC0E700561712 /* LHPBook.h */,
+				1D5404911B3EC0E700561712 /* LHPBook.m */,
+				1D5404871B3D678200561712 /* LHPQuestion.h */,
+				1D5404881B3D678200561712 /* LHPQuestion.m */,
+				1D5404841B3D653900561712 /* LHPScore.h */,
+				1D5404851B3D653900561712 /* LHPScore.m */,
+				1D54048A1B3D6A4900561712 /* LHPBook+LHPExtensions.h */,
+				1D54048B1B3D6A4900561712 /* LHPBook+LHPExtensions.m */,
+				1D5404671B3D40C800561712 /* LHPQuestion+LHPExtensions.h */,
+				1D5404681B3D40C800561712 /* LHPQuestion+LHPExtensions.m */,
+				1D54046B1B3D40C800561712 /* LHPScore+LHPExtensions.h */,
+				1D54046C1B3D40C800561712 /* LHPScore+LHPExtensions.m */,
+			);
+			name = "Core Data Model";
+			sourceTree = "<group>";
+		};
+		1D9F3CC11B4024A0003FADC0 /* XLM Parser */ = {
+			isa = PBXGroup;
+			children = (
+				1D15305C1B3EF0B6003B8C8B /* test.xml */,
+				1D15305E1B3EF175003B8C8B /* LHPXMLParserDelegate.h */,
+				1D15305F1B3EF175003B8C8B /* LHPXMLParserDelegate.m */,
+			);
+			name = "XLM Parser";
+			sourceTree = "<group>";
+		};
+		1D9F3CC51B4024ED003FADC0 /* URL Session Manager */ = {
+			isa = PBXGroup;
+			children = (
+				1D9F3CC21B4024E3003FADC0 /* LHPSessionManager.h */,
+				1D9F3CC31B4024E3003FADC0 /* LHPSessionManager.m */,
+			);
+			name = "URL Session Manager";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -270,6 +299,7 @@
 				1D1530601B3EF175003B8C8B /* LHPXMLParserDelegate.m in Sources */,
 				1D5404891B3D678200561712 /* LHPQuestion.m in Sources */,
 				1D5404921B3EC0E700561712 /* LHPBook.m in Sources */,
+				1D9F3CC41B4024E3003FADC0 /* LHPSessionManager.m in Sources */,
 				1D54046F1B3D40C800561712 /* LHPQuestion+LHPExtensions.m in Sources */,
 				1D5404401B3D3E4600561712 /* main.m in Sources */,
 			);
