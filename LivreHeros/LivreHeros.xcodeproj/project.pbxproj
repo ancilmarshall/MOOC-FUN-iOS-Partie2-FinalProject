@@ -11,8 +11,7 @@
 		1D1530601B3EF175003B8C8B /* LHPXMLParserDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D15305F1B3EF175003B8C8B /* LHPXMLParserDelegate.m */; };
 		1D5404401B3D3E4600561712 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D54043F1B3D3E4600561712 /* main.m */; };
 		1D5404431B3D3E4600561712 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404421B3D3E4600561712 /* AppDelegate.m */; };
-		1D5404461B3D3E4600561712 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404451B3D3E4600561712 /* ViewController.m */; };
-		1D5404491B3D3E4600561712 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D5404471B3D3E4600561712 /* Main.storyboard */; };
+		1D5404461B3D3E4600561712 /* LHPBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404451B3D3E4600561712 /* LHPBookViewController.m */; };
 		1D54044B1B3D3E4600561712 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D54044A1B3D3E4600561712 /* Images.xcassets */; };
 		1D54044E1B3D3E4600561712 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D54044C1B3D3E4600561712 /* LaunchScreen.xib */; };
 		1D54045A1B3D3E4600561712 /* LivreHerosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404591B3D3E4600561712 /* LivreHerosTests.m */; };
@@ -24,6 +23,12 @@
 		1D54048C1B3D6A4900561712 /* LHPBook+LHPExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D54048B1B3D6A4900561712 /* LHPBook+LHPExtensions.m */; };
 		1D5404921B3EC0E700561712 /* LHPBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D5404911B3EC0E700561712 /* LHPBook.m */; };
 		1D9F3CC41B4024E3003FADC0 /* LHPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9F3CC31B4024E3003FADC0 /* LHPSessionManager.m */; };
+		1D9F3CFD1B41F08A003FADC0 /* LHPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9F3CFC1B41F08A003FADC0 /* LHPSettingsViewController.m */; };
+		1D9F3CFF1B41F645003FADC0 /* LHPBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9F3CFE1B41F645003FADC0 /* LHPBookViewController.xib */; };
+		1DB066C71B428A28004B1986 /* ScoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB066C61B428A28004B1986 /* ScoreView.xib */; };
+		1DB066C91B428A3A004B1986 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB066C81B428A3A004B1986 /* SettingsView.xib */; };
+		1DB066CC1B428A52004B1986 /* ScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB066CB1B428A52004B1986 /* ScoreView.m */; };
+		1DB066CF1B428A69004B1986 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB066CE1B428A69004B1986 /* SettingsView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,9 +50,8 @@
 		1D54043F1B3D3E4600561712 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1D5404411B3D3E4600561712 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D5404421B3D3E4600561712 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1D5404441B3D3E4600561712 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		1D5404451B3D3E4600561712 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		1D5404481B3D3E4600561712 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1D5404441B3D3E4600561712 /* LHPBookViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LHPBookViewController.h; sourceTree = "<group>"; };
+		1D5404451B3D3E4600561712 /* LHPBookViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LHPBookViewController.m; sourceTree = "<group>"; };
 		1D54044A1B3D3E4600561712 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		1D54044D1B3D3E4600561712 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		1D5404531B3D3E4600561712 /* LivreHerosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LivreHerosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +72,15 @@
 		1D5404911B3EC0E700561712 /* LHPBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPBook.m; sourceTree = "<group>"; };
 		1D9F3CC21B4024E3003FADC0 /* LHPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPSessionManager.h; sourceTree = "<group>"; };
 		1D9F3CC31B4024E3003FADC0 /* LHPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPSessionManager.m; sourceTree = "<group>"; };
+		1D9F3CFB1B41F08A003FADC0 /* LHPSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPSettingsViewController.h; sourceTree = "<group>"; };
+		1D9F3CFC1B41F08A003FADC0 /* LHPSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPSettingsViewController.m; sourceTree = "<group>"; };
+		1D9F3CFE1B41F645003FADC0 /* LHPBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LHPBookViewController.xib; sourceTree = "<group>"; };
+		1DB066C61B428A28004B1986 /* ScoreView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreView.xib; sourceTree = "<group>"; };
+		1DB066C81B428A3A004B1986 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		1DB066CA1B428A52004B1986 /* ScoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreView.h; sourceTree = "<group>"; };
+		1DB066CB1B428A52004B1986 /* ScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreView.m; sourceTree = "<group>"; };
+		1DB066CD1B428A69004B1986 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
+		1DB066CE1B428A69004B1986 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,17 +122,16 @@
 		1D54043C1B3D3E4600561712 /* LivreHeros */ = {
 			isa = PBXGroup;
 			children = (
-				1D9F3CC01B402474003FADC0 /* Core Data Model */,
 				1D5404411B3D3E4600561712 /* AppDelegate.h */,
 				1D5404421B3D3E4600561712 /* AppDelegate.m */,
-				1D5404441B3D3E4600561712 /* ViewController.h */,
-				1D5404451B3D3E4600561712 /* ViewController.m */,
+				1D9F3CC01B402474003FADC0 /* Core Data Model */,
+				1DB066D01B428C50004B1986 /* Settings View and View Controller */,
+				1DB066D11B428C67004B1986 /* Book View Controller */,
 				1D9F3CC11B4024A0003FADC0 /* XLM Parser */,
-				1D5404471B3D3E4600561712 /* Main.storyboard */,
+				1D9F3CC51B4024ED003FADC0 /* URL Session Manager */,
 				1D54044A1B3D3E4600561712 /* Images.xcassets */,
 				1D54044C1B3D3E4600561712 /* LaunchScreen.xib */,
 				1D54043D1B3D3E4600561712 /* Supporting Files */,
-				1D9F3CC51B4024ED003FADC0 /* URL Session Manager */,
 			);
 			path = LivreHeros;
 			sourceTree = "<group>";
@@ -187,6 +199,31 @@
 				1D9F3CC31B4024E3003FADC0 /* LHPSessionManager.m */,
 			);
 			name = "URL Session Manager";
+			sourceTree = "<group>";
+		};
+		1DB066D01B428C50004B1986 /* Settings View and View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1D9F3CFB1B41F08A003FADC0 /* LHPSettingsViewController.h */,
+				1D9F3CFC1B41F08A003FADC0 /* LHPSettingsViewController.m */,
+				1DB066CD1B428A69004B1986 /* SettingsView.h */,
+				1DB066CE1B428A69004B1986 /* SettingsView.m */,
+				1DB066C81B428A3A004B1986 /* SettingsView.xib */,
+				1DB066CA1B428A52004B1986 /* ScoreView.h */,
+				1DB066CB1B428A52004B1986 /* ScoreView.m */,
+				1DB066C61B428A28004B1986 /* ScoreView.xib */,
+			);
+			name = "Settings View and View Controller";
+			sourceTree = "<group>";
+		};
+		1DB066D11B428C67004B1986 /* Book View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1D5404441B3D3E4600561712 /* LHPBookViewController.h */,
+				1D5404451B3D3E4600561712 /* LHPBookViewController.m */,
+				1D9F3CFE1B41F645003FADC0 /* LHPBookViewController.xib */,
+			);
+			name = "Book View Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,10 +306,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D5404491B3D3E4600561712 /* Main.storyboard in Resources */,
+				1D9F3CFF1B41F645003FADC0 /* LHPBookViewController.xib in Resources */,
 				1D54044E1B3D3E4600561712 /* LaunchScreen.xib in Resources */,
 				1D54044B1B3D3E4600561712 /* Images.xcassets in Resources */,
+				1DB066C91B428A3A004B1986 /* SettingsView.xib in Resources */,
 				1D15305D1B3EF0B6003B8C8B /* test.xml in Resources */,
+				1DB066C71B428A28004B1986 /* ScoreView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +329,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D5404461B3D3E4600561712 /* ViewController.m in Sources */,
+				1D5404461B3D3E4600561712 /* LHPBookViewController.m in Sources */,
 				1D5404711B3D40C800561712 /* LHPScore+LHPExtensions.m in Sources */,
 				1D5404431B3D3E4600561712 /* AppDelegate.m in Sources */,
 				1D5404741B3D40DE00561712 /* Model.xcdatamodeld in Sources */,
@@ -299,9 +338,12 @@
 				1D1530601B3EF175003B8C8B /* LHPXMLParserDelegate.m in Sources */,
 				1D5404891B3D678200561712 /* LHPQuestion.m in Sources */,
 				1D5404921B3EC0E700561712 /* LHPBook.m in Sources */,
+				1DB066CC1B428A52004B1986 /* ScoreView.m in Sources */,
 				1D9F3CC41B4024E3003FADC0 /* LHPSessionManager.m in Sources */,
 				1D54046F1B3D40C800561712 /* LHPQuestion+LHPExtensions.m in Sources */,
 				1D5404401B3D3E4600561712 /* main.m in Sources */,
+				1D9F3CFD1B41F08A003FADC0 /* LHPSettingsViewController.m in Sources */,
+				1DB066CF1B428A69004B1986 /* SettingsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,14 +366,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		1D5404471B3D3E4600561712 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1D5404481B3D3E4600561712 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		1D54044C1B3D3E4600561712 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

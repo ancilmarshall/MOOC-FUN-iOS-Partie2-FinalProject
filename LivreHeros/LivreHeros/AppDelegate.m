@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 Ancil Marshall. All rights reserved.
 //
 
-#import "AppDelegate.h"
 #import <CoreData/CoreData.h>
+#import "AppDelegate.h"
+#import "LHPBookViewController.h"
+#import "LHPSettingsViewController.h"
 
 @interface AppDelegate ()
 @property (nonatomic,strong,readwrite) NSManagedObjectContext* managedObjectContext;
@@ -18,8 +20,28 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+    //Core Data setup
     NSURL* storeURL = [self SQLiteStoreURL];
     self.managedObjectContext = [self contextForStoreAtURL:storeURL];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    //TODO: Check for device time and only use split view controller for the iPad or iPhone6+
+    
+    UIViewController* master = [LHPSettingsViewController new];
+    UINavigationController* masterNavC = [[UINavigationController alloc] initWithRootViewController:master];
+    
+    UIViewController* detail = [LHPBookViewController new];
+    UINavigationController* detailNavC = [[UINavigationController alloc] initWithRootViewController:detail];
+    
+    UISplitViewController* splitVC = [[UISplitViewController alloc] init];
+    splitVC.viewControllers = @[masterNavC, detailNavC];
+    
+    //finish up window properties
+    self.window.rootViewController = splitVC;
+    [self.window makeKeyAndVisible];
+    
+    
     return YES;
 }
 
