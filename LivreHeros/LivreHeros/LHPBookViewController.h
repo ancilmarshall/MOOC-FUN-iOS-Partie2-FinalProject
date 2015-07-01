@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LHPSettingsViewController.h"
 
-@interface LHPBookViewController : UIViewController
+@interface LHPBookViewController : UIViewController <LHPSettingsViewControllerDelegateProtocol>
 
 
 @end

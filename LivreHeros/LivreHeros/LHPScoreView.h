@@ -1,13 +1,13 @@
 //
-//  ScoreView.m
+//  ScoreView.h
 //  LivreHeros
 //
 //  Created by Ancil on 6/30/15.
 //  Copyright (c) 2015 Ancil Marshall. All rights reserved.
 //
 
-#import "ScoreView.h"
+#import <UIKit/UIKit.h>
 
-@implementation ScoreView
+@interface LHPScoreView : UIView
 
 @end

@@ -25,10 +25,10 @@
 		1D9F3CC41B4024E3003FADC0 /* LHPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9F3CC31B4024E3003FADC0 /* LHPSessionManager.m */; };
 		1D9F3CFD1B41F08A003FADC0 /* LHPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D9F3CFC1B41F08A003FADC0 /* LHPSettingsViewController.m */; };
 		1D9F3CFF1B41F645003FADC0 /* LHPBookViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1D9F3CFE1B41F645003FADC0 /* LHPBookViewController.xib */; };
-		1DB066C71B428A28004B1986 /* ScoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB066C61B428A28004B1986 /* ScoreView.xib */; };
-		1DB066C91B428A3A004B1986 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB066C81B428A3A004B1986 /* SettingsView.xib */; };
-		1DB066CC1B428A52004B1986 /* ScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB066CB1B428A52004B1986 /* ScoreView.m */; };
-		1DB066CF1B428A69004B1986 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB066CE1B428A69004B1986 /* SettingsView.m */; };
+		1DB066C71B428A28004B1986 /* LHPScoreView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB066C61B428A28004B1986 /* LHPScoreView.xib */; };
+		1DB066C91B428A3A004B1986 /* LHPSettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB066C81B428A3A004B1986 /* LHPSettingsView.xib */; };
+		1DB066CC1B428A52004B1986 /* LHPScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB066CB1B428A52004B1986 /* LHPScoreView.m */; };
+		1DB066CF1B428A69004B1986 /* LHPSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB066CE1B428A69004B1986 /* LHPSettingsView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,12 +75,12 @@
 		1D9F3CFB1B41F08A003FADC0 /* LHPSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPSettingsViewController.h; sourceTree = "<group>"; };
 		1D9F3CFC1B41F08A003FADC0 /* LHPSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPSettingsViewController.m; sourceTree = "<group>"; };
 		1D9F3CFE1B41F645003FADC0 /* LHPBookViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LHPBookViewController.xib; sourceTree = "<group>"; };
-		1DB066C61B428A28004B1986 /* ScoreView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreView.xib; sourceTree = "<group>"; };
-		1DB066C81B428A3A004B1986 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
-		1DB066CA1B428A52004B1986 /* ScoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreView.h; sourceTree = "<group>"; };
-		1DB066CB1B428A52004B1986 /* ScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreView.m; sourceTree = "<group>"; };
-		1DB066CD1B428A69004B1986 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
-		1DB066CE1B428A69004B1986 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
+		1DB066C61B428A28004B1986 /* LHPScoreView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LHPScoreView.xib; sourceTree = "<group>"; };
+		1DB066C81B428A3A004B1986 /* LHPSettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LHPSettingsView.xib; sourceTree = "<group>"; };
+		1DB066CA1B428A52004B1986 /* LHPScoreView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPScoreView.h; sourceTree = "<group>"; };
+		1DB066CB1B428A52004B1986 /* LHPScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPScoreView.m; sourceTree = "<group>"; };
+		1DB066CD1B428A69004B1986 /* LHPSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPSettingsView.h; sourceTree = "<group>"; };
+		1DB066CE1B428A69004B1986 /* LHPSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPSettingsView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,12 +206,12 @@
 			children = (
 				1D9F3CFB1B41F08A003FADC0 /* LHPSettingsViewController.h */,
 				1D9F3CFC1B41F08A003FADC0 /* LHPSettingsViewController.m */,
-				1DB066CD1B428A69004B1986 /* SettingsView.h */,
-				1DB066CE1B428A69004B1986 /* SettingsView.m */,
-				1DB066C81B428A3A004B1986 /* SettingsView.xib */,
-				1DB066CA1B428A52004B1986 /* ScoreView.h */,
-				1DB066CB1B428A52004B1986 /* ScoreView.m */,
-				1DB066C61B428A28004B1986 /* ScoreView.xib */,
+				1DB066CD1B428A69004B1986 /* LHPSettingsView.h */,
+				1DB066CE1B428A69004B1986 /* LHPSettingsView.m */,
+				1DB066C81B428A3A004B1986 /* LHPSettingsView.xib */,
+				1DB066CA1B428A52004B1986 /* LHPScoreView.h */,
+				1DB066CB1B428A52004B1986 /* LHPScoreView.m */,
+				1DB066C61B428A28004B1986 /* LHPScoreView.xib */,
 			);
 			name = "Settings View and View Controller";
 			sourceTree = "<group>";
@@ -309,9 +309,9 @@
 				1D9F3CFF1B41F645003FADC0 /* LHPBookViewController.xib in Resources */,
 				1D54044E1B3D3E4600561712 /* LaunchScreen.xib in Resources */,
 				1D54044B1B3D3E4600561712 /* Images.xcassets in Resources */,
-				1DB066C91B428A3A004B1986 /* SettingsView.xib in Resources */,
+				1DB066C91B428A3A004B1986 /* LHPSettingsView.xib in Resources */,
 				1D15305D1B3EF0B6003B8C8B /* test.xml in Resources */,
-				1DB066C71B428A28004B1986 /* ScoreView.xib in Resources */,
+				1DB066C71B428A28004B1986 /* LHPScoreView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,12 +338,12 @@
 				1D1530601B3EF175003B8C8B /* LHPXMLParserDelegate.m in Sources */,
 				1D5404891B3D678200561712 /* LHPQuestion.m in Sources */,
 				1D5404921B3EC0E700561712 /* LHPBook.m in Sources */,
-				1DB066CC1B428A52004B1986 /* ScoreView.m in Sources */,
+				1DB066CC1B428A52004B1986 /* LHPScoreView.m in Sources */,
 				1D9F3CC41B4024E3003FADC0 /* LHPSessionManager.m in Sources */,
 				1D54046F1B3D40C800561712 /* LHPQuestion+LHPExtensions.m in Sources */,
 				1D5404401B3D3E4600561712 /* main.m in Sources */,
 				1D9F3CFD1B41F08A003FADC0 /* LHPSettingsViewController.m in Sources */,
-				1DB066CF1B428A69004B1986 /* SettingsView.m in Sources */,
+				1DB066CF1B428A69004B1986 /* LHPSettingsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +460,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LivreHeros/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -470,6 +471,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LivreHeros/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

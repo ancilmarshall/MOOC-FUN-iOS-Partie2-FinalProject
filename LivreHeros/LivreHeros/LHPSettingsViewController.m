@@ -14,13 +14,13 @@
  * the labels and the sliders. Good code reuse principles applied here.
  */
 
-#import "ScoreView.h"
-#import "SettingsView.h"
+#import "LHPScoreView.h"
+#import "LHPSettingsView.h"
 #import "LHPSettingsViewController.h"
 
 @interface LHPSettingsViewController ()
-@property (nonatomic,strong) ScoreView* scoreView;
-@property (nonatomic,strong) SettingsView* settingsView;
+@property (nonatomic,strong) LHPScoreView* scoreView;
+@property (nonatomic,strong) LHPSettingsView* settingsView;
 @property (nonatomic,strong) NSLayoutConstraint* scoreTopConstraint;
 @property (nonatomic,strong) NSLayoutConstraint* scoreHeightConstraint;
 @property (nonatomic,strong) NSLayoutConstraint* scoreWidthConstraint;
@@ -33,7 +33,7 @@
 @implementation LHPSettingsViewController
 
 //constants
-const CGFloat kRedBlueViewSpace = 10.0f;
+const CGFloat kViewSpace = 10.0f;
 const CGFloat kViewMargin = 10.0f;
 const CGFloat kScoreHeightConstraintConstantPortrait = 300.0f;
 
@@ -43,8 +43,10 @@ typedef enum {TOTAL,FIXED} Length_Type;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+
     self.viewSize = self.view.bounds.size;
-    
+
     //set up UI elements, scoreView and Settings View
     UINib *scoreNib = [UINib nibWithNibName:@"ScoreView" bundle:[NSBundle mainBundle]];
     self.scoreView = [scoreNib instantiateWithOwner:self options:nil][0];
@@ -56,11 +58,39 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.settingsView = [settingsNib instantiateWithOwner:self options:nil][0];
     self.settingsView.backgroundColor = [UIColor blueColor];
     self.settingsView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.settingsView.delegate = self;
     [self.view addSubview:self.settingsView];
+    
+    self.delegate = (id)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     [self initializeConstraints];
 }
 
+//must reset the viewSize when view appears to account for the iPad using the
+//split view controller which has changes width when this is the master
+-(void)viewWillAppear:(BOOL)animated;
+{
+    [super viewWillAppear:YES];
+    self.viewSize = self.view.bounds.size;
+    [self updateConstraintConstants];
+    [self.view layoutIfNeeded];
+    
+}
+
+
+#pragma mark - LHPSettingsViewDelegateProtocol
+-(void)LHPSettingsView:(LHPSettingsView *)settingsView didUpdateBackGroundColor:(UIColor *)color;
+{
+    NSAssert(settingsView == self.settingsView, @"Expected settingsView to be same instance held in this object");
+    NSAssert(self.delegate!=nil,@"Delegate object not yet set");
+    NSAssert([self.delegate respondsToSelector:@selector(backgroundColorDidUpdate:)],
+             @"Delegate does not implement required protocol method");
+    
+    [self.delegate backgroundColorDidUpdate:color];
+}
+
+
+#pragma mark - Autolayout and constraint methods
 
 // initially waits till this lifecyle to make sure that topLayoutGuide is set
 -(void)viewWillLayoutSubviews
@@ -209,8 +239,8 @@ typedef enum {TOTAL,FIXED} Length_Type;
     
     if ( alpha > 0.0 && alpha < 1.0 )
     {
-        redDim = alpha * length - kRedBlueViewSpace/2.0;
-        blueDim = (1.0 - alpha)* length - kRedBlueViewSpace/2.0;
+        redDim = alpha * length - kViewSpace/2.0;
+        blueDim = (1.0 - alpha)* length - kViewSpace/2.0;
         
     }
     else if (alpha == 1.0)
@@ -258,7 +288,6 @@ typedef enum {TOTAL,FIXED} Length_Type;
     } else { // In landscape mode, the two views have equal widths
         alpha = 0.5f;
     }
-    
     
     return alpha;
 }
@@ -331,11 +360,29 @@ typedef enum {TOTAL,FIXED} Length_Type;
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
+    
+    //NSLog(@"View: %@, ToSize: %@",self.description, NSStringFromCGSize(size));
+    
+    //Noticed intermittent problems on iPhone6+ on the simulator where the
+    //size reported is sometimes the primary view controller's size or the
+    //secondary view controller's size. Quick hack here is to detect the size
+    //and change it manually.
+    //NOTE: Still not working after the change
+    //TODO: Fix this issue
+    
+    if ((size.width > 440.0 && size.width < 441.0) &&
+        (size.height> 413.0 && size.height < 415.0)){
+        size = (CGSize){.width = 295, .height = 414};
+        NSLog(@"View: %@, ToSizeNew: %@",self.description, NSStringFromCGSize(size));
+
+    }
+    
     [super viewWillTransitionToSize:size
           withTransitionCoordinator:coordinator];
     
     self.viewSize = size;
     [self updateConstraintConstants];
+    [self.view layoutIfNeeded];
     
     [coordinator animateAlongsideTransition:
      ^(id<UIViewControllerTransitionCoordinatorContext> context) {

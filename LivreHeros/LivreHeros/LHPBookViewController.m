@@ -6,14 +6,15 @@
 //  Copyright (c) 2015 Ancil Marshall. All rights reserved.
 //
 
-#import "LHPBookViewController.h"
-#import "AppDelegate.h"
 #import <CoreData/CoreData.h>
-#import "LHPQuestion+LHPExtensions.h"
+#import "AppDelegate.h"
+#import "LHPBookViewController.h"
 #import "LHPBook+LHPExtensions.h"
+#import "LHPQuestion+LHPExtensions.h"
+#import "LHPSessionManager.h"
+#import "LHPSettingsViewController.h"
 #import "LHPScore+LHPExtensions.h"
 #import "LHPXMLParserDelegate.h"
-#import "LHPSessionManager.h"
 
 @interface LHPBookViewController ()
 @property (nonatomic,strong) LHPBook* book;
@@ -52,6 +53,25 @@
     }
     
 }
+
+#pragma mark - LHPSettingsViewControllerDelegateProtocol
+-(void)backgroundColorDidUpdate:(UIColor*)color;
+{
+    self.view.backgroundColor = color;
+}
+
+
+//- (void)viewWillTransitionToSize:(CGSize)size
+//       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+//{
+//    [super viewWillTransitionToSize:size
+//          withTransitionCoordinator:coordinator];
+//    
+//    NSLog(@"View: %@, ToSize: %@",self.description, NSStringFromCGSize(size));
+//    
+//}
+
+
 //
 //-(IBAction)populateData:(id)sender;
 //{

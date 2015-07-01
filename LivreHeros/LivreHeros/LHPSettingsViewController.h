@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LHPSettingsView.h" //TODO: Sepearate the protocols
 
-@protocol LHPSettingsDelegateProtocol;
+@protocol LHPSettingsViewControllerDelegateProtocol;
 
-@interface LHPSettingsViewController : UIViewController
-@property (nonatomic,weak) id<LHPSettingsDelegateProtocol> delegate;
+@interface LHPSettingsViewController : UIViewController <LHPSettingsViewDelegateProtocol>
+@property (nonatomic,weak) id<LHPSettingsViewControllerDelegateProtocol> delegate;
 @end
 
-
-@protocol LHPSettingsDelegateProtocol <NSObject>
+@protocol LHPSettingsViewControllerDelegateProtocol <NSObject>
 
 -(void)backgroundColorDidUpdate:(UIColor*)color;
 
