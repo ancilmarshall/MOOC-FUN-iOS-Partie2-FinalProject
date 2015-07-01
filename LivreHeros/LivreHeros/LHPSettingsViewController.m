@@ -14,6 +14,7 @@
  * the labels and the sliders. Good code reuse principles applied here.
  */
 
+#import "LHPBook+LHPExtensions.h"
 #import "ScoreView.h"
 #import "SettingsView.h"
 #import "LHPSettingsViewController.h"
@@ -21,6 +22,7 @@
 @interface LHPSettingsViewController ()
 @property (nonatomic,strong) ScoreView* scoreView;
 @property (nonatomic,strong) SettingsView* settingsView;
+@property (nonatomic,strong) LHPBook* book;
 @property (nonatomic,strong) NSLayoutConstraint* scoreTopConstraint;
 @property (nonatomic,strong) NSLayoutConstraint* scoreHeightConstraint;
 @property (nonatomic,strong) NSLayoutConstraint* scoreWidthConstraint;
@@ -46,6 +48,8 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.view.backgroundColor = [UIColor whiteColor];
 
     self.viewSize = self.view.bounds.size;
+    
+    self.book = [LHPBook sharedInstance]; //cache the app's book singleton
 
     //set up UI elements, scoreView and Settings View
     UINib *scoreNib = [UINib nibWithNibName:@"ScoreView" bundle:[NSBundle mainBundle]];
@@ -65,7 +69,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.delegate = (id)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     [self initializeConstraints];
-    
+    [self didUpdateScore:self.book.currentScore];
 }
 
 //must reset the viewSize when view appears to account for the iPad using the
@@ -87,7 +91,8 @@ typedef enum {TOTAL,FIXED} Length_Type;
 #pragma mark - LHPSettingsViewDelegateProtocol
 -(void)LHPSettingsView:(SettingsView *)settingsView didUpdateBackGroundColor:(UIColor *)color;
 {
-    NSAssert(settingsView == self.settingsView, @"Expected settingsView to be same instance held in this object");
+    NSAssert(settingsView == self.settingsView,
+             @"Expected settingsView to be same instance held in this object");
     NSAssert(self.delegate!=nil,@"Delegate object not yet set");
     NSAssert([self.delegate respondsToSelector:@selector(backgroundColorDidUpdate:)],
              @"Delegate does not implement required protocol method");
@@ -98,10 +103,19 @@ typedef enum {TOTAL,FIXED} Length_Type;
 #pragma mark - LHPBookViewControllerDelegateProtocol
 -(void)didUpdateScore:(NSUInteger)score;
 {
-    self.scoreView.currentScoreLabel.text =
-        [NSString stringWithFormat:
-         NSLocalizedString(@"Score: %tu", @"Settings View Controller formatted scoreLabel"),
-         score];
+    if (score == 0){
+        self.scoreView.currentScoreLabel.text =
+        NSLocalizedString(@"Score: No progress in levels",
+                          @"Settings View Controller default score label");
+        
+    } else {
+    
+        self.scoreView.currentScoreLabel.text =
+            [NSString stringWithFormat:
+             NSLocalizedString(@"Score: %tu",
+                               @"Settings View Controller formatted scoreLabel"),
+             score];
+    }
 }
 
 #pragma mark - Autolayout and constraint methods

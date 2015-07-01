@@ -29,6 +29,8 @@
 		1DB066C91B428A3A004B1986 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB066C81B428A3A004B1986 /* SettingsView.xib */; };
 		1DB066CC1B428A52004B1986 /* ScoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB066CB1B428A52004B1986 /* ScoreView.m */; };
 		1DB066CF1B428A69004B1986 /* SettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB066CE1B428A69004B1986 /* SettingsView.m */; };
+		1DB066D71B445F0B004B1986 /* LHPUsernameEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DB066D51B445F0B004B1986 /* LHPUsernameEntryViewController.m */; };
+		1DB066D81B445F0B004B1986 /* LHPUsernameEntryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DB066D61B445F0B004B1986 /* LHPUsernameEntryViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,9 @@
 		1DB066CE1B428A69004B1986 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
 		1DB066D21B44523B004B1986 /* LHPBookViewControllerDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPBookViewControllerDelegateProtocol.h; sourceTree = "<group>"; };
 		1DB066D31B445630004B1986 /* LHPSettingsViewControllerDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPSettingsViewControllerDelegateProtocol.h; sourceTree = "<group>"; };
+		1DB066D41B445F0B004B1986 /* LHPUsernameEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPUsernameEntryViewController.h; sourceTree = "<group>"; };
+		1DB066D51B445F0B004B1986 /* LHPUsernameEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LHPUsernameEntryViewController.m; sourceTree = "<group>"; };
+		1DB066D61B445F0B004B1986 /* LHPUsernameEntryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LHPUsernameEntryViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +134,7 @@
 				1D9F3CC01B402474003FADC0 /* Core Data Model */,
 				1DB066D01B428C50004B1986 /* Settings View and View Controller */,
 				1DB066D11B428C67004B1986 /* Book View Controller */,
+				1DB066D91B445F1A004B1986 /* Username Entry View Controller */,
 				1D9F3CC11B4024A0003FADC0 /* XLM Parser */,
 				1D9F3CC51B4024ED003FADC0 /* URL Session Manager */,
 				1D54044A1B3D3E4600561712 /* Images.xcassets */,
@@ -230,6 +236,16 @@
 			name = "Book View Controller";
 			sourceTree = "<group>";
 		};
+		1DB066D91B445F1A004B1986 /* Username Entry View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1DB066D41B445F0B004B1986 /* LHPUsernameEntryViewController.h */,
+				1DB066D51B445F0B004B1986 /* LHPUsernameEntryViewController.m */,
+				1DB066D61B445F0B004B1986 /* LHPUsernameEntryViewController.xib */,
+			);
+			name = "Username Entry View Controller";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -315,6 +331,7 @@
 				1D54044B1B3D3E4600561712 /* Images.xcassets in Resources */,
 				1DB066C91B428A3A004B1986 /* SettingsView.xib in Resources */,
 				1D15305D1B3EF0B6003B8C8B /* test.xml in Resources */,
+				1DB066D81B445F0B004B1986 /* LHPUsernameEntryViewController.xib in Resources */,
 				1DB066C71B428A28004B1986 /* ScoreView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -333,6 +350,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DB066D71B445F0B004B1986 /* LHPUsernameEntryViewController.m in Sources */,
 				1D5404461B3D3E4600561712 /* LHPBookViewController.m in Sources */,
 				1D5404711B3D40C800561712 /* LHPScore+LHPExtensions.m in Sources */,
 				1D5404431B3D3E4600561712 /* AppDelegate.m in Sources */,

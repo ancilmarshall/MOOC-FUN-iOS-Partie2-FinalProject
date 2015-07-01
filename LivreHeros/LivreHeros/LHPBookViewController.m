@@ -14,6 +14,7 @@
 #import "LHPSessionManager.h"
 #import "LHPSettingsViewController.h"
 #import "LHPScore+LHPExtensions.h"
+#import "LHPUsernameEntryViewController.h"
 #import "LHPXMLParserDelegate.h"
 
 @interface LHPBookViewController ()
@@ -103,6 +104,13 @@
     NSAssert(self.delegate != nil,@"Delegate not yet set");
     [self.delegate didUpdateScore:self.book.currentScore];
     
+    if (!question){
+        LHPUsernameEntryViewController* usernameEntryVieController =
+        [[LHPUsernameEntryViewController alloc] initWithScore:self.book.currentScore];
+        
+        [self presentViewController:usernameEntryVieController animated:YES completion:nil];
+ 
+    }
 }
 
 @end
