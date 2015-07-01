@@ -12,6 +12,7 @@
 
 @interface SettingsView : UIView
 @property (nonatomic,weak) id<LHPSettingsViewDelegateProtocol> delegate;
+-(void)initialize;
 @end
 
 @protocol LHPSettingsViewDelegateProtocol <NSObject>

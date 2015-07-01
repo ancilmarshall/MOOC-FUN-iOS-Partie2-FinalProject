@@ -75,6 +75,8 @@ typedef enum {TOTAL,FIXED} Length_Type;
     [self updateConstraintConstants];
     [self.view layoutIfNeeded];
     
+    [self.settingsView initialize];
+    
 }
 
 

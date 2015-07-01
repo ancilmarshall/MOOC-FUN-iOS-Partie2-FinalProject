@@ -24,48 +24,63 @@
 -(instancetype)initWithCoder:(NSCoder *)aDecoder;
 {
     self = [super initWithCoder:aDecoder];
+    
     if (self){
         
-        [self.redSlider addTarget:self
-                           action:@selector(sliderValueChanged)
-                 forControlEvents:UIControlEventValueChanged];
+        self.redSlider.translatesAutoresizingMaskIntoConstraints = NO;
+        self.greenSlider.translatesAutoresizingMaskIntoConstraints = NO;
+        self.blueSlider.translatesAutoresizingMaskIntoConstraints = NO;
+        self.redLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.greenLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        self.blueLabel.translatesAutoresizingMaskIntoConstraints = NO;
         
-        [self.greenSlider addTarget:self
-                           action:@selector(sliderValueChanged)
-                 forControlEvents:UIControlEventValueChanged];
-        
-        [self.blueSlider addTarget:self
-                           action:@selector(sliderValueChanged)
-                 forControlEvents:UIControlEventValueChanged];
+
         
     }
-    return self;
     
+    return self;
 }
 
+/*
+ * NOTE: Need to call this initialize function sometime after the container view has
+ * been loaded to ensure that the outlets are set. It was discovered that the outlets
+ * are stil nil by the time -initWithCoder is called.
+ */
+-(void)initialize;
+{
+    [self.redSlider addTarget:self
+                       action:@selector(sliderValueChanged)
+             forControlEvents:UIControlEventValueChanged];
+    
+    [self.greenSlider addTarget:self
+                         action:@selector(sliderValueChanged)
+               forControlEvents:UIControlEventValueChanged];
+    
+    [self.blueSlider addTarget:self
+                        action:@selector(sliderValueChanged)
+              forControlEvents:UIControlEventValueChanged];
+    
+    [self updateUI];
+}
 
--(void)updateLabels;
+-(void)updateUI;
 {
     self.redLabel.text =
-        [NSString stringWithFormat:NSLocalizedString(@"%tu % Red of the background color",
+        [NSString stringWithFormat:NSLocalizedString(@"%tu %% Red of the background color",
                                                      @"Settings Red % label"),
-         (NSUInteger)[self.redSlider value]*100];
+         (NSUInteger)(self.redSlider.value*100)];
     
     self.greenLabel.text =
-    [NSString stringWithFormat:NSLocalizedString(@"%tu % Green of the background color",
+    [NSString stringWithFormat:NSLocalizedString(@"%tu %% Green of the background color",
                                                  @"Settings Green % label"),
-     (NSUInteger)[self.greenSlider value]*100];
+     (NSUInteger)(self.greenSlider.value*100)];
     
     self.blueLabel.text =
-    [NSString stringWithFormat:NSLocalizedString(@"%tu % Blue of the background color",
+    [NSString stringWithFormat:NSLocalizedString(@"%tu %% Blue of the background color",
                                                  @"Settings Blue % label"),
-     (NSUInteger)[self.blueSlider value]*100];
+     (NSUInteger)(self.blueSlider.value*100)];
     
-}
-
--(void)sliderValueChanged;
-{
-    [self updateLabels];
+    // Update the background color of the delegate
     UIColor* color = [UIColor colorWithRed:self.redSlider.value
                                      green:self.greenSlider.value
                                       blue:self.blueSlider.value
@@ -76,6 +91,12 @@
              @"LHPSettingsView delegate does not implement required protocol");
     
     [self.delegate LHPSettingsView:self didUpdateBackGroundColor:color];
+    
+}
+
+-(void)sliderValueChanged;
+{
+    [self updateUI];
 }
 
 @end
