@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LHPSettingsView.h" //TODO: Sepearate the protocols
+#import "SettingsView.h" //TODO: Sepearate the protocols
 
 @protocol LHPSettingsViewControllerDelegateProtocol;
 

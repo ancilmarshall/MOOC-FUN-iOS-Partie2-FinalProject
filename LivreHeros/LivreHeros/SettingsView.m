@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 Ancil Marshall. All rights reserved.
 //
 
-#import "LHPSettingsView.h"
+#import "SettingsView.h"
 
 
-@interface LHPSettingsView()
+@interface SettingsView()
 @property (nonatomic,weak) IBOutlet UILabel* redLabel;
 @property (nonatomic,weak) IBOutlet UILabel* greenLabel;
 @property (nonatomic,weak) IBOutlet UILabel* blueLabel;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation LHPSettingsView
+@implementation SettingsView
 
 -(instancetype)initWithCoder:(NSCoder *)aDecoder;
 {

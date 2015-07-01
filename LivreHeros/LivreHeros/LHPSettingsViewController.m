@@ -14,13 +14,13 @@
  * the labels and the sliders. Good code reuse principles applied here.
  */
 
-#import "LHPScoreView.h"
-#import "LHPSettingsView.h"
+#import "ScoreView.h"
+#import "SettingsView.h"
 #import "LHPSettingsViewController.h"
 
 @interface LHPSettingsViewController ()
-@property (nonatomic,strong) LHPScoreView* scoreView;
-@property (nonatomic,strong) LHPSettingsView* settingsView;
+@property (nonatomic,strong) ScoreView* scoreView;
+@property (nonatomic,strong) SettingsView* settingsView;
 @property (nonatomic,strong) NSLayoutConstraint* scoreTopConstraint;
 @property (nonatomic,strong) NSLayoutConstraint* scoreHeightConstraint;
 @property (nonatomic,strong) NSLayoutConstraint* scoreWidthConstraint;
@@ -79,7 +79,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
 
 
 #pragma mark - LHPSettingsViewDelegateProtocol
--(void)LHPSettingsView:(LHPSettingsView *)settingsView didUpdateBackGroundColor:(UIColor *)color;
+-(void)LHPSettingsView:(SettingsView *)settingsView didUpdateBackGroundColor:(UIColor *)color;
 {
     NSAssert(settingsView == self.settingsView, @"Expected settingsView to be same instance held in this object");
     NSAssert(self.delegate!=nil,@"Delegate object not yet set");
@@ -88,7 +88,6 @@ typedef enum {TOTAL,FIXED} Length_Type;
     
     [self.delegate backgroundColorDidUpdate:color];
 }
-
 
 #pragma mark - Autolayout and constraint methods
 

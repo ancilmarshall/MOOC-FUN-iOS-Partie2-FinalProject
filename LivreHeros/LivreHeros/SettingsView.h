@@ -10,12 +10,12 @@
 
 @protocol LHPSettingsViewDelegateProtocol;
 
-@interface LHPSettingsView : UIView
+@interface SettingsView : UIView
 @property (nonatomic,weak) id<LHPSettingsViewDelegateProtocol> delegate;
 @end
 
 @protocol LHPSettingsViewDelegateProtocol <NSObject>
 
--(void)LHPSettingsView:(LHPSettingsView*)settingsView didUpdateBackGroundColor:(UIColor*)color;
+-(void)LHPSettingsView:(SettingsView*)settingsView didUpdateBackGroundColor:(UIColor*)color;
 
 @end
