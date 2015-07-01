@@ -81,6 +81,8 @@
 		1DB066CB1B428A52004B1986 /* ScoreView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreView.m; sourceTree = "<group>"; };
 		1DB066CD1B428A69004B1986 /* SettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsView.h; sourceTree = "<group>"; };
 		1DB066CE1B428A69004B1986 /* SettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsView.m; sourceTree = "<group>"; };
+		1DB066D21B44523B004B1986 /* LHPBookViewControllerDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPBookViewControllerDelegateProtocol.h; sourceTree = "<group>"; };
+		1DB066D31B445630004B1986 /* LHPSettingsViewControllerDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LHPSettingsViewControllerDelegateProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +208,7 @@
 			children = (
 				1D9F3CFB1B41F08A003FADC0 /* LHPSettingsViewController.h */,
 				1D9F3CFC1B41F08A003FADC0 /* LHPSettingsViewController.m */,
+				1DB066D31B445630004B1986 /* LHPSettingsViewControllerDelegateProtocol.h */,
 				1DB066CD1B428A69004B1986 /* SettingsView.h */,
 				1DB066CE1B428A69004B1986 /* SettingsView.m */,
 				1DB066C81B428A3A004B1986 /* SettingsView.xib */,
@@ -220,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				1D5404441B3D3E4600561712 /* LHPBookViewController.h */,
+				1DB066D21B44523B004B1986 /* LHPBookViewControllerDelegateProtocol.h */,
 				1D5404451B3D3E4600561712 /* LHPBookViewController.m */,
 				1D9F3CFE1B41F645003FADC0 /* LHPBookViewController.xib */,
 			);

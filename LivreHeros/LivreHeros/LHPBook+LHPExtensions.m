@@ -58,15 +58,7 @@
                                           inManagedObjectContext:moc];
         book.title = @"LivreHeros";
         book.currentIndex = 1; //although set as default in IB, setting programatically here as well
-        
-        //add scores for testing purposes
-        [LHPScore addScore:1 username:@"ancil"];
-        [LHPScore addScore:2 username:@"brandon"];
-        [LHPScore addScore:3 username:@"darien"];
-        [LHPScore addScore:4 username:@"cyril"];
-        [LHPScore addScore:5 username:@"shirley"];
-        [LHPScore addScore:6 username:@"eutrice"];
-        
+                
         [[AppDelegate sharedDelegate] saveToPersistentStore];
     }
     
@@ -98,13 +90,10 @@
     self.currentScore = 0;
 }
 
-
 #pragma mark - Book Sequence Methods
 
 -(NSString*)getNextQuestion:(UserResponse)response;
 {
-    //increment the current score or level value
-    self.currentScore += 1;
     
     //exit immediately if index is 0, meaning end of book
     if (self.currentIndex == 0){
@@ -117,6 +106,11 @@
     LHPQuestion* nextQuestion = [LHPQuestion questionEntityForIndex:nextIndex];
     self.currentIndex = nextIndex;
     
+    //increment the current score or level value only if nextIndex != 0
+    if (self.currentIndex != 0){
+        self.currentScore += 1;
+    }
+    
     [[AppDelegate sharedDelegate] saveToPersistentStore];
     
     return nextQuestion.text;
@@ -124,14 +118,14 @@
 
 -(NSString*)getCurrentQuestion;
 {
-    //exit immediately if inces is 0, meaning end of book
     if (self.currentIndex == 0){
-        return nil;
+        [self restart];
     }
     LHPQuestion* currentQuestion = [LHPQuestion questionEntityForIndex:self.currentIndex];
     return currentQuestion.text;
     
 }
+
 
 # pragma mark - Category convenient accessors
 

@@ -2,7 +2,7 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="LHPBook" representedClassName="LHPBook" syncable="YES">
         <attribute name="currentIndexNSNumber" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
-        <attribute name="currentScoreNSNumber" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="currentScoreNSNumber" attributeType="Integer 16" minValueString="0" defaultValueString="0" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="questions" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="LHPQuestion" inverseName="book" inverseEntity="LHPQuestion" syncable="YES"/>
     </entity>

@@ -61,12 +61,11 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.settingsView.delegate = self;
     [self.view addSubview:self.settingsView];
     
+    //TODO: Change for tabController, add if/else statements
     self.delegate = (id)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     [self initializeConstraints];
-    [self.scoreView initialize];
-    [self.settingsView initialize];
-
+    
 }
 
 //must reset the viewSize when view appears to account for the iPad using the
@@ -77,9 +76,13 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.viewSize = self.view.bounds.size;
     [self updateConstraintConstants];
     [self.view layoutIfNeeded];
+    
+    // NOTE: need to call these special initialize functions after this container
+    // view loads, which ensures that their outlets are set
+    [self.scoreView initialize];
+    [self.settingsView initialize];
 
 }
-
 
 #pragma mark - LHPSettingsViewDelegateProtocol
 -(void)LHPSettingsView:(SettingsView *)settingsView didUpdateBackGroundColor:(UIColor *)color;
@@ -90,6 +93,15 @@ typedef enum {TOTAL,FIXED} Length_Type;
              @"Delegate does not implement required protocol method");
     
     [self.delegate backgroundColorDidUpdate:color];
+}
+
+#pragma mark - LHPBookViewControllerDelegateProtocol
+-(void)didUpdateScore:(NSUInteger)score;
+{
+    self.scoreView.currentScoreLabel.text =
+        [NSString stringWithFormat:
+         NSLocalizedString(@"Score: %tu", @"Settings View Controller formatted scoreLabel"),
+         score];
 }
 
 #pragma mark - Autolayout and constraint methods

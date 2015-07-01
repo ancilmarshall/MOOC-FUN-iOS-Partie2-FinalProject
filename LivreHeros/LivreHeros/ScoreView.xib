@@ -70,6 +70,15 @@
                 <constraint firstItem="wze-lY-Sdd" firstAttribute="top" secondItem="IvF-Qd-yOf" secondAttribute="bottom" constant="32" id="n3k-Uz-IVV"/>
                 <constraint firstItem="6Ag-aH-Hdz" firstAttribute="top" secondItem="I4z-cx-OIZ" secondAttribute="bottom" constant="8" id="oJ5-dt-iwJ"/>
             </constraints>
+            <connections>
+                <outlet property="currentScoreLabel" destination="IvF-Qd-yOf" id="qHR-31-mhY"/>
+                <outlet property="score1label" destination="5Rg-i8-fxw" id="gZC-2g-bfS"/>
+                <outlet property="score2label" destination="MIh-5y-RNJ" id="pu7-l8-bLu"/>
+                <outlet property="score3label" destination="I4z-cx-OIZ" id="mkx-SU-xpS"/>
+                <outlet property="score4label" destination="6Ag-aH-Hdz" id="AnL-ww-Z0z"/>
+                <outlet property="score5label" destination="RD7-BO-9KQ" id="gVl-p4-oAy"/>
+                <outlet property="top5HeadingLabel" destination="wze-lY-Sdd" id="KRq-ZE-MOB"/>
+            </connections>
         </view>
     </objects>
 </document>

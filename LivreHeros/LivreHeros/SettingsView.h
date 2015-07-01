@@ -16,7 +16,5 @@
 @end
 
 @protocol LHPSettingsViewDelegateProtocol <NSObject>
-
 -(void)LHPSettingsView:(SettingsView*)settingsView didUpdateBackGroundColor:(UIColor*)color;
-
 @end

@@ -19,7 +19,10 @@ typedef enum {
 @property (nonatomic,assign) NSUInteger currentIndex;
 @property (nonatomic,assign) NSUInteger currentScore;
 +(instancetype)sharedInstance;
--(void)addQuestion:(NSString*)text index:(NSUInteger)index yes:(NSUInteger)yesIndex no:(NSUInteger)noIndex;
+-(void)addQuestion:(NSString*)text
+             index:(NSUInteger)index
+               yes:(NSUInteger)yesIndex
+                no:(NSUInteger)noIndex;
 -(NSString*)getNextQuestion:(UserResponse)response;
 -(NSString*)getCurrentQuestion;
 -(void)restart;

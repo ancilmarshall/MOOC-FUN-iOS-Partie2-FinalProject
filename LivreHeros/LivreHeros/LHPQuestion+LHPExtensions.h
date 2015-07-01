@@ -14,8 +14,10 @@
 @property (nonatomic,assign) NSUInteger noIndex;
 @property (nonatomic,assign) NSUInteger yesIndex;
 
-+(LHPQuestion*)insertQuestion:(NSString*)text index:(NSUInteger)index
-                     yesIndex:(NSUInteger)yesIndex noIndex:(NSUInteger)noIndex
++(LHPQuestion*)insertQuestion:(NSString*)text
+                        index:(NSUInteger)index
+                     yesIndex:(NSUInteger)yesIndex
+                      noIndex:(NSUInteger)noIndex
                          book:(LHPBook*)book;
 +(NSString*)questionForIndex:(NSUInteger)index;
 +(NSUInteger)yesIndexForIndex:(NSUInteger)index;

@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "LHPSettingsViewController.h"
+#import "LHPSettingsViewControllerDelegateProtocol.h"
+#import "LHPBookViewControllerDelegateProtocol.h"
 
 @interface LHPBookViewController : UIViewController <LHPSettingsViewControllerDelegateProtocol>
-
-
+@property (nonatomic,weak) id<LHPBookViewControllerDelegateProtocol>delegate;
 @end
 

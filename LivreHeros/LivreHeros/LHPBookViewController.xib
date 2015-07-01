@@ -6,6 +6,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LHPBookViewController">
             <connections>
+                <outlet property="instructions" destination="UTL-17-lcs" id="mjd-gX-m9z"/>
+                <outlet property="questionLabel" destination="7Jc-LS-raR" id="vbW-Ny-Llc"/>
+                <outlet property="titleLabel" destination="vFG-2u-qd1" id="ND6-Nl-orx"/>
                 <outlet property="view" destination="iN0-l3-epB" id="cif-IZ-afW"/>
             </connections>
         </placeholder>
@@ -13,7 +16,59 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Level" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFG-2u-qd1">
+                    <rect key="frame" x="8" y="80" width="80" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instructions" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTL-17-lcs">
+                    <rect key="frame" x="8" y="571" width="584" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Jc-LS-raR">
+                    <rect key="frame" x="8" y="109" width="584" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lSj-o4-zDD">
+                    <rect key="frame" x="285" y="285" width="30" height="30"/>
+                    <state key="normal" title="Yes">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="yes:" destination="-1" eventType="touchUpInside" id="lCg-lv-h7A"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0zo-N9-fI3">
+                    <rect key="frame" x="285" y="323" width="30" height="30"/>
+                    <state key="normal" title="No">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="no:" destination="-1" eventType="touchUpInside" id="hKz-lq-O7c"/>
+                    </connections>
+                </button>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerX" secondItem="0zo-N9-fI3" secondAttribute="centerX" id="2xX-ON-vK2"/>
+                <constraint firstAttribute="trailing" secondItem="7Jc-LS-raR" secondAttribute="trailing" constant="8" id="4Xk-Q4-9zc"/>
+                <constraint firstItem="vFG-2u-qd1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="80" id="4ii-sb-ABq"/>
+                <constraint firstAttribute="trailing" secondItem="UTL-17-lcs" secondAttribute="trailing" constant="8" id="M9t-LB-6gf"/>
+                <constraint firstItem="7Jc-LS-raR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="NDT-06-ziF"/>
+                <constraint firstItem="7Jc-LS-raR" firstAttribute="top" secondItem="vFG-2u-qd1" secondAttribute="bottom" constant="8" id="PpQ-Yf-83J"/>
+                <constraint firstItem="vFG-2u-qd1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="WpZ-u8-22n"/>
+                <constraint firstItem="UTL-17-lcs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="fue-VY-NlS"/>
+                <constraint firstItem="0zo-N9-fI3" firstAttribute="top" secondItem="lSj-o4-zDD" secondAttribute="bottom" constant="8" id="gCa-fK-gIw"/>
+                <constraint firstAttribute="centerY" secondItem="lSj-o4-zDD" secondAttribute="centerY" id="tVa-0a-Lz5"/>
+                <constraint firstAttribute="bottom" secondItem="UTL-17-lcs" secondAttribute="bottom" constant="8" id="vAA-Yx-yRy"/>
+                <constraint firstAttribute="centerX" secondItem="lSj-o4-zDD" secondAttribute="centerX" id="yjr-gE-1RM"/>
+            </constraints>
         </view>
     </objects>
 </document>

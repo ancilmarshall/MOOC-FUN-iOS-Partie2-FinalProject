@@ -8,7 +8,6 @@
 
 #import "SettingsView.h"
 
-
 @interface SettingsView()
 @property (nonatomic,weak) IBOutlet UILabel* redLabel;
 @property (nonatomic,weak) IBOutlet UILabel* greenLabel;
