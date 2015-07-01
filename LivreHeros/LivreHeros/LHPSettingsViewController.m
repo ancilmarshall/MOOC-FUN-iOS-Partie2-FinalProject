@@ -64,19 +64,20 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.delegate = (id)[[self.splitViewController.viewControllers lastObject] topViewController];
     
     [self initializeConstraints];
+    [self.scoreView initialize];
+    [self.settingsView initialize];
+
 }
 
 //must reset the viewSize when view appears to account for the iPad using the
-//split view controller which has changes width when this is the master
+//split view controller which changes width when this is the master
 -(void)viewWillAppear:(BOOL)animated;
 {
     [super viewWillAppear:YES];
     self.viewSize = self.view.bounds.size;
     [self updateConstraintConstants];
     [self.view layoutIfNeeded];
-    
-    [self.settingsView initialize];
-    
+
 }
 
 
@@ -180,7 +181,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
                                     toItem:nil
                                  attribute:NSLayoutAttributeNotAnAttribute
                                 multiplier:0
-                                  constant:0];
+                                  constant:self.view.frame.size.width];
     self.settingsWidthConstraint.active = YES;
     
     // blue view height constraint (chagnes based on orientation)

@@ -16,30 +16,9 @@
 @property (nonatomic,weak) IBOutlet UISlider* redSlider;
 @property (nonatomic,weak) IBOutlet UISlider* greenSlider;
 @property (nonatomic,weak) IBOutlet UISlider* blueSlider;
-
 @end
 
 @implementation SettingsView
-
--(instancetype)initWithCoder:(NSCoder *)aDecoder;
-{
-    self = [super initWithCoder:aDecoder];
-    
-    if (self){
-        
-        self.redSlider.translatesAutoresizingMaskIntoConstraints = NO;
-        self.greenSlider.translatesAutoresizingMaskIntoConstraints = NO;
-        self.blueSlider.translatesAutoresizingMaskIntoConstraints = NO;
-        self.redLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.greenLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        self.blueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-        
-
-        
-    }
-    
-    return self;
-}
 
 /*
  * NOTE: Need to call this initialize function sometime after the container view has
@@ -65,6 +44,7 @@
 
 -(void)updateUI;
 {
+    //update the labels' text
     self.redLabel.text =
         [NSString stringWithFormat:NSLocalizedString(@"%tu %% Red of the background color",
                                                      @"Settings Red % label"),
