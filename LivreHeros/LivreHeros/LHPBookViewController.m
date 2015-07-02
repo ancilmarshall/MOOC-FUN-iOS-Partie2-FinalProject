@@ -62,23 +62,6 @@
     self.view.backgroundColor = color;
 }
 
-//-(IBAction)performFetch:(id)sender;
-//{
-//  
-//    NSFetchRequest* fetchRequest = [[NSFetchRequest alloc]
-//                                    initWithEntityName:NSStringFromClass([LHPBook class])];
-//    
-//    NSError* error;
-//    NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
-//    NSArray* arr = [moc executeFetchRequest:fetchRequest error:&error];
-//    if (!arr) {
-//        NSLog(@"Error fetching question data: %@",[error localizedDescription]);
-//    }
-//    
-//    NSLog(@"%@",(LHPBook*)[arr firstObject]);
-//    
-//}
-
 -(void)restart:(id)sender;
 {
     [self.book restart];
@@ -107,9 +90,10 @@
     if (!question){
         LHPUsernameEntryViewController* usernameEntryVieController =
         [[LHPUsernameEntryViewController alloc] initWithScore:self.book.currentScore];
-        
+
+        usernameEntryVieController.modalPresentationStyle = UIModalPresentationFormSheet;
         [self presentViewController:usernameEntryVieController animated:YES completion:nil];
- 
+        
     }
 }
 

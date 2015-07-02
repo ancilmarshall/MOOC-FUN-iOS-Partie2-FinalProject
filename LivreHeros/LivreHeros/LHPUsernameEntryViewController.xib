@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LHPUsernameEntryViewController">
             <connections>
                 <outlet property="inputText" destination="Lb7-Gx-9tz" id="gvw-qT-IaP"/>
+                <outlet property="instructionsLabel" destination="3Jz-Es-bn4" id="Cg2-dZ-mFZ"/>
                 <outlet property="scoreLabel" destination="0Q2-HF-XLT" id="WhK-Or-ZlV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -16,13 +17,13 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter username" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Lb7-Gx-9tz">
-                    <rect key="frame" x="8" y="102" width="584" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your name here" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Lb7-Gx-9tz">
+                    <rect key="frame" x="8" y="138" width="584" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Q2-HF-XLT">
-                    <rect key="frame" x="275" y="66" width="50" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your score is:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Q2-HF-XLT">
+                    <rect key="frame" x="248" y="64" width="104" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
@@ -30,7 +31,7 @@
                 <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VSv-gJ-MXC">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <items>
-                        <navigationItem title="Username" id="MNL-cz-zk2">
+                        <navigationItem title="Player Name" id="MNL-cz-zk2">
                             <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="d1a-tj-aMG">
                                 <connections>
                                     <action selector="cancel:" destination="-1" id="Azb-ji-EB4"/>
@@ -44,18 +45,26 @@
                         </navigationItem>
                     </items>
                 </navigationBar>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Jz-Es-bn4">
+                    <rect key="frame" x="210" y="101" width="181" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="Lb7-Gx-9tz" firstAttribute="top" secondItem="3Jz-Es-bn4" secondAttribute="bottom" constant="16" id="0G9-lV-N5l"/>
+                <constraint firstItem="3Jz-Es-bn4" firstAttribute="top" secondItem="0Q2-HF-XLT" secondAttribute="bottom" constant="16" id="0oP-pj-UbS"/>
                 <constraint firstAttribute="centerX" secondItem="VSv-gJ-MXC" secondAttribute="centerX" id="2WZ-9f-n93"/>
                 <constraint firstItem="VSv-gJ-MXC" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="3cs-Jr-fl0"/>
                 <constraint firstItem="Lb7-Gx-9tz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="7Qv-JF-77X"/>
                 <constraint firstAttribute="trailing" secondItem="Lb7-Gx-9tz" secondAttribute="trailing" constant="8" id="QO4-ee-djr"/>
                 <constraint firstItem="VSv-gJ-MXC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TbE-fy-MKN"/>
-                <constraint firstItem="Lb7-Gx-9tz" firstAttribute="top" secondItem="0Q2-HF-XLT" secondAttribute="bottom" constant="15" id="eLC-uH-WAm"/>
-                <constraint firstItem="0Q2-HF-XLT" firstAttribute="top" secondItem="VSv-gJ-MXC" secondAttribute="bottom" constant="22" id="hez-5t-bZt"/>
+                <constraint firstItem="0Q2-HF-XLT" firstAttribute="top" secondItem="VSv-gJ-MXC" secondAttribute="bottom" constant="20" id="hez-5t-bZt"/>
                 <constraint firstAttribute="centerX" secondItem="0Q2-HF-XLT" secondAttribute="centerX" id="qPQ-NS-Plz"/>
                 <constraint firstAttribute="trailing" secondItem="VSv-gJ-MXC" secondAttribute="trailing" id="qqU-8q-nf2"/>
+                <constraint firstAttribute="centerX" secondItem="3Jz-Es-bn4" secondAttribute="centerX" constant="-0.5" id="qvf-iS-QHg"/>
             </constraints>
         </view>
     </objects>

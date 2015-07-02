@@ -70,5 +70,11 @@
                 <constraint firstAttribute="centerX" secondItem="lSj-o4-zDD" secondAttribute="centerX" id="yjr-gE-1RM"/>
             </constraints>
         </view>
+        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hbD-iZ-I6f">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <point key="canvasLocation" x="1021" y="403"/>
+        </tableView>
     </objects>
 </document>
