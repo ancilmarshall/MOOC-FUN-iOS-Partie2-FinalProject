@@ -21,10 +21,16 @@
 @property (nonatomic,strong) LHPBook* book;
 @property (nonatomic,weak) IBOutlet UILabel* questionLabel;
 @property (nonatomic,weak) IBOutlet UILabel* titleLabel;
-@property (nonatomic,weak) IBOutlet UILabel* instructions;
+@property (nonatomic,weak) IBOutlet UILabel* instructionsLabel;
+@property (nonatomic,weak) IBOutlet NSLayoutConstraint* instructionsLabelBottomConstraint;
+@property (nonatomic,weak) IBOutlet NSLayoutConstraint* titleLabelTopConstraint;
 @end
 
+const static CGFloat kConstraintMargin = 8.0f;
+
 @implementation LHPBookViewController
+
+#pragma mark - Initialization
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,7 +38,10 @@
     [[LHPSessionManager sharedInstance] downloadXMLFile];
     
     self.book = [LHPBook sharedInstance];
-    
+
+    self.navigationItem.title = NSLocalizedString(@"Book Hero!",
+                                                  @"Book Hero Navigation bar title");
+
     NSURL* xmlURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"xml"];
     
     //NSURL* xmlURL = [[LHPSessionManager sharedInstance] appDocumentsURL];
@@ -47,13 +56,46 @@
     
     [xmlParser parse];
     
+    self.titleLabel.text = NSLocalizedString(
+                                             @"New Question",
+                                             @"Book Hero view title");
+    self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    
     //always continue questions from saved state of the book/game upon loading
     //except if book was completed on previous execution
     self.questionLabel.text = [self.book getCurrentQuestion];
     
-    //TODO; only if split view controller on iPad... make logic for iPhone and tabController
-    self.delegate = (id)[[[self.splitViewController viewControllers] firstObject] topViewController];
+    self.instructionsLabel.text = NSLocalizedString(
+                                @"Swipe RIGHT to respond YES\n Swipe LEFT to respond NO",
+                                @"User instructions to respond yes or no based on swipe gesture");
     
+    self.instructionsLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self resetConstraints];
+    
+    self.delegate = (id)[[AppDelegate sharedDelegate] settingsViewController];
+}
+
+-(void)restart:(id)sender;
+{
+    [self.book restart];
+    //self.questionLabel.text = [self.book getCurrentQuestion];
+}
+
+-(void)resetConstraints;
+{
+    CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    
+    if (self.tabBarController){
+        CGFloat height = [[self tabBarController] tabBar].frame.size.height;
+        self.instructionsLabelBottomConstraint.constant = height+kConstraintMargin;
+    }
+    
+    if (self.navigationController){
+        CGFloat height = [[self navigationController] navigationBar].frame.size.height;
+        self.titleLabelTopConstraint.constant = height+statusBarHeight+kConstraintMargin;
+    }
+    
+    [self.view layoutIfNeeded];
 }
 
 #pragma mark - LHPSettingsViewControllerDelegateProtocol
@@ -62,13 +104,7 @@
     self.view.backgroundColor = color;
 }
 
--(void)restart:(id)sender;
-{
-    [self.book restart];
-    //self.questionLabel.text = [self.book getCurrentQuestion];
-
-}
-
+#pragma mark - User actions
 -(IBAction)yes:(id)sender;
 {
     [self executeUserResponse:kUserResponseYes];
@@ -96,5 +132,27 @@
         
     }
 }
+
+#pragma mark - Rotation support
+/*
+ * override this method to perform calculations during rotation
+ */
+//TODO: provide logic to calculate new heights based on size since the
+// navigation bar and status bar changes sizes after rotation which is
+// not conveyed before the rotation happens
+
+//- (void)viewWillTransitionToSize:(CGSize)size
+//       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+//{
+//
+//    [super viewWillTransitionToSize:size
+//          withTransitionCoordinator:coordinator];
+//    
+//    [self resetConstraints];
+//    [coordinator animateAlongsideTransition:
+//     ^(id<UIViewControllerTransitionCoordinatorContext> context) {
+//         [self.view layoutIfNeeded];
+//     } completion:nil];
+//}
 
 @end

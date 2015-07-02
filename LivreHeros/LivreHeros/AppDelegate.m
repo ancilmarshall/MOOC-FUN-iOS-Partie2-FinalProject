@@ -13,6 +13,9 @@
 
 @interface AppDelegate ()
 @property (nonatomic,strong,readwrite) NSManagedObjectContext* managedObjectContext;
+@property (nonatomic,strong,readwrite) LHPBookViewController* bookViewController;
+@property (nonatomic,strong,readwrite) LHPSettingsViewController* settingsViewController;
+
 @end
 
 @implementation AppDelegate
@@ -26,19 +29,26 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    //TODO: Check for device time and only use split view controller for the iPad or iPhone6+
     
-    UIViewController* master = [LHPSettingsViewController new];
-    UINavigationController* masterNavC = [[UINavigationController alloc] initWithRootViewController:master];
+    self.settingsViewController = [LHPSettingsViewController new];
+    UINavigationController* settingsNavC = [[UINavigationController alloc]
+                                            initWithRootViewController:self.settingsViewController];
+    self.bookViewController = [LHPBookViewController new];
+    UINavigationController* bookNavC = [[UINavigationController alloc]
+                                        initWithRootViewController:self.bookViewController];
     
-    UIViewController* detail = [LHPBookViewController new];
-    UINavigationController* detailNavC = [[UINavigationController alloc] initWithRootViewController:detail];
     
-    UISplitViewController* splitVC = [[UISplitViewController alloc] init];
-    splitVC.viewControllers = @[masterNavC, detailNavC];
-    
-    //finish up window properties
-    self.window.rootViewController = splitVC;
+    //Check for device type and only use split view controller for the iPad
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
+        UISplitViewController* splitVC = [[UISplitViewController alloc] init];
+        splitVC.viewControllers = @[settingsNavC, bookNavC];
+        self.window.rootViewController = splitVC;
+    }else{
+        UITabBarController* tabBarC = [[UITabBarController alloc] init];
+        tabBarC.viewControllers = @[bookNavC,settingsNavC];
+        self.window.rootViewController = tabBarC;
+    }
+        
     [self.window makeKeyAndVisible];
     
     

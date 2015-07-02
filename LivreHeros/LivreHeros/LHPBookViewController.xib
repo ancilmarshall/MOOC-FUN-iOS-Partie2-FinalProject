@@ -6,9 +6,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LHPBookViewController">
             <connections>
-                <outlet property="instructions" destination="UTL-17-lcs" id="mjd-gX-m9z"/>
+                <outlet property="instructionsLabel" destination="UTL-17-lcs" id="Um0-uY-z42"/>
+                <outlet property="instructionsLabelBottomConstraint" destination="vAA-Yx-yRy" id="3Qw-25-L06"/>
                 <outlet property="questionLabel" destination="7Jc-LS-raR" id="vbW-Ny-Llc"/>
                 <outlet property="titleLabel" destination="vFG-2u-qd1" id="ND6-Nl-orx"/>
+                <outlet property="titleLabelTopConstraint" destination="4ii-sb-ABq" id="vf6-yo-Swo"/>
                 <outlet property="view" destination="iN0-l3-epB" id="cif-IZ-afW"/>
             </connections>
         </placeholder>
@@ -18,19 +20,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Level" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFG-2u-qd1">
-                    <rect key="frame" x="8" y="80" width="80" height="21"/>
+                    <rect key="frame" x="8" y="8" width="80" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instructions" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTL-17-lcs">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Instructions" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UTL-17-lcs">
                     <rect key="frame" x="8" y="571" width="584" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Jc-LS-raR">
-                    <rect key="frame" x="8" y="109" width="584" height="21"/>
+                    <rect key="frame" x="8" y="37" width="584" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
@@ -55,10 +57,11 @@
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="0zo-N9-fI3" secondAttribute="centerX" id="2xX-ON-vK2"/>
                 <constraint firstAttribute="trailing" secondItem="7Jc-LS-raR" secondAttribute="trailing" constant="8" id="4Xk-Q4-9zc"/>
-                <constraint firstItem="vFG-2u-qd1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="80" id="4ii-sb-ABq"/>
+                <constraint firstItem="vFG-2u-qd1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="4ii-sb-ABq"/>
                 <constraint firstAttribute="trailing" secondItem="UTL-17-lcs" secondAttribute="trailing" constant="8" id="M9t-LB-6gf"/>
                 <constraint firstItem="7Jc-LS-raR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="NDT-06-ziF"/>
                 <constraint firstItem="7Jc-LS-raR" firstAttribute="top" secondItem="vFG-2u-qd1" secondAttribute="bottom" constant="8" id="PpQ-Yf-83J"/>
@@ -69,6 +72,10 @@
                 <constraint firstAttribute="bottom" secondItem="UTL-17-lcs" secondAttribute="bottom" constant="8" id="vAA-Yx-yRy"/>
                 <constraint firstAttribute="centerX" secondItem="lSj-o4-zDD" secondAttribute="centerX" id="yjr-gE-1RM"/>
             </constraints>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="HyL-Hb-psq" appends="YES" id="OBW-I1-snG"/>
+                <outletCollection property="gestureRecognizers" destination="TQD-Iw-rmE" appends="YES" id="6Sk-BY-nm8"/>
+            </connections>
         </view>
         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hbD-iZ-I6f">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -76,5 +83,17 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="1021" y="403"/>
         </tableView>
+        <swipeGestureRecognizer direction="right" id="HyL-Hb-psq">
+            <connections>
+                <action selector="yes:" destination="-1" id="KT5-d4-tX9"/>
+                <outlet property="delegate" destination="-1" id="dDM-cc-q2x"/>
+            </connections>
+        </swipeGestureRecognizer>
+        <swipeGestureRecognizer direction="left" id="TQD-Iw-rmE">
+            <connections>
+                <action selector="no:" destination="-1" id="She-oF-7Yi"/>
+                <outlet property="delegate" destination="iN0-l3-epB" id="lPk-p1-rOT"/>
+            </connections>
+        </swipeGestureRecognizer>
     </objects>
 </document>

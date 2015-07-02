@@ -14,6 +14,7 @@
  * the labels and the sliders. Good code reuse principles applied here.
  */
 
+#import "AppDelegate.h"
 #import "LHPBook+LHPExtensions.h"
 #import "ScoreView.h"
 #import "SettingsView.h"
@@ -38,6 +39,7 @@
 const CGFloat kViewSpace = 10.0f;
 const CGFloat kViewMargin = 10.0f;
 const CGFloat kScoreHeightConstraintConstantPortrait = 300.0f;
+//TODO: Remove the fixed value here and adjust based on device type
 
 //typedefs
 typedef enum {TOTAL,FIXED} Length_Type;
@@ -46,6 +48,8 @@ typedef enum {TOTAL,FIXED} Length_Type;
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.title = NSLocalizedString(@"Scores and Settings",
+                                     @"Scores and Settings Navigation bar title");
 
     self.viewSize = self.view.bounds.size;
     
@@ -65,8 +69,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.settingsView.delegate = self;
     [self.view addSubview:self.settingsView];
     
-    //TODO: Change for tabController, add if/else statements
-    self.delegate = (id)[[self.splitViewController.viewControllers lastObject] topViewController];
+    self.delegate  = (id)[[AppDelegate sharedDelegate] bookViewController];
     
     [self initializeConstraints];
     [self didUpdateScore:self.book.currentScore];
@@ -157,7 +160,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
                                   constant:0];
     self.scoreTopConstraint.active = YES;
     
-    // red view width constraint (changes based on orientation)
+    // score view width constraint (changes based on orientation)
     self.scoreWidthConstraint =
     [NSLayoutConstraint constraintWithItem:self.scoreView
                                  attribute:NSLayoutAttributeWidth
@@ -168,7 +171,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
                                   constant:0];
     self.scoreWidthConstraint.active = YES;
     
-    //red view height constraint (changes based on orientation)
+    //score view height constraint (changes based on orientation)
     self.scoreHeightConstraint =
     [NSLayoutConstraint constraintWithItem:self.scoreView
                                  attribute:NSLayoutAttributeHeight
@@ -179,7 +182,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
                                   constant:0];
     self.scoreHeightConstraint.active = YES;
     
-    //blue view right constraint (always fixed). Note negative sign in constant
+    //settings view right constraint (always fixed). Note negative sign in constant
     [NSLayoutConstraint constraintWithItem:self.settingsView
                                  attribute:NSLayoutAttributeRight
                                  relatedBy:NSLayoutRelationEqual
@@ -188,7 +191,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
                                 multiplier:1.0
                                   constant:-kViewMargin].active = YES;
     
-    // blue view bottom constraint (changes based on orientation)
+    // settings view bottom constraint (changes based on orientation)
     self.settingsBottomConstraint =
     [NSLayoutConstraint constraintWithItem:self.settingsView
                                  attribute:NSLayoutAttributeBottom
@@ -199,7 +202,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
                                   constant:0];
     self.settingsBottomConstraint.active = YES;
     
-    // blue view width constraint (chagnes based on orientation)
+    // settings view width constraint (chagnes based on orientation)
     self.settingsWidthConstraint =
     [NSLayoutConstraint constraintWithItem:self.settingsView
                                  attribute:NSLayoutAttributeWidth
@@ -210,7 +213,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
                                   constant:self.view.frame.size.width];
     self.settingsWidthConstraint.active = YES;
     
-    // blue view height constraint (chagnes based on orientation)
+    // settings view height constraint (chagnes based on orientation)
     self.settingsHeightConstraint =
     [NSLayoutConstraint constraintWithItem:self.settingsView
                                  attribute:NSLayoutAttributeHeight
@@ -232,22 +235,22 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.scoreTopConstraint.constant = [self topContsraintConstant];
     self.settingsBottomConstraint.constant = -[self bottomConstraintConstant];
     
-    CGFloat redConstant;
-    CGFloat blueConstant;
-    [self calcVariableDimensionsRed:&redConstant blue:&blueConstant];
+    CGFloat scoreConstant;
+    CGFloat settingsConstant;
+    [self calcVariableDimensionsScore:&scoreConstant settings:&settingsConstant];
     
     if ([self isPortrait])
     {
         self.scoreWidthConstraint.constant = [self getLength:FIXED];
-        self.scoreHeightConstraint.constant = redConstant;
+        self.scoreHeightConstraint.constant = scoreConstant;
         self.settingsWidthConstraint.constant = [self getLength:FIXED];
-        self.settingsHeightConstraint.constant = blueConstant;
+        self.settingsHeightConstraint.constant = settingsConstant;
     }
     else
     {
-        self.scoreWidthConstraint.constant =  redConstant;
+        self.scoreWidthConstraint.constant =  scoreConstant;
         self.scoreHeightConstraint.constant = [self getLength:FIXED];
-        self.settingsWidthConstraint.constant = blueConstant;
+        self.settingsWidthConstraint.constant = settingsConstant;
         self.settingsHeightConstraint.constant = [self getLength:FIXED];
     }
 }
@@ -257,42 +260,42 @@ typedef enum {TOTAL,FIXED} Length_Type;
 /*
  * Calculation that returns the variable length of the views based on slider
  */
-- (void) calcVariableDimensionsRed:(CGFloat*)redDimension
-                              blue:(CGFloat*)blueDimension
+- (void) calcVariableDimensionsScore:(CGFloat*)scoreDimension
+                              settings:(CGFloat*)settingsDimension
 {
     CGFloat alpha = [self calcAlpha];
     CGFloat length = [self getLength:TOTAL];
-    CGFloat redDim;
-    CGFloat blueDim;
+    CGFloat scoreDim;
+    CGFloat settingsDim;
     
     if ( alpha > 0.0 && alpha < 1.0 )
     {
-        redDim = alpha * length - kViewSpace/2.0;
-        blueDim = (1.0 - alpha)* length - kViewSpace/2.0;
+        scoreDim = alpha * length - kViewSpace/2.0;
+        settingsDim = (1.0 - alpha)* length - kViewSpace/2.0;
         
     }
     else if (alpha == 1.0)
     {
-        redDim = length;
-        blueDim = 0.0;
+        scoreDim = length;
+        settingsDim = 0.0;
     }
     else // alpha == 0.0
     {
-        redDim = 0.0;
-        blueDim = length;
+        scoreDim = 0.0;
+        settingsDim = length;
     }
     
     //because of space between views, the calculation falls negative as as
     // alpha approaches 0.0 and 1.0. Capping them here is an easy solution
-    if (blueDim < 0.0) {
-        blueDim = 0.0;
+    if (settingsDim < 0.0) {
+        settingsDim = 0.0;
     }
-    if (redDim < 0.0) {
-        redDim = 0.0;
+    if (scoreDim < 0.0) {
+        scoreDim = 0.0;
     }
     
-    *redDimension = redDim;
-    *blueDimension = blueDim;
+    *scoreDimension = scoreDim;
+    *settingsDimension = settingsDim;
 }
 
 /*
@@ -301,6 +304,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
  * Would be better to calculate automatically based on subviews, but could not figure 
  * it out.
  */
+
 
 -(CGFloat)calcAlpha;
 {
