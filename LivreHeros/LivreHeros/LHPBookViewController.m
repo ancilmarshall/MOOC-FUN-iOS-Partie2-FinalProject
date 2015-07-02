@@ -35,7 +35,23 @@ const static CGFloat kConstraintMargin = 8.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [[LHPSessionManager sharedInstance] downloadXMLFile];
+    //always download on app load -> Move to app delegate
+    //takes time -> download on background context
+    //compare downloaded file to file in app
+    // if no file exists -> use downloaded file
+    //                   -> parse
+    // if file is different -> use new file (user confirmation required )
+    //                   -> parse
+    // if file is same -> discard downloaded file
+    //                 ->  don't parse
+    
+    //add to notification center
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(parseXml)
+                                                 name:kLHPSessionManagerXMLDownloadCompleteNotification
+                                               object:nil];
+    
+    //[[LHPSessionManager sharedInstance] downloadXMLFile];
     
     self.book = [LHPBook sharedInstance];
 
@@ -73,6 +89,23 @@ const static CGFloat kConstraintMargin = 8.0f;
     [self resetConstraints];
     
     self.delegate = (id)[[AppDelegate sharedDelegate] settingsViewController];
+}
+
+//TODO: Nothing for now, but hook up and parse. May need a to wait for notification
+-(void)parseXml;
+{
+//    NSURL* xmlURL = [[LHPSessionManager sharedInstance] appDocumentsURL];
+//    //NSLog(@"\n%@",xmlURL);
+//    
+//    //NSString* str = [NSString stringWithContentsOfURL:xmlURL encoding:NSUTF8StringEncoding error:NULL];
+//    //NSLog(@"\n%@",str);
+//    
+//    LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
+//    NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
+//    xmlParser.delegate = xmlParserDelegate;
+//    
+//    [xmlParser parse];
+    
 }
 
 -(void)restart:(id)sender;
@@ -131,6 +164,12 @@ const static CGFloat kConstraintMargin = 8.0f;
         [self presentViewController:usernameEntryVieController animated:YES completion:nil];
         
     }
+}
+
+//TODO: Debugging
+-(IBAction)removeBook:(id)sender;
+{
+    [LHPBook reinitBookAndDeleteAllQuestions];
 }
 
 #pragma mark - Rotation support

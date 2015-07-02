@@ -23,5 +23,5 @@
 +(NSUInteger)yesIndexForIndex:(NSUInteger)index;
 +(NSUInteger)noIndexForIndex:(NSUInteger)index;
 +(LHPQuestion*)questionEntityForIndex:(NSUInteger)index;
-
++(void)deleteAllManagedObjects;
 @end

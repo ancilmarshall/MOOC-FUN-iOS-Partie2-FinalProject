@@ -15,9 +15,9 @@ typedef enum {
     kUserResponseYes
 } UserResponse;
 
-
 @property (nonatomic,assign) NSUInteger currentIndex;
 @property (nonatomic,assign) NSUInteger currentScore;
+
 +(instancetype)sharedInstance;
 -(void)addQuestion:(NSString*)text
              index:(NSUInteger)index
@@ -26,5 +26,6 @@ typedef enum {
 -(NSString*)getNextQuestion:(UserResponse)response;
 -(NSString*)getCurrentQuestion;
 -(void)restart;
++(void)reinitBookAndDeleteAllQuestions;
 
 @end

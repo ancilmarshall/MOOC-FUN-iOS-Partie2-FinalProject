@@ -55,6 +55,15 @@
                         <action selector="no:" destination="-1" eventType="touchUpInside" id="hKz-lq-O7c"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HTy-g2-vOM">
+                    <rect key="frame" x="252" y="361" width="97" height="30"/>
+                    <state key="normal" title="Remove Book">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="removeBook:" destination="-1" eventType="touchUpInside" id="bjh-Fv-CM7"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <gestureRecognizers/>
@@ -65,9 +74,11 @@
                 <constraint firstAttribute="trailing" secondItem="UTL-17-lcs" secondAttribute="trailing" constant="8" id="M9t-LB-6gf"/>
                 <constraint firstItem="7Jc-LS-raR" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="NDT-06-ziF"/>
                 <constraint firstItem="7Jc-LS-raR" firstAttribute="top" secondItem="vFG-2u-qd1" secondAttribute="bottom" constant="8" id="PpQ-Yf-83J"/>
+                <constraint firstItem="HTy-g2-vOM" firstAttribute="top" secondItem="0zo-N9-fI3" secondAttribute="bottom" constant="8" id="UJn-tv-8U4"/>
                 <constraint firstItem="vFG-2u-qd1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="WpZ-u8-22n"/>
                 <constraint firstItem="UTL-17-lcs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="fue-VY-NlS"/>
                 <constraint firstItem="0zo-N9-fI3" firstAttribute="top" secondItem="lSj-o4-zDD" secondAttribute="bottom" constant="8" id="gCa-fK-gIw"/>
+                <constraint firstAttribute="centerX" secondItem="HTy-g2-vOM" secondAttribute="centerX" id="sXG-6h-hB6"/>
                 <constraint firstAttribute="centerY" secondItem="lSj-o4-zDD" secondAttribute="centerY" id="tVa-0a-Lz5"/>
                 <constraint firstAttribute="bottom" secondItem="UTL-17-lcs" secondAttribute="bottom" constant="8" id="vAA-Yx-yRy"/>
                 <constraint firstAttribute="centerX" secondItem="lSj-o4-zDD" secondAttribute="centerX" id="yjr-gE-1RM"/>
@@ -77,12 +88,6 @@
                 <outletCollection property="gestureRecognizers" destination="TQD-Iw-rmE" appends="YES" id="6Sk-BY-nm8"/>
             </connections>
         </view>
-        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="hbD-iZ-I6f">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-            <point key="canvasLocation" x="1021" y="403"/>
-        </tableView>
         <swipeGestureRecognizer direction="right" id="HyL-Hb-psq">
             <connections>
                 <action selector="yes:" destination="-1" id="KT5-d4-tX9"/>

@@ -112,6 +112,28 @@
 }
 
 #pragma mark - Helper functions
++(void)deleteAllManagedObjects;
+{
+    NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
+    NSFetchRequest* request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([self class])];
+    __block NSArray* fetchResults = nil;
+    [moc performBlockAndWait:^{
+        
+        NSError* error = nil;
+        fetchResults = [moc executeFetchRequest:request error:&error];
+        if (error !=nil){
+            NSLog(@"Error fetching objects: %@",[error localizedDescription]);
+        }
+        
+        for (NSManagedObject* object in fetchResults){
+            [moc deleteObject:object];
+        }
+    }];
+    
+    [[AppDelegate sharedDelegate] saveToPersistentStore];
+    
+}
+
 //override description
 -(NSString*)description;
 {

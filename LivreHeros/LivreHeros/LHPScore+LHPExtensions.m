@@ -49,7 +49,7 @@
     return fetchResults;
 }
 
-+(void)deleteAllScores;
++(void)deleteAllManagedObjects;
 {
     NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
     NSFetchRequest* request = [[NSFetchRequest alloc] initWithEntityName:NSStringFromClass([self class])];
@@ -59,11 +59,11 @@
         NSError* error = nil;
         fetchResults = [moc executeFetchRequest:request error:&error];
         if (error !=nil){
-            NSLog(@"Error fetching scores: %@",[error localizedDescription]);
+            NSLog(@"Error fetching objects: %@",[error localizedDescription]);
         }
         
-        for (LHPScore* score in fetchResults){
-            [moc deleteObject:score];
+        for (NSManagedObject* object in fetchResults){
+            [moc deleteObject:object];
         }
     }];
     

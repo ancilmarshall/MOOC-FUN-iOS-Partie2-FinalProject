@@ -42,7 +42,8 @@
         
         NSError* error = nil;
         NSArray* fetchResult = [moc executeFetchRequest:request error:&error];
-        NSAssert([fetchResult count]<=1,@"Expected 0 or 1 initial fetch results for Book object: %tu",[fetchResult count]);
+        NSAssert([fetchResult count]<=1,@"Expected 0 or 1 initial fetch results for Book object: %tu",
+                 [fetchResult count]);
         if (error != nil){
             NSLog(@"Error fetching initial book request: %@",[error localizedDescription]);
         }
@@ -53,6 +54,8 @@
         
     }];
     
+    // if book is nil, when we need to create a new instance, insert into context and save to store
+    // otherwise do nothing and return the book instance found
     if (book == nil) {
         book = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([LHPBook class])
                                           inManagedObjectContext:moc];
@@ -89,6 +92,38 @@
     self.currentIndex = 1;
     self.currentScore = 0;
 }
+
++(void)reinitBookAndDeleteAllQuestions;
+{
+    
+    NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
+    NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([LHPBook class])];
+    
+    __block LHPBook* book;
+    //Note: Need to perform this synchronously to get book after block executes
+    [moc performBlockAndWait:^{
+        
+        NSError* error = nil;
+        NSArray* fetchResult = [moc executeFetchRequest:request error:&error];
+        NSAssert([fetchResult count]==1,@"Expected 1 fetch results for Book object: %tu",
+                 [fetchResult count]);
+        if (error != nil){
+            NSLog(@"Error fetching book request: %@",[error localizedDescription]);
+        }
+        
+        book = (LHPBook*)[fetchResult firstObject];
+    }];
+
+    [moc deleteObject:book];
+    [[AppDelegate sharedDelegate] saveToPersistentStore];
+    
+    //now delete all the question entities from the persistent store
+    [LHPQuestion deleteAllManagedObjects];
+    
+    //now insert a new book entry, that is empty
+    [LHPBook insertBook];
+}
+
 
 #pragma mark - Book Sequence Methods
 

@@ -12,7 +12,8 @@
 static NSString* const LHPServerScheme = @"http";
 static NSString* const LPHServerHost = @"lip6.fr";
 static NSString* const LPHServerPath = @"/Fabrice.Kordon/MOOC/histoire.xml";
-
+NSString* const kLHPSessionManagerXMLDownloadCompleteNotification =
+    @"LHPSessionManagerXMLDownloadCompleteNotification";
 
 @interface LHPSessionManager() <NSURLSessionDownloadDelegate, NSURLSessionDelegate>
 
@@ -42,6 +43,15 @@ static NSString* const LPHServerPath = @"/Fabrice.Kordon/MOOC/histoire.xml";
     return self;
 }
 
+//compare downloaded file to file in app
+// if no file exists -> use downloaded file
+//                   -> parse
+// if file is different -> use new file (user confirmation required )
+//                   -> parse
+// if file is same -> discard downloaded file
+//                 ->  don't parse
+
+
 #pragma mark - NSURL Session Download
 -(void)downloadXMLFile;
 {
@@ -57,8 +67,37 @@ static NSString* const LPHServerPath = @"/Fabrice.Kordon/MOOC/histoire.xml";
                                             completionHandler:
         ^(NSData *data, NSURLResponse *response, NSError *error) {
             
-            [data writeToFile:[[self appDocumentsURL] path] atomically:YES];
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            NSURL* appURL = [self appDocumentsURL];
+            
+            //TODO: probably a neater way to do this
+            //if file does not exist, use downloaded data
+            if(![[NSFileManager defaultManager] fileExistsAtPath:[appURL path]]){
+                [data writeToFile:[[self appDocumentsURL] path] atomically:YES];
+                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                
+                //post a notification when file is done
+                [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
+                                                                    object:nil];
+            }
+            else // file exists, check for equality
+            {
+                
+                NSString* currentFileContents =
+                [NSString stringWithContentsOfURL: appURL
+                                         encoding: NSUTF8StringEncoding
+                                            error: NULL];
+                
+                NSString* downloadedFileContents =
+                [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                
+                //if files are equal, do nothing, otherwise, save new data
+                if ( ![currentFileContents isEqualToString:downloadedFileContents]){
+                    [data writeToFile:[[self appDocumentsURL] path] atomically:YES];
+                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
+                                                                        object:nil];
+                }
+            }
         }];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -116,6 +155,27 @@ didFinishDownloadingToURL:(NSURL *)location;
     
     NSURL* fileURL = [[directory URLByAppendingPathComponent:
                        [NSString stringWithFormat:@"book"]]
+                      
+                      URLByAppendingPathExtension:@"xml"];
+    return fileURL;
+}
+
+- (NSURL *)downloadedDocumentsURL
+{
+    NSError* directoryError;
+    NSURL* directory = [[NSFileManager defaultManager]
+                        URLForDirectory:NSDocumentDirectory
+                        inDomain:NSUserDomainMask
+                        appropriateForURL:nil
+                        create:NO
+                        error:&directoryError];
+    
+    if (directoryError){
+        NSAssert(NO,@"Error opening a directory in the User's Documents directory");
+    }
+    
+    NSURL* fileURL = [[directory URLByAppendingPathComponent:
+                       [NSString stringWithFormat:@"downloaded"]]
                       
                       URLByAppendingPathExtension:@"xml"];
     return fileURL;

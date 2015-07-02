@@ -229,9 +229,9 @@
 			isa = PBXGroup;
 			children = (
 				1D5404441B3D3E4600561712 /* LHPBookViewController.h */,
-				1DB066D21B44523B004B1986 /* LHPBookViewControllerDelegateProtocol.h */,
 				1D5404451B3D3E4600561712 /* LHPBookViewController.m */,
 				1D9F3CFE1B41F645003FADC0 /* LHPBookViewController.xib */,
+				1DB066D21B44523B004B1986 /* LHPBookViewControllerDelegateProtocol.h */,
 			);
 			name = "Book View Controller";
 			sourceTree = "<group>";

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+extern NSString* const kLHPSessionManagerXMLDownloadCompleteNotification;
+
 @interface LHPSessionManager : NSObject
 +(instancetype)sharedInstance;
 -(void)downloadXMLFile;
