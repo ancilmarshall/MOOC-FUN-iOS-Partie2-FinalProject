@@ -29,7 +29,6 @@
 @property (nonatomic,weak) IBOutlet UIGestureRecognizer* yesGesture;
 @property (nonatomic,weak) IBOutlet UIGestureRecognizer* noGesture;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *xmlDownloadActivityIndicator;
-
 @end
 
 const static CGFloat kConstraintMargin = 8.0f;
@@ -40,6 +39,10 @@ const static CGFloat kConstraintMargin = 8.0f;
 #define BOOK_VC_LOG(format, ...)
 #endif
 
+typedef enum {
+    kXMLFileTypeLocal = 0,
+    kXMLFileTypeRemote
+} XMLFileType;
 
 @implementation LHPBookViewController
 
@@ -50,10 +53,10 @@ const static CGFloat kConstraintMargin = 8.0f;
     
     self.book = [LHPBook sharedInstance];
 
-    //add to notification center
+    //add to notification observers to this object
     //TODO: remove notification center during dealloc
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(parseXml)
+                                             selector:@selector(xmlDownloadCompleted)
                                                  name:kLHPSessionManagerXMLDownloadCompleteNotification
                                                object:nil];
     
@@ -67,18 +70,18 @@ const static CGFloat kConstraintMargin = 8.0f;
                                                  name:kLHPSessionManagerXMLDownloadErrorNotification
                                                object:nil];
     
-    [[LHPSessionManager sharedInstance] downloadXMLFile];
-    [self.xmlDownloadActivityIndicator startAnimating];
-    
-    
-    //NSLog(@"\n%@",xmlURL);
-    //NSString* str = [NSString stringWithContentsOfURL:xmlURL encoding:NSUTF8StringEncoding error:NULL];
-    //BOOK_VC_LOG(@"\n%@",str);
-    
+    //setup outlets
     self.navigationItem.title = NSLocalizedString(@"Book Hero!",
                                                   @"Book Hero Navigation bar title");
     self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
     self.navigationItem.leftItemsSupplementBackButton = YES;
+
+    UIBarButtonItem* restartGameButton =
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                      target:self
+                                                      action:@selector(restart:)];
+    self.navigationItem.rightBarButtonItem = restartGameButton;
+    self.navigationItem.rightBarButtonItem.enabled = NO;
 
     self.titleLabel.text = NSLocalizedString(
                                              @"New Question",
@@ -90,39 +93,50 @@ const static CGFloat kConstraintMargin = 8.0f;
                                 @"User instructions to respond yes or no based on swipe gesture");
     
     self.instructionsLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self resetConstraints];
-    
-    self.delegate = (id)[[AppDelegate sharedDelegate] settingsViewController];
     
     self.userResponseYesLabel.hidden = YES;
     self.userResponseNoLabel.hidden = YES;
+    [self resetConstraints];
     
+    //use delegate pattern to communicate between the two view controllers
+    self.delegate = (id)[[AppDelegate sharedDelegate] settingsViewController];
+    
+    // Game startup Logic
+    [self startXMLDownload];
+    //[self parseXmlFileType:kXMLFileTypeLocal];
+    
+}
+
+-(void)startXMLDownload;
+{
+    [[LHPSessionManager sharedInstance] downloadXMLFile];
+    [self.xmlDownloadActivityIndicator startAnimating];
 }
 
 -(void)resumeGame;
 {
-    //always continue questions from saved state of the book/game upon loading
-    //except if book was completed on previous execution
-    self.questionLabel.text = [self.book getCurrentQuestion];
-    self.yesGesture.enabled = YES;
-    self.noGesture.enabled = YES;
-    [self.xmlDownloadActivityIndicator stopAnimating];
+    BOOK_VC_LOG(@"Resuming Game");
+
+    //make sure we're on the main queue
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        //always continue questions from saved state of the book/game upon loading
+        //except if book was completed on previous execution
+        self.questionLabel.text = [self.book getCurrentQuestion];
+        self.yesGesture.enabled = YES;
+        self.noGesture.enabled = YES;
+        [self.xmlDownloadActivityIndicator stopAnimating];
+        self.navigationItem.rightBarButtonItem.enabled = NO;
+        
+    });
+    
 }
 
 //TODO: Nothing for now, but hook up and parse. May need a to wait for notification (based on timer?)
--(void)parseXml;
+-(void)xmlDownloadCompleted;
 {
     BOOK_VC_LOG(@"Xml Download Notification received, parsing downloaded file");
-    
-    //reinit book and delet questions from the core data stack
-    [LHPBook reinitBookAndDeleteAllQuestions];
-    
-    NSURL* xmlURL = [[LHPSessionManager sharedInstance] appDocumentsURL];
-    LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
-    NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
-    xmlParser.delegate = xmlParserDelegate;
-    [xmlParser parse];
-    
+    [self parseXmlFileType:kXMLFileTypeRemote];
 }
 
 -(void)parseComplete;
@@ -135,20 +149,36 @@ const static CGFloat kConstraintMargin = 8.0f;
 -(void)handleNetworkError;
 {
     BOOK_VC_LOG(@"Network Error Notification received");
+    [self parseXmlFileType:kXMLFileTypeLocal];
+}
+
+-(void)parseXmlFileType:(XMLFileType)type;
+{
+    //each time we parse xlm, must reinit book by deleting questions from the core data stack
+    [LHPBook reinitBookAndDeleteAllQuestions];
     
-    NSURL* xmlURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"xml"];
+    NSURL* xmlURL;
+    if (type == kXMLFileTypeLocal){
+        xmlURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"xml"];
+        [[NSFileManager defaultManager] moveItemAtURL:xmlURL
+            toURL:[[LHPSessionManager sharedInstance] appDocumentsURL]  error:NULL];
+    }
+    else if (type == kXMLFileTypeRemote){
+        xmlURL = [[LHPSessionManager sharedInstance] appDocumentsURL];
+    }
     LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
     NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
     xmlParser.delegate = xmlParserDelegate;
     
-    BOOK_VC_LOG(@"Parsing test.xml");
+    BOOK_VC_LOG(@"Parsing XML Document");
     [xmlParser parse];
+
 }
 
 -(void)restart:(id)sender;
 {
     [self.book restart];
-    //self.questionLabel.text = [self.book getCurrentQuestion];
+    [self resumeGame];
 }
 
 -(void)resetConstraints;
@@ -196,6 +226,7 @@ const static CGFloat kConstraintMargin = 8.0f;
     NSAssert(self.delegate != nil,@"Delegate not yet set");
     [self.delegate didUpdateScore:self.book.currentScore];
     
+    //handle case when game is complete
     if (!question){
         LHPUsernameEntryViewController* usernameEntryVieController =
         [[LHPUsernameEntryViewController alloc] initWithScore:self.book.currentScore];
@@ -203,6 +234,9 @@ const static CGFloat kConstraintMargin = 8.0f;
         usernameEntryVieController.modalPresentationStyle = UIModalPresentationFormSheet;
         [self presentViewController:usernameEntryVieController animated:YES completion:nil];
         
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        self.yesGesture.enabled = NO;
+        self.noGesture.enabled = NO;
     }
 }
 

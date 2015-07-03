@@ -16,7 +16,6 @@
 @property (nonatomic,strong,readwrite) NSManagedObjectContext* managedObjectContext;
 @property (nonatomic,strong,readwrite) LHPBookViewController* bookViewController;
 @property (nonatomic,strong,readwrite) LHPSettingsViewController* settingsViewController;
-
 @end
 
 @implementation AppDelegate
@@ -45,19 +44,20 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
         UISplitViewController* splitVC = [[UISplitViewController alloc] init];
         splitVC.viewControllers = @[settingsNavC, bookNavC];
-        //bookNavC.navigationItem.leftItemsSupplementBackButton = YES;
-        //bookNavC.navigationItem.leftBarButtonItem = splitVC.displayModeButtonItem;
-        
         self.window.rootViewController = splitVC;
     }else{
         UITabBarController* tabBarC = [[UITabBarController alloc] init];
         tabBarC.viewControllers = @[bookNavC,settingsNavC];
+        bookNavC.tabBarItem.image = [UIImage imageNamed:@"book"];
+        bookNavC.tabBarItem.title = NSLocalizedString(@"Book",nil);
+        settingsNavC.tabBarItem.image = [UIImage imageNamed:@"pref"];
+        settingsNavC.tabBarItem.title = NSLocalizedString(@"Settings", nil);
+        
         self.window.rootViewController = tabBarC;
     }
         
     [self.window makeKeyAndVisible];
-    
-    
+
     return YES;
 }
 

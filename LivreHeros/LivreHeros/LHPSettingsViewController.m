@@ -31,6 +31,7 @@
 @property (nonatomic,strong) NSLayoutConstraint* settingsHeightConstraint;
 @property (nonatomic,strong) NSLayoutConstraint* settingsWidthConstraint;
 @property (nonatomic,assign) CGSize viewSize; //holds size while rotating
+@property (nonatomic,strong) UIImageView* backgroundImageView;
 @end
 
 @implementation LHPSettingsViewController
@@ -80,6 +81,12 @@ typedef enum {TOTAL,FIXED} Length_Type;
     
     [self initializeConstraints];
     [self didUpdateScore:self.book.currentScore];
+    
+    self.backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    self.backgroundImageView.image = [UIImage imageNamed:@"fond-prefs.jpg"];
+    self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
+    [self.view addSubview:self.backgroundImageView];
+    [self.view sendSubviewToBack:self.backgroundImageView]; // to move behind labels in the IB storyboard
 }
 
 //must reset the viewSize when view appears to account for the iPad using the
@@ -436,6 +443,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
     
     self.viewSize = size;
     [self updateConstraintConstants];
+    self.backgroundImageView.frame = CGRectMake(0, 0, size.width, size.height);
     [self.view layoutIfNeeded];
     
     [coordinator animateAlongsideTransition:

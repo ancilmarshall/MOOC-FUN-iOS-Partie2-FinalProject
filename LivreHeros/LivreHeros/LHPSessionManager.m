@@ -12,14 +12,14 @@
 static NSString* const LHPServerScheme = @"http";
 static NSString* const LPHServerHost = @"lip6.fr";
 static NSString* const LPHServerPath = @"/Fabrice.Kordon/MOOC/histoire.xml";
+
 NSString* const kLHPSessionManagerXMLDownloadCompleteNotification =
     @"LHPSessionManagerXMLDownloadCompleteNotification";
 NSString* const kLHPSessionManagerXMLDownloadErrorNotification =
     @"LHPSessionManagerXMLDownloadErrorNotification";
 
-
 #if 0 && defined(DEBUG)
-#define SESSION_MANAGER_LOG(format, ...) NSLog(@"Server Manager: " format, ## __VA_ARGS__)
+#define SESSION_MANAGER_LOG(format, ...) NSLog(@"Session Manager: " format, ## __VA_ARGS__)
 #else
 #define SESSION_MANAGER_LOG(format, ...)
 #endif
@@ -77,13 +77,9 @@ NSString* const kLHPSessionManagerXMLDownloadErrorNotification =
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             SESSION_MANAGER_LOG(@"Download complete");
             
-            if (![response isKindOfClass:[NSHTTPURLResponse class]])
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadErrorNotification object:nil];
-            }
             NSHTTPURLResponse* httpResp = (NSHTTPURLResponse*)response;
             
-            if (error!=nil)
+            if (error!=nil && [response isKindOfClass:[NSHTTPURLResponse class]])
             {
                 if (httpResp.statusCode == 200){
                     
