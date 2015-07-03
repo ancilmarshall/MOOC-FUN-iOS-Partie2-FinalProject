@@ -13,8 +13,6 @@
 
 @implementation LHPBook (LHPExtensions)
 
-
-
 #pragma mark - Initialization
 // only allow one instance of the LHPBook class for this app
 +(instancetype) sharedInstance;
@@ -95,33 +93,8 @@
 
 +(void)reinitBookAndDeleteAllQuestions;
 {
-    
-    NSManagedObjectContext* moc = [[AppDelegate sharedDelegate] managedObjectContext];
-    NSFetchRequest* request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([LHPBook class])];
-    
-    __block LHPBook* book;
-    //Note: Need to perform this synchronously to get book after block executes
-    [moc performBlockAndWait:^{
-        
-        NSError* error = nil;
-        NSArray* fetchResult = [moc executeFetchRequest:request error:&error];
-        NSAssert([fetchResult count]==1,@"Expected 1 fetch results for Book object: %tu",
-                 [fetchResult count]);
-        if (error != nil){
-            NSLog(@"Error fetching book request: %@",[error localizedDescription]);
-        }
-        
-        book = (LHPBook*)[fetchResult firstObject];
-    }];
-
-    [moc deleteObject:book];
-    [[AppDelegate sharedDelegate] saveToPersistentStore];
-    
     //now delete all the question entities from the persistent store
     [LHPQuestion deleteAllManagedObjects];
-    
-    //now insert a new book entry, that is empty
-    [LHPBook insertBook];
 }
 
 

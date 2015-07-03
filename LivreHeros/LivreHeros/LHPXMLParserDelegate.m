@@ -29,6 +29,9 @@
 #import "LHPBook+LHPExtensions.h"
 #import "LHPQuestion+LHPExtensions.h"
 
+NSString* const kLHPXMLParserDeletageCompletionNotification =
+    @"LHPXMLParserDelegateCompletionNotification";
+
 typedef enum {
     kLHPXMLParserTagNone = 0,
     kLHPXMLParserTagBook,
@@ -99,7 +102,15 @@ typedef enum {
     
     switch (self.currentParserTag) {
         case kLHPXMLParserTagNone:
+            break;
+            
         case kLHPXMLParserTagBook:
+            NSLog(@"Parsing complete");
+            
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:kLHPXMLParserDeletageCompletionNotification
+             object:nil];
+            
             break;
             
         case kLHPXMLParserTagQuestion:

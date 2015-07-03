@@ -34,7 +34,10 @@ const static CGFloat kConstraintMargin = 8.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.book = [LHPBook sharedInstance];
 
+    
     //always download on app load -> Move to app delegate
     //takes time -> download on background context
     //compare downloaded file to file in app
@@ -46,32 +49,35 @@ const static CGFloat kConstraintMargin = 8.0f;
     //                 ->  don't parse
     
     //add to notification center
+    //TODO: remove notification center during dealloc
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(parseXml)
                                                  name:kLHPSessionManagerXMLDownloadCompleteNotification
                                                object:nil];
     
-    //[[LHPSessionManager sharedInstance] downloadXMLFile];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(parseComplete)
+                                                 name:kLHPXMLParserDeletageCompletionNotification
+                                               object:nil];
     
-    self.book = [LHPBook sharedInstance];
-
-    self.navigationItem.title = NSLocalizedString(@"Book Hero!",
-                                                  @"Book Hero Navigation bar title");
-
+    [[LHPSessionManager sharedInstance] downloadXMLFile];
+    
     NSURL* xmlURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"xml"];
     
     //NSURL* xmlURL = [[LHPSessionManager sharedInstance] appDocumentsURL];
     //NSLog(@"\n%@",xmlURL);
-
     //NSString* str = [NSString stringWithContentsOfURL:xmlURL encoding:NSUTF8StringEncoding error:NULL];
     //NSLog(@"\n%@",str);
     
     LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
     NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
     xmlParser.delegate = xmlParserDelegate;
-    
+    NSLog(@"Parsing test.xml");
     [xmlParser parse];
     
+    self.navigationItem.title = NSLocalizedString(@"Book Hero!",
+                                                  @"Book Hero Navigation bar title");
+
     self.titleLabel.text = NSLocalizedString(
                                              @"New Question",
                                              @"Book Hero view title");
@@ -94,18 +100,23 @@ const static CGFloat kConstraintMargin = 8.0f;
 //TODO: Nothing for now, but hook up and parse. May need a to wait for notification
 -(void)parseXml;
 {
-//    NSURL* xmlURL = [[LHPSessionManager sharedInstance] appDocumentsURL];
-//    //NSLog(@"\n%@",xmlURL);
-//    
-//    //NSString* str = [NSString stringWithContentsOfURL:xmlURL encoding:NSUTF8StringEncoding error:NULL];
-//    //NSLog(@"\n%@",str);
-//    
-//    LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
-//    NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
-//    xmlParser.delegate = xmlParserDelegate;
-//    
-//    [xmlParser parse];
+    NSLog(@"Xml Download Notification received, parsing downloaded file");
     
+    //reinit book and delet questions from the core data stack
+    [LHPBook reinitBookAndDeleteAllQuestions];
+    
+    NSURL* xmlURL = [[LHPSessionManager sharedInstance] appDocumentsURL];
+    
+    LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
+    NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
+    xmlParser.delegate = xmlParserDelegate;
+    
+    [xmlParser parse];
+}
+
+-(void)parseComplete;
+{
+    NSLog(@"Parse Complete Notification received");
 }
 
 -(void)restart:(id)sender;

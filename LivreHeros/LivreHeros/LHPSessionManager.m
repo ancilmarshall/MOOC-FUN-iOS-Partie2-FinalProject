@@ -66,14 +66,16 @@ NSString* const kLHPSessionManagerXMLDownloadCompleteNotification =
     NSURLSessionDataTask* task = [session dataTaskWithRequest:request
                                             completionHandler:
         ^(NSData *data, NSURLResponse *response, NSError *error) {
-            
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+
             NSURL* appURL = [self appDocumentsURL];
+            
+            NSLog(@"Download complete");
             
             //TODO: probably a neater way to do this
             //if file does not exist, use downloaded data
             if(![[NSFileManager defaultManager] fileExistsAtPath:[appURL path]]){
                 [data writeToFile:[[self appDocumentsURL] path] atomically:YES];
-                [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                 
                 //post a notification when file is done
                 [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
@@ -81,7 +83,6 @@ NSString* const kLHPSessionManagerXMLDownloadCompleteNotification =
             }
             else // file exists, check for equality
             {
-                
                 NSString* currentFileContents =
                 [NSString stringWithContentsOfURL: appURL
                                          encoding: NSUTF8StringEncoding
@@ -93,11 +94,15 @@ NSString* const kLHPSessionManagerXMLDownloadCompleteNotification =
                 //if files are equal, do nothing, otherwise, save new data
                 if ( ![currentFileContents isEqualToString:downloadedFileContents]){
                     [data writeToFile:[[self appDocumentsURL] path] atomically:YES];
-                    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
                     [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
                                                                         object:nil];
                 }
             }
+            
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
+                            object:nil];
+            
         }];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];

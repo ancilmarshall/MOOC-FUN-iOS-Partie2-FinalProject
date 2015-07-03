@@ -9,6 +9,7 @@
 #import <CoreData/CoreData.h>
 #import "AppDelegate.h"
 #import "LHPBookViewController.h"
+#import "LHPBook+LHPExtensions.h"
 #import "LHPSettingsViewController.h"
 
 @interface AppDelegate ()
@@ -25,6 +26,9 @@
     //Core Data setup
     NSURL* storeURL = [self SQLiteStoreURL];
     self.managedObjectContext = [self contextForStoreAtURL:storeURL];
+    
+    //initialize the LHPBook singleton immediately after the moc is setup and on App launch
+    (void)[LHPBook sharedInstance];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     

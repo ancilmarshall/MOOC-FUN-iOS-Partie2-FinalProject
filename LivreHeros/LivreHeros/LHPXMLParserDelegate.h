@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+extern NSString* const kLHPXMLParserDeletageCompletionNotification;
 
 @interface LHPXMLParserDelegate : NSObject <NSXMLParserDelegate>
 
