@@ -45,6 +45,13 @@ const CGFloat kCalibratedPortraitHeight = 763.0;
 //typedefs
 typedef enum {TOTAL,FIXED} Length_Type;
 
+#if 0 && defined(DEBUG)
+#define SETTINGS_VC_LOG(format, ...) NSLog(@"Server Manager: " format, ## __VA_ARGS__)
+#else
+#define SETTINGS_VC_LOG(format, ...)
+#endif
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -53,20 +60,18 @@ typedef enum {TOTAL,FIXED} Length_Type;
                                      @"Scores and Settings Navigation bar title");
 
     self.viewSize = self.view.bounds.size;
-    NSLog(@"ViewSize %@", NSStringFromCGSize(self.viewSize) );
+    SETTINGS_VC_LOG(@"ViewSize %@", NSStringFromCGSize(self.viewSize) );
     
     self.book = [LHPBook sharedInstance]; //cache the app's book singleton
 
     //set up UI elements, scoreView and Settings View
     UINib *scoreNib = [UINib nibWithNibName:@"ScoreView" bundle:[NSBundle mainBundle]];
     self.scoreView = [scoreNib instantiateWithOwner:self options:nil][0];
-    self.scoreView.backgroundColor = [UIColor redColor];
     self.scoreView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.scoreView];
     
     UINib *settingsNib = [UINib nibWithNibName:@"SettingsView" bundle:[NSBundle mainBundle]];
     self.settingsView = [settingsNib instantiateWithOwner:self options:nil][0];
-    self.settingsView.backgroundColor = [UIColor blueColor];
     self.settingsView.translatesAutoresizingMaskIntoConstraints = NO;
     self.settingsView.delegate = self;
     [self.view addSubview:self.settingsView];
@@ -409,7 +414,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
 
-    //NSLog(@"View: %@, ToSize: %@",self.description, NSStringFromCGSize(size));
+    //SETTINGS_VC_LOG(@"View: %@, ToSize: %@",self.description, NSStringFromCGSize(size));
     
     //Noticed intermittent problems on iPhone6+ on the simulator where the
     //size reported is sometimes the primary view controller's size or the
@@ -421,10 +426,10 @@ typedef enum {TOTAL,FIXED} Length_Type;
     if ((size.width > 440.0 && size.width < 441.0) &&
         (size.height> 413.0 && size.height < 415.0)){
         size = (CGSize){.width = 295, .height = 414};
-        NSLog(@"View: %@, ToSizeNew: %@",self.description, NSStringFromCGSize(size));
+        SETTINGS_VC_LOG(@"View: %@, ToSizeNew: %@",self.description, NSStringFromCGSize(size));
 
     }
-    NSLog(@"View: %@, ToSizeNew: %@",self.description, NSStringFromCGSize(size));
+    SETTINGS_VC_LOG(@"View: %@, ToSizeNew: %@",self.description, NSStringFromCGSize(size));
 
     [super viewWillTransitionToSize:size
           withTransitionCoordinator:coordinator];

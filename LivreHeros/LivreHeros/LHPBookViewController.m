@@ -24,9 +24,22 @@
 @property (nonatomic,weak) IBOutlet UILabel* instructionsLabel;
 @property (nonatomic,weak) IBOutlet NSLayoutConstraint* instructionsLabelBottomConstraint;
 @property (nonatomic,weak) IBOutlet NSLayoutConstraint* titleLabelTopConstraint;
+@property (nonatomic,weak) IBOutlet UILabel* userResponseYesLabel;
+@property (nonatomic,weak) IBOutlet UILabel* userResponseNoLabel;
+@property (nonatomic,weak) IBOutlet UIGestureRecognizer* yesGesture;
+@property (nonatomic,weak) IBOutlet UIGestureRecognizer* noGesture;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *xmlDownloadActivityIndicator;
+
 @end
 
 const static CGFloat kConstraintMargin = 8.0f;
+
+#if 0 && defined(DEBUG)
+#define BOOK_VC_LOG(format, ...) NSLog(@"LHPBookViewController: " format, ## __VA_ARGS__)
+#else
+#define BOOK_VC_LOG(format, ...)
+#endif
+
 
 @implementation LHPBookViewController
 
@@ -49,19 +62,18 @@ const static CGFloat kConstraintMargin = 8.0f;
                                                  name:kLHPXMLParserDeletageCompletionNotification
                                                object:nil];
     
-    [[LHPSessionManager sharedInstance] downloadXMLFile];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleNetworkError)
+                                                 name:kLHPSessionManagerXMLDownloadErrorNotification
+                                               object:nil];
     
-    //NSURL* xmlURL = [[LHPSessionManager sharedInstance] appDocumentsURL];
-    NSURL* xmlURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"xml"];
-    LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
-    NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
-    xmlParser.delegate = xmlParserDelegate;
-    NSLog(@"Parsing test.xml");
-    [xmlParser parse];
+    [[LHPSessionManager sharedInstance] downloadXMLFile];
+    [self.xmlDownloadActivityIndicator startAnimating];
+    
     
     //NSLog(@"\n%@",xmlURL);
     //NSString* str = [NSString stringWithContentsOfURL:xmlURL encoding:NSUTF8StringEncoding error:NULL];
-    //NSLog(@"\n%@",str);
+    //BOOK_VC_LOG(@"\n%@",str);
     
     self.navigationItem.title = NSLocalizedString(@"Book Hero!",
                                                   @"Book Hero Navigation bar title");
@@ -71,10 +83,6 @@ const static CGFloat kConstraintMargin = 8.0f;
                                              @"Book Hero view title");
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
-    //always continue questions from saved state of the book/game upon loading
-    //except if book was completed on previous execution
-    self.questionLabel.text = [self.book getCurrentQuestion];
-    
     self.instructionsLabel.text = NSLocalizedString(
                                 @"Swipe RIGHT to respond YES\n Swipe LEFT to respond NO",
                                 @"User instructions to respond yes or no based on swipe gesture");
@@ -83,12 +91,26 @@ const static CGFloat kConstraintMargin = 8.0f;
     [self resetConstraints];
     
     self.delegate = (id)[[AppDelegate sharedDelegate] settingsViewController];
+    
+    self.userResponseYesLabel.hidden = YES;
+    self.userResponseNoLabel.hidden = YES;
+    
+}
+
+-(void)resumeGame;
+{
+    //always continue questions from saved state of the book/game upon loading
+    //except if book was completed on previous execution
+    self.questionLabel.text = [self.book getCurrentQuestion];
+    self.yesGesture.enabled = YES;
+    self.noGesture.enabled = YES;
+    [self.xmlDownloadActivityIndicator stopAnimating];
 }
 
 //TODO: Nothing for now, but hook up and parse. May need a to wait for notification (based on timer?)
 -(void)parseXml;
 {
-    NSLog(@"Xml Download Notification received, parsing downloaded file");
+    BOOK_VC_LOG(@"Xml Download Notification received, parsing downloaded file");
     
     //reinit book and delet questions from the core data stack
     [LHPBook reinitBookAndDeleteAllQuestions];
@@ -99,14 +121,26 @@ const static CGFloat kConstraintMargin = 8.0f;
     xmlParser.delegate = xmlParserDelegate;
     [xmlParser parse];
     
-    NSString* str = [NSString stringWithContentsOfURL:xmlURL encoding:NSUTF8StringEncoding error:NULL];
-    NSLog(@"\n%@",str);
-    
 }
 
 -(void)parseComplete;
 {
-    NSLog(@"Parse Complete Notification received");
+    BOOK_VC_LOG(@"Parse Complete Notification received");
+    [self resumeGame];
+}
+
+// if a network error occured, use test.xml file
+-(void)handleNetworkError;
+{
+    BOOK_VC_LOG(@"Network Error Notification received");
+    
+    NSURL* xmlURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"xml"];
+    LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
+    NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
+    xmlParser.delegate = xmlParserDelegate;
+    
+    BOOK_VC_LOG(@"Parsing test.xml");
+    [xmlParser parse];
 }
 
 -(void)restart:(id)sender;
@@ -141,11 +175,14 @@ const static CGFloat kConstraintMargin = 8.0f;
 #pragma mark - User actions
 -(IBAction)yes:(id)sender;
 {
+    [self animateUserResponseLabel:self.userResponseYesLabel];
     [self executeUserResponse:kUserResponseYes];
 }
 
 -(IBAction)no:(id)sender;
 {
+
+    [self animateUserResponseLabel:self.userResponseNoLabel];
     [self executeUserResponse:kUserResponseNo];
 }
 
@@ -167,11 +204,17 @@ const static CGFloat kConstraintMargin = 8.0f;
     }
 }
 
-//TODO: Debugging
--(IBAction)removeBook:(id)sender;
+-(void)animateUserResponseLabel:(UILabel*)label;
 {
-    [LHPBook reinitBookAndDeleteAllQuestions];
+    label.alpha = 0.8;
+    label.hidden = NO;
+    [UIView animateWithDuration:1 animations:^{
+        label.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        label.hidden = YES;
+    }];
 }
+
 
 #pragma mark - Rotation support
 /*

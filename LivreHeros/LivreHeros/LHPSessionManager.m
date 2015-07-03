@@ -17,6 +17,13 @@ NSString* const kLHPSessionManagerXMLDownloadCompleteNotification =
 NSString* const kLHPSessionManagerXMLDownloadErrorNotification =
     @"LHPSessionManagerXMLDownloadErrorNotification";
 
+
+#if 0 && defined(DEBUG)
+#define SESSION_MANAGER_LOG(format, ...) NSLog(@"Server Manager: " format, ## __VA_ARGS__)
+#else
+#define SESSION_MANAGER_LOG(format, ...)
+#endif
+
 @interface LHPSessionManager() <NSURLSessionDownloadDelegate, NSURLSessionDelegate>
 
 @end
@@ -68,7 +75,7 @@ NSString* const kLHPSessionManagerXMLDownloadErrorNotification =
                                             completionHandler:
         ^(NSData *data, NSURLResponse *response, NSError *error) {
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            NSLog(@"Download complete");
+            SESSION_MANAGER_LOG(@"Download complete");
             
             if (![response isKindOfClass:[NSHTTPURLResponse class]])
             {
@@ -88,7 +95,7 @@ NSString* const kLHPSessionManagerXMLDownloadErrorNotification =
                         [data writeToFile:[[self appDocumentsURL] path] atomically:YES];
                         
                         //post a notification when file is done
-                        NSLog(@"Download complete, new file, posting notification");
+                        SESSION_MANAGER_LOG(@"Download complete, new file, posting notification");
                         [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
                                                                             object:nil];
                     }
@@ -105,7 +112,7 @@ NSString* const kLHPSessionManagerXMLDownloadErrorNotification =
                         //if files are equal, do nothing, otherwise, save new data
                         if ( ![currentFileContents isEqualToString:downloadedFileContents]){
                             [data writeToFile:[[self appDocumentsURL] path] atomically:YES];
-                            NSLog(@"Download complete, updated file, posting notification");
+                            SESSION_MANAGER_LOG(@"Download complete, updated file, posting notification");
                             
                             [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
                                                                                 object:nil];
@@ -113,11 +120,11 @@ NSString* const kLHPSessionManagerXMLDownloadErrorNotification =
                     }
                     
                 } else {
-                    NSLog(@"Error in HTTP Repsonse\nStatus code: %tu",httpResp.statusCode);
+                    SESSION_MANAGER_LOG(@"Error in HTTP Repsonse\nStatus code: %tu",httpResp.statusCode);
                     [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadErrorNotification object:nil];
                 }
             } else {
-                NSLog(@"Error in NSURLSessionTask\nError: %@\nHTTP Repsonse\nStatus code: %tu",
+                SESSION_MANAGER_LOG(@"Error in NSURLSessionTask\nError: %@\nHTTP Repsonse\nStatus code: %tu",
                       [error localizedDescription],httpResp.statusCode);
                 [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadErrorNotification object:nil];
             }
@@ -152,13 +159,13 @@ NSString* const kLHPSessionManagerXMLDownloadErrorNotification =
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
 didFinishDownloadingToURL:(NSURL *)location;
 {
-    NSLog(@"In the NSURLSessionDownloadDelegate function");
+    SESSION_MANAGER_LOG(@"In the NSURLSessionDownloadDelegate function");
     
     NSError* error = nil;
     [[NSFileManager defaultManager] copyItemAtPath:[location path] toPath:[[self appDocumentsURL] path] error:&error];
     
     if (error){
-        NSLog(@"Error copying downloaded file: %@",error.localizedDescription);
+        SESSION_MANAGER_LOG(@"Error copying downloaded file: %@",error.localizedDescription);
     }
 }
 

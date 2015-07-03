@@ -12,7 +12,13 @@
 
 -(void)initialize;
 {
-    //set up and configure the IBOutlets
+
+    self.score1label.translatesAutoresizingMaskIntoConstraints = NO;
+    self.score2label.translatesAutoresizingMaskIntoConstraints = NO;
+    self.score3label.translatesAutoresizingMaskIntoConstraints = NO;
+    self.score4label.translatesAutoresizingMaskIntoConstraints = NO;
+    self.score5label.translatesAutoresizingMaskIntoConstraints = NO;
+    
     [self updateUI];
 }
 
@@ -23,7 +29,7 @@
     NSInteger count = [scores count];
     LHPScore* score;
     
-    UIFont* font = [UIFont systemFontOfSize:20.0];
+    UIFont* font = [UIFont systemFontOfSize:14.0];
     NSDictionary *attrsDictionary =
     [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
     NSAttributedString* attrString;
@@ -62,6 +68,7 @@
             attrString = [[NSAttributedString alloc] initWithString:str attributes:attrsDictionary];
             self.score1label.text = [attrString string];
             
+            break;
         case 0:
         default:
             break;

@@ -77,7 +77,6 @@ typedef enum {
 - (void)parser:(NSXMLParser*)parser didStartElement:(NSString*)elementName namespaceURI:(NSString*)namespaceURI qualifiedName:(NSString* )qualifiedName attributes:(NSDictionary*)attributeDict;
 {
     if ([elementName isEqualToString:@"histoire"]){
-        NSLog(@"Parsing started...");
         self.currentParserTag = kLHPXMLParserTagBook;
         
     } else if ([elementName isEqualToString:@"etape"]){
@@ -106,7 +105,7 @@ typedef enum {
             break;
             
         case kLHPXMLParserTagBook:
-            NSLog(@"Parsing complete, posting notification");
+            //NSLog(@"Parsing complete, posting notification");
             
             [[NSNotificationCenter defaultCenter]
              postNotificationName:kLHPXMLParserDeletageCompletionNotification
