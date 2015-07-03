@@ -38,7 +38,8 @@
 //constants
 const CGFloat kViewSpace = 10.0f;
 const CGFloat kViewMargin = 10.0f;
-const CGFloat kScoreHeightConstraintConstantPortrait = 300.0f;
+const CGFloat kScoreHeightConstraintConstantPortrait = 270.0f;
+const CGFloat kCalibratedPortraitHeight = 763.0;
 //TODO: Remove the fixed value here and adjust based on device type
 
 //typedefs
@@ -52,6 +53,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
                                      @"Scores and Settings Navigation bar title");
 
     self.viewSize = self.view.bounds.size;
+    NSLog(@"ViewSize %@", NSStringFromCGSize(self.viewSize) );
     
     self.book = [LHPBook sharedInstance]; //cache the app's book singleton
 
@@ -314,7 +316,10 @@ typedef enum {TOTAL,FIXED} Length_Type;
     
     if ( [self isPortrait]){
         totalLength = [self getLength:TOTAL];
-        scoreViewHeight = kScoreHeightConstraintConstantPortrait;
+        scoreViewHeight = kScoreHeightConstraintConstantPortrait * [self calcDevicePortraitFactor];
+        if (scoreViewHeight > kScoreHeightConstraintConstantPortrait) {
+            scoreViewHeight = kScoreHeightConstraintConstantPortrait;
+        }
         NSAssert(totalLength>0,@"Expected a strictly positive total length value");
         alpha = scoreViewHeight/totalLength;
     } else { // In landscape mode, the two views have equal widths
@@ -324,6 +329,11 @@ typedef enum {TOTAL,FIXED} Length_Type;
     return alpha;
 }
 
+-(CGFloat)calcDevicePortraitFactor;
+{
+    NSAssert(kCalibratedPortraitHeight > 0, @"Expected calibratedPortraitHeight to be greater that zero");
+    return self.viewSize.height / kCalibratedPortraitHeight;
+}
 
 /*
  * Return value from view's top edge to top of red (or blue in landscape) view
@@ -343,7 +353,11 @@ typedef enum {TOTAL,FIXED} Length_Type;
  */
 -(CGFloat)bottomConstraintConstant
 {
-    return kViewMargin;
+    CGFloat height = 0;
+    if (self.tabBarController){
+        height += [[self tabBarController] tabBar].frame.size.height;
+    }
+    return kViewMargin + height;
 }
 
 /*
@@ -363,9 +377,11 @@ typedef enum {TOTAL,FIXED} Length_Type;
     if ( ([self isPortrait]  && lengthType == TOTAL)  ||
         ([self isLandscape] && lengthType == FIXED))
     {
-        length = self.viewSize.height -
-        [self topContsraintConstant] -
-        [self bottomConstraintConstant];
+        
+        CGFloat topConstraintConst = [self topContsraintConstant];
+        CGFloat bottomConstraintConst = [self bottomConstraintConstant];
+        
+        length = self.viewSize.height - topConstraintConst - bottomConstraintConst;
     }
     //total length landscape or fixed length portrait
     else if ( ([self isLandscape] && lengthType == TOTAL)  ||
@@ -392,7 +408,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-    
+
     //NSLog(@"View: %@, ToSize: %@",self.description, NSStringFromCGSize(size));
     
     //Noticed intermittent problems on iPhone6+ on the simulator where the
@@ -408,7 +424,8 @@ typedef enum {TOTAL,FIXED} Length_Type;
         NSLog(@"View: %@, ToSizeNew: %@",self.description, NSStringFromCGSize(size));
 
     }
-    
+    NSLog(@"View: %@, ToSizeNew: %@",self.description, NSStringFromCGSize(size));
+
     [super viewWillTransitionToSize:size
           withTransitionCoordinator:coordinator];
     

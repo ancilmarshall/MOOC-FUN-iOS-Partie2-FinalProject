@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 
 extern NSString* const kLHPSessionManagerXMLDownloadCompleteNotification;
+extern NSString* const kLHPSessionManagerXMLDownloadErrorNotification;
 
 @interface LHPSessionManager : NSObject
 +(instancetype)sharedInstance;

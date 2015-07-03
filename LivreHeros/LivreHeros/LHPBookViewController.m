@@ -37,17 +37,6 @@ const static CGFloat kConstraintMargin = 8.0f;
     
     self.book = [LHPBook sharedInstance];
 
-    
-    //always download on app load -> Move to app delegate
-    //takes time -> download on background context
-    //compare downloaded file to file in app
-    // if no file exists -> use downloaded file
-    //                   -> parse
-    // if file is different -> use new file (user confirmation required )
-    //                   -> parse
-    // if file is same -> discard downloaded file
-    //                 ->  don't parse
-    
     //add to notification center
     //TODO: remove notification center during dealloc
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -62,18 +51,17 @@ const static CGFloat kConstraintMargin = 8.0f;
     
     [[LHPSessionManager sharedInstance] downloadXMLFile];
     
-    NSURL* xmlURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"xml"];
-    
     //NSURL* xmlURL = [[LHPSessionManager sharedInstance] appDocumentsURL];
-    //NSLog(@"\n%@",xmlURL);
-    //NSString* str = [NSString stringWithContentsOfURL:xmlURL encoding:NSUTF8StringEncoding error:NULL];
-    //NSLog(@"\n%@",str);
-    
+    NSURL* xmlURL = [[NSBundle mainBundle] URLForResource:@"test" withExtension:@"xml"];
     LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
     NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
     xmlParser.delegate = xmlParserDelegate;
     NSLog(@"Parsing test.xml");
     [xmlParser parse];
+    
+    //NSLog(@"\n%@",xmlURL);
+    //NSString* str = [NSString stringWithContentsOfURL:xmlURL encoding:NSUTF8StringEncoding error:NULL];
+    //NSLog(@"\n%@",str);
     
     self.navigationItem.title = NSLocalizedString(@"Book Hero!",
                                                   @"Book Hero Navigation bar title");
@@ -97,7 +85,7 @@ const static CGFloat kConstraintMargin = 8.0f;
     self.delegate = (id)[[AppDelegate sharedDelegate] settingsViewController];
 }
 
-//TODO: Nothing for now, but hook up and parse. May need a to wait for notification
+//TODO: Nothing for now, but hook up and parse. May need a to wait for notification (based on timer?)
 -(void)parseXml;
 {
     NSLog(@"Xml Download Notification received, parsing downloaded file");
@@ -106,12 +94,14 @@ const static CGFloat kConstraintMargin = 8.0f;
     [LHPBook reinitBookAndDeleteAllQuestions];
     
     NSURL* xmlURL = [[LHPSessionManager sharedInstance] appDocumentsURL];
-    
     LHPXMLParserDelegate* xmlParserDelegate = [LHPXMLParserDelegate new];
     NSXMLParser* xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:xmlURL];
     xmlParser.delegate = xmlParserDelegate;
-    
     [xmlParser parse];
+    
+    NSString* str = [NSString stringWithContentsOfURL:xmlURL encoding:NSUTF8StringEncoding error:NULL];
+    NSLog(@"\n%@",str);
+    
 }
 
 -(void)parseComplete;

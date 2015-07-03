@@ -8,8 +8,8 @@
      <etape>
           <id>2</id>
           <texte>Is 2 greater than 5?</texte>
-          <oui>3</oui>
-          <non>0</non>
+          <oui>0</oui>
+          <non>3</non>
      </etape>
      <etape>
           <id>3</id>

@@ -14,9 +14,10 @@ static NSString* const LPHServerHost = @"lip6.fr";
 static NSString* const LPHServerPath = @"/Fabrice.Kordon/MOOC/histoire.xml";
 NSString* const kLHPSessionManagerXMLDownloadCompleteNotification =
     @"LHPSessionManagerXMLDownloadCompleteNotification";
+NSString* const kLHPSessionManagerXMLDownloadErrorNotification =
+    @"LHPSessionManagerXMLDownloadErrorNotification";
 
 @interface LHPSessionManager() <NSURLSessionDownloadDelegate, NSURLSessionDelegate>
-
 
 @end
 
@@ -58,7 +59,7 @@ NSString* const kLHPSessionManagerXMLDownloadCompleteNotification =
     NSURL* url = [self NSURLComponentsWithQueryItems:nil].URL;
     
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"POST";
+    request.HTTPMethod = @"GET";
     
     NSURLSessionConfiguration* config = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:config];
@@ -67,42 +68,59 @@ NSString* const kLHPSessionManagerXMLDownloadCompleteNotification =
                                             completionHandler:
         ^(NSData *data, NSURLResponse *response, NSError *error) {
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-
-            NSURL* appURL = [self appDocumentsURL];
-            
             NSLog(@"Download complete");
             
-            //TODO: probably a neater way to do this
-            //if file does not exist, use downloaded data
-            if(![[NSFileManager defaultManager] fileExistsAtPath:[appURL path]]){
-                [data writeToFile:[[self appDocumentsURL] path] atomically:YES];
-                
-                //post a notification when file is done
-                [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
-                                                                    object:nil];
-            }
-            else // file exists, check for equality
+            if (![response isKindOfClass:[NSHTTPURLResponse class]])
             {
-                NSString* currentFileContents =
-                [NSString stringWithContentsOfURL: appURL
-                                         encoding: NSUTF8StringEncoding
-                                            error: NULL];
-                
-                NSString* downloadedFileContents =
-                [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                
-                //if files are equal, do nothing, otherwise, save new data
-                if ( ![currentFileContents isEqualToString:downloadedFileContents]){
-                    [data writeToFile:[[self appDocumentsURL] path] atomically:YES];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
-                                                                        object:nil];
-                }
+                [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadErrorNotification object:nil];
             }
+            NSHTTPURLResponse* httpResp = (NSHTTPURLResponse*)response;
             
-            [[NSNotificationCenter defaultCenter]
-             postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
-                            object:nil];
-            
+            if (error!=nil)
+            {
+                if (httpResp.statusCode == 200){
+                    
+                    NSURL* appURL = [self appDocumentsURL];
+                    
+                    //TODO: probably a neater way to do this
+                    //if file does not exist, use downloaded data
+                    if(![[NSFileManager defaultManager] fileExistsAtPath:[appURL path]]){
+                        [data writeToFile:[[self appDocumentsURL] path] atomically:YES];
+                        
+                        //post a notification when file is done
+                        NSLog(@"Download complete, new file, posting notification");
+                        [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
+                                                                            object:nil];
+                    }
+                    else // file exists, check for equality
+                    {
+                        NSString* currentFileContents =
+                        [NSString stringWithContentsOfURL: appURL
+                                                 encoding: NSUTF8StringEncoding
+                                                    error: NULL];
+                        
+                        NSString* downloadedFileContents =
+                        [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                        
+                        //if files are equal, do nothing, otherwise, save new data
+                        if ( ![currentFileContents isEqualToString:downloadedFileContents]){
+                            [data writeToFile:[[self appDocumentsURL] path] atomically:YES];
+                            NSLog(@"Download complete, updated file, posting notification");
+                            
+                            [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadCompleteNotification
+                                                                                object:nil];
+                        }
+                    }
+                    
+                } else {
+                    NSLog(@"Error in HTTP Repsonse\nStatus code: %tu",httpResp.statusCode);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadErrorNotification object:nil];
+                }
+            } else {
+                NSLog(@"Error in NSURLSessionTask\nError: %@\nHTTP Repsonse\nStatus code: %tu",
+                      [error localizedDescription],httpResp.statusCode);
+                [[NSNotificationCenter defaultCenter] postNotificationName:kLHPSessionManagerXMLDownloadErrorNotification object:nil];
+            }
         }];
     
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -185,9 +203,6 @@ didFinishDownloadingToURL:(NSURL *)location;
                       URLByAppendingPathExtension:@"xml"];
     return fileURL;
 }
-
-
-
 
 
 @end
