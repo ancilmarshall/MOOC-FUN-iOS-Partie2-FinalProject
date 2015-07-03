@@ -77,6 +77,8 @@ const static CGFloat kConstraintMargin = 8.0f;
     
     self.navigationItem.title = NSLocalizedString(@"Book Hero!",
                                                   @"Book Hero Navigation bar title");
+    self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+    self.navigationItem.leftItemsSupplementBackButton = YES;
 
     self.titleLabel.text = NSLocalizedString(
                                              @"New Question",

@@ -45,6 +45,9 @@
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
         UISplitViewController* splitVC = [[UISplitViewController alloc] init];
         splitVC.viewControllers = @[settingsNavC, bookNavC];
+        //bookNavC.navigationItem.leftItemsSupplementBackButton = YES;
+        //bookNavC.navigationItem.leftBarButtonItem = splitVC.displayModeButtonItem;
+        
         self.window.rootViewController = splitVC;
     }else{
         UITabBarController* tabBarC = [[UITabBarController alloc] init];
