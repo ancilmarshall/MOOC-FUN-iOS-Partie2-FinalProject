@@ -28,6 +28,7 @@
 @property (nonatomic,strong) NSLayoutConstraint* scoreHeightConstraint;
 @property (nonatomic,strong) NSLayoutConstraint* scoreWidthConstraint;
 @property (nonatomic,strong) NSLayoutConstraint* settingsBottomConstraint;
+@property (nonatomic,strong) NSLayoutConstraint* settingsTopConstraint;
 @property (nonatomic,strong) NSLayoutConstraint* settingsHeightConstraint;
 @property (nonatomic,strong) NSLayoutConstraint* settingsWidthConstraint;
 @property (nonatomic,assign) CGSize viewSize; //holds size while rotating
@@ -47,12 +48,12 @@ const CGFloat kCalibratedPortraitHeight = 763.0;
 typedef enum {TOTAL,FIXED} Length_Type;
 
 #if 0 && defined(DEBUG)
-#define SETTINGS_VC_LOG(format, ...) NSLog(@"Server Manager: " format, ## __VA_ARGS__)
+#define SETTINGS_VC_LOG(format, ...) NSLog(@"LPHSettingsVC " format, ## __VA_ARGS__)
 #else
 #define SETTINGS_VC_LOG(format, ...)
 #endif
 
-
+#pragma mark - Initialization
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -75,6 +76,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.settingsView = [settingsNib instantiateWithOwner:self options:nil][0];
     self.settingsView.translatesAutoresizingMaskIntoConstraints = NO;
     self.settingsView.delegate = self;
+    self.settingsView.backgroundColor = [UIColor blueColor];
     [self.view addSubview:self.settingsView];
     
     self.delegate  = (id)[[AppDelegate sharedDelegate] bookViewController];
@@ -87,16 +89,19 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.view addSubview:self.backgroundImageView];
     [self.view sendSubviewToBack:self.backgroundImageView]; // to move behind labels in the IB storyboard
+    
+    self.navigationController.navigationBar.translucent = NO;
+
 }
 
 //must reset the viewSize when view appears to account for the iPad using the
 //split view controller which changes width when this is the master
--(void)viewWillAppear:(BOOL)animated;
+-(void)viewDidAppear:(BOOL)animated;
 {
-    [super viewWillAppear:YES];
+    [super viewDidAppear:YES];
     self.viewSize = self.view.bounds.size;
     [self updateConstraintConstants];
-    [self.view layoutIfNeeded];
+    //[self.view layoutIfNeeded];
     
     // NOTE: need to call these special initialize functions after this container
     // view loads, which ensures that their outlets are set
@@ -140,7 +145,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
 // initially waits till this lifecyle to make sure that topLayoutGuide is set
 -(void)viewWillLayoutSubviews
 {
-    [super viewWillLayoutSubviews];
+    //[super viewWillLayoutSubviews]; // does nothing so no need to call super here
     [self updateConstraintConstants];
 }
 
@@ -205,7 +210,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
                                 multiplier:1.0
                                   constant:-kViewMargin].active = YES;
     
-    // settings view bottom constraint (changes based on orientation)
+    // settings view bottom constraint (enabled/disabled based on orientation)
     self.settingsBottomConstraint =
     [NSLayoutConstraint constraintWithItem:self.settingsView
                                  attribute:NSLayoutAttributeBottom
@@ -215,6 +220,18 @@ typedef enum {TOTAL,FIXED} Length_Type;
                                 multiplier:1.0
                                   constant:0];
     self.settingsBottomConstraint.active = YES;
+    
+    // settings view top constraint (enabled/disabled based on orientation)
+    self.settingsTopConstraint =
+    [NSLayoutConstraint constraintWithItem:self.settingsView
+                                 attribute:NSLayoutAttributeTop
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:self.view
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1.0
+                                  constant:0];
+    self.settingsTopConstraint.active = NO;
+    
     
     // settings view width constraint (chagnes based on orientation)
     self.settingsWidthConstraint =
@@ -248,6 +265,8 @@ typedef enum {TOTAL,FIXED} Length_Type;
     // note the required negative sign
     self.scoreTopConstraint.constant = [self topContsraintConstant];
     self.settingsBottomConstraint.constant = -[self bottomConstraintConstant];
+    self.settingsTopConstraint.constant = [self topContsraintConstant];
+    
     
     CGFloat scoreConstant;
     CGFloat settingsConstant;
@@ -259,6 +278,9 @@ typedef enum {TOTAL,FIXED} Length_Type;
         self.scoreHeightConstraint.constant = scoreConstant;
         self.settingsWidthConstraint.constant = [self getLength:FIXED];
         self.settingsHeightConstraint.constant = settingsConstant;
+        
+        self.settingsTopConstraint.active = NO;
+        self.settingsBottomConstraint.active = YES;
     }
     else
     {
@@ -266,7 +288,13 @@ typedef enum {TOTAL,FIXED} Length_Type;
         self.scoreHeightConstraint.constant = [self getLength:FIXED];
         self.settingsWidthConstraint.constant = settingsConstant;
         self.settingsHeightConstraint.constant = [self getLength:FIXED];
+        
+        self.settingsBottomConstraint.active = NO;
+        self.settingsTopConstraint.active = YES;
     }
+    
+    SETTINGS_VC_LOG(@"Bottom Height: %f",self.settingsHeightConstraint.constant);
+
 }
 
 #pragma mark - Variable length/height/width calculations based on orientation
@@ -352,12 +380,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
  */
 -(CGFloat)topContsraintConstant
 {
-    CGFloat length = self.topLayoutGuide.length;
-    if (length == 0) // as in the case of landscape for iPhone
-    {
-        length = kViewMargin;
-    }
-    return length;
+    return kViewMargin;
 }
 
 /*
@@ -365,11 +388,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
  */
 -(CGFloat)bottomConstraintConstant
 {
-    CGFloat height = 0;
-    if (self.tabBarController){
-        height += [[self tabBarController] tabBar].frame.size.height;
-    }
-    return kViewMargin + height;
+    return kViewMargin;
 }
 
 /*
@@ -433,10 +452,10 @@ typedef enum {TOTAL,FIXED} Length_Type;
     if ((size.width > 440.0 && size.width < 441.0) &&
         (size.height> 413.0 && size.height < 415.0)){
         size = (CGSize){.width = 295, .height = 414};
-        SETTINGS_VC_LOG(@"View: %@, ToSizeNew: %@",self.description, NSStringFromCGSize(size));
+        SETTINGS_VC_LOG(@"New size: %@", NSStringFromCGSize(size));
 
     }
-    SETTINGS_VC_LOG(@"View: %@, ToSizeNew: %@",self.description, NSStringFromCGSize(size));
+    SETTINGS_VC_LOG(@"New size: %@", NSStringFromCGSize(size));
 
     [super viewWillTransitionToSize:size
           withTransitionCoordinator:coordinator];
@@ -445,7 +464,7 @@ typedef enum {TOTAL,FIXED} Length_Type;
     [self updateConstraintConstants];
     self.backgroundImageView.frame = CGRectMake(0, 0, size.width, size.height);
     [self.view layoutIfNeeded];
-    
+
     [coordinator animateAlongsideTransition:
      ^(id<UIViewControllerTransitionCoordinatorContext> context) {
          [self.view layoutIfNeeded];

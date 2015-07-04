@@ -73,6 +73,8 @@ typedef enum {
     //setup outlets
     self.navigationItem.title = NSLocalizedString(@"Book Hero!",
                                                   @"Book Hero Navigation bar title");
+    
+    //add the back button when using the split view controller
     self.navigationItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
     self.navigationItem.leftItemsSupplementBackButton = YES;
 
@@ -96,7 +98,7 @@ typedef enum {
     
     self.userResponseYesLabel.hidden = YES;
     self.userResponseNoLabel.hidden = YES;
-    [self resetConstraints];
+    //[self resetConstraints];
     
     //use delegate pattern to communicate between the two view controllers
     self.delegate = (id)[[AppDelegate sharedDelegate] settingsViewController];
@@ -104,6 +106,8 @@ typedef enum {
     // Game startup Logic
     [self startXMLDownload];
     //[self parseXmlFileType:kXMLFileTypeLocal];
+    
+    //self.navigationController.navigationBar.translucent = NO;
     
 }
 
@@ -181,6 +185,9 @@ typedef enum {
     [self resumeGame];
 }
 
+
+//No longer need this function if the translucency of the tabbar and navigation bar is set to NO
+// as the view is correctly resized
 -(void)resetConstraints;
 {
     CGFloat statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
@@ -194,7 +201,7 @@ typedef enum {
         CGFloat height = [[self navigationController] navigationBar].frame.size.height;
         self.titleLabelTopConstraint.constant = height+statusBarHeight+kConstraintMargin;
     }
-    
+
     [self.view layoutIfNeeded];
 }
 

@@ -39,6 +39,20 @@
     UINavigationController* bookNavC = [[UINavigationController alloc]
                                         initWithRootViewController:self.bookViewController];
     
+    // turn off translucency to make rotation easier and detection of view sizes
+    settingsNavC.navigationBar.translucent = NO;
+    bookNavC.navigationBar.translucent = NO;
+    
+    // adjust the navigation bar appearance
+    bookNavC.navigationBar.barTintColor = [UIColor blueColor];
+    bookNavC.navigationBar.tintColor = [UIColor whiteColor];
+    
+    settingsNavC.navigationBar.barTintColor = [UIColor blueColor];
+    bookNavC.navigationBar.tintColor = [UIColor whiteColor];
+    
+    NSDictionary* attr = @{ NSForegroundColorAttributeName : [UIColor whiteColor]};
+    bookNavC.navigationBar.titleTextAttributes = attr;
+    settingsNavC.navigationBar.titleTextAttributes = attr;
     
     //Check for device type and only use split view controller for the iPad
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad){
@@ -47,6 +61,7 @@
         self.window.rootViewController = splitVC;
     }else{
         UITabBarController* tabBarC = [[UITabBarController alloc] init];
+        tabBarC.tabBar.translucent = NO;
         tabBarC.viewControllers = @[bookNavC,settingsNavC];
         bookNavC.tabBarItem.image = [UIImage imageNamed:@"book"];
         bookNavC.tabBarItem.title = NSLocalizedString(@"Book",nil);
@@ -55,7 +70,6 @@
         
         self.window.rootViewController = tabBarC;
     }
-        
     [self.window makeKeyAndVisible];
 
     return YES;
