@@ -47,7 +47,7 @@ const CGFloat kCalibratedPortraitHeight = 763.0;
 //typedefs
 typedef enum {TOTAL,FIXED} Length_Type;
 
-#if 0 && defined(DEBUG)
+#if 1 && defined(DEBUG)
 #define SETTINGS_VC_LOG(format, ...) NSLog(@"LPHSettingsVC " format, ## __VA_ARGS__)
 #else
 #define SETTINGS_VC_LOG(format, ...)
@@ -76,7 +76,6 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.settingsView = [settingsNib instantiateWithOwner:self options:nil][0];
     self.settingsView.translatesAutoresizingMaskIntoConstraints = NO;
     self.settingsView.delegate = self;
-    self.settingsView.backgroundColor = [UIColor blueColor];
     [self.view addSubview:self.settingsView];
     
     self.delegate  = (id)[[AppDelegate sharedDelegate] bookViewController];
@@ -90,24 +89,40 @@ typedef enum {TOTAL,FIXED} Length_Type;
     [self.view addSubview:self.backgroundImageView];
     [self.view sendSubviewToBack:self.backgroundImageView]; // to move behind labels in the IB storyboard
     
-    self.navigationController.navigationBar.translucent = NO;
-
+    UIBarButtonItem* b = [[UIBarButtonItem alloc]
+                          initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(showBookViewController)];
+    
+    self.navigationItem.rightBarButtonItem = b;
+    
 }
+
 
 //must reset the viewSize when view appears to account for the iPad using the
 //split view controller which changes width when this is the master
--(void)viewDidAppear:(BOOL)animated;
+-(void)viewWillAppear:(BOOL)animated;
 {
-    [super viewDidAppear:YES];
+    [super viewWillAppear:YES];
     self.viewSize = self.view.bounds.size;
     [self updateConstraintConstants];
-    //[self.view layoutIfNeeded];
+    self.backgroundImageView.frame = CGRectMake(0, 0,
+                                                self.view.frame.size.width,
+                                                self.view.frame.size.height);
+    [self.view layoutIfNeeded];
     
     // NOTE: need to call these special initialize functions after this container
     // view loads, which ensures that their outlets are set
     [self.scoreView initialize];
     [self.settingsView initialize];
 
+}
+
+#pragma mark - SplitViewController Methods
+-(void)showBookViewController;
+{
+    // don't forget that you have to show the navigationController that embedds the detailVC
+    [self.splitViewController showDetailViewController:
+        ((UIViewController*)[AppDelegate sharedDelegate].bookViewController).navigationController
+                                                sender:self];
 }
 
 #pragma mark - LHPSettingsViewDelegateProtocol
@@ -267,7 +282,6 @@ typedef enum {TOTAL,FIXED} Length_Type;
     self.settingsBottomConstraint.constant = -[self bottomConstraintConstant];
     self.settingsTopConstraint.constant = [self topContsraintConstant];
     
-    
     CGFloat scoreConstant;
     CGFloat settingsConstant;
     [self calcVariableDimensionsScore:&scoreConstant settings:&settingsConstant];
@@ -293,8 +307,6 @@ typedef enum {TOTAL,FIXED} Length_Type;
         self.settingsTopConstraint.active = YES;
     }
     
-    SETTINGS_VC_LOG(@"Bottom Height: %f",self.settingsHeightConstraint.constant);
-
 }
 
 #pragma mark - Variable length/height/width calculations based on orientation
@@ -449,13 +461,13 @@ typedef enum {TOTAL,FIXED} Length_Type;
     //NOTE: Still not working after the change
     //TODO: Fix this issue
     
-    if ((size.width > 440.0 && size.width < 441.0) &&
-        (size.height> 413.0 && size.height < 415.0)){
-        size = (CGSize){.width = 295, .height = 414};
+    
+    if (size.width > 440.0 && size.width < 441.0){
+        size = (CGSize){.width = 295, .height = 370};
         SETTINGS_VC_LOG(@"New size: %@", NSStringFromCGSize(size));
 
     }
-    SETTINGS_VC_LOG(@"New size: %@", NSStringFromCGSize(size));
+    //SETTINGS_VC_LOG(@"New size: %@", NSStringFromCGSize(size));
 
     [super viewWillTransitionToSize:size
           withTransitionCoordinator:coordinator];

@@ -17,7 +17,7 @@
 #import "LHPUsernameEntryViewController.h"
 #import "LHPXMLParserDelegate.h"
 
-@interface LHPBookViewController ()
+@interface LHPBookViewController () <UIGestureRecognizerDelegate>
 @property (nonatomic,strong) LHPBook* book;
 @property (nonatomic,weak) IBOutlet UILabel* questionLabel;
 @property (nonatomic,weak) IBOutlet UILabel* titleLabel;
@@ -104,11 +104,9 @@ typedef enum {
     self.delegate = (id)[[AppDelegate sharedDelegate] settingsViewController];
     
     // Game startup Logic
-    [self startXMLDownload];
-    //[self parseXmlFileType:kXMLFileTypeLocal];
-    
-    //self.navigationController.navigationBar.translucent = NO;
-    
+    //[self startXMLDownload];
+    [self parseXmlFileType:kXMLFileTypeLocal];
+
 }
 
 -(void)startXMLDownload;
@@ -176,7 +174,6 @@ typedef enum {
     
     BOOK_VC_LOG(@"Parsing XML Document");
     [xmlParser parse];
-
 }
 
 -(void)restart:(id)sender;
@@ -184,7 +181,6 @@ typedef enum {
     [self.book restart];
     [self resumeGame];
 }
-
 
 //No longer need this function if the translucency of the tabbar and navigation bar is set to NO
 // as the view is correctly resized
@@ -209,20 +205,83 @@ typedef enum {
 -(void)backgroundColorDidUpdate:(UIColor*)color;
 {
     self.view.backgroundColor = color;
+    [self adjustFontColorsForBackgroundColor:color];
 }
 
-#pragma mark - User actions
--(IBAction)yes:(id)sender;
+-(void)adjustFontColorsForBackgroundColor:(UIColor* )color;
 {
+    CGFloat red;
+    CGFloat green;
+    CGFloat blue;
+    CGFloat alpha;
+    [color getRed:&red green:&green blue:&blue alpha:&alpha];
+    
+    CGFloat aveColor = (red + green + blue)/3.0;
+    
+    if (aveColor < 0.3)
+    {
+        self.instructionsLabel.textColor = [UIColor whiteColor];
+        self.titleLabel.textColor = [UIColor whiteColor];
+        self.questionLabel.textColor = [UIColor whiteColor];
+        self.userResponseNoLabel.textColor = [UIColor whiteColor];
+        self.userResponseYesLabel.textColor = [UIColor whiteColor];
+    }
+    else{
+        self.instructionsLabel.textColor = [UIColor blackColor];
+        self.titleLabel.textColor = [UIColor blackColor];
+        self.questionLabel.textColor = [UIColor blackColor];
+        self.userResponseNoLabel.textColor = [UIColor blackColor];
+        self.userResponseYesLabel.textColor = [UIColor blackColor];
+    }
+}
+
+#pragma mark - GestureRecognizers
+
+
+
+#pragma mark - User actions
+-(IBAction)yes:(UIPanGestureRecognizer*)gesture;
+{
+    
     [self animateUserResponseLabel:self.userResponseYesLabel];
     [self executeUserResponse:kUserResponseYes];
 }
 
--(IBAction)no:(id)sender;
-{
 
+-(IBAction)no:(UIPanGestureRecognizer*)gesture;
+{
     [self animateUserResponseLabel:self.userResponseNoLabel];
     [self executeUserResponse:kUserResponseNo];
+}
+
+
+-(void)translateRotateView:(UIView*)view forGesture:(UIPanGestureRecognizer*)gesture;
+{
+    UIGestureRecognizerState gestureState = gesture.state;
+    
+    CGPoint translation;
+    
+    switch (gestureState) {
+        case UIGestureRecognizerStateBegan:
+            break;
+            
+        case UIGestureRecognizerStateChanged:
+            translation = [gesture translationInView:view];
+            break;
+            
+        case UIGestureRecognizerStateCancelled:
+            break;
+            
+        case UIGestureRecognizerStateEnded:
+            break;
+            
+        case UIGestureRecognizerStateFailed:
+            break;
+            
+        default:
+            break;
+    }
+    
 }
 
 -(void)executeUserResponse:(UserResponse)response;
@@ -257,28 +316,5 @@ typedef enum {
         label.hidden = YES;
     }];
 }
-
-
-#pragma mark - Rotation support
-/*
- * override this method to perform calculations during rotation
- */
-//TODO: provide logic to calculate new heights based on size since the
-// navigation bar and status bar changes sizes after rotation which is
-// not conveyed before the rotation happens
-
-//- (void)viewWillTransitionToSize:(CGSize)size
-//       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
-//{
-//
-//    [super viewWillTransitionToSize:size
-//          withTransitionCoordinator:coordinator];
-//    
-//    [self resetConstraints];
-//    [coordinator animateAlongsideTransition:
-//     ^(id<UIViewControllerTransitionCoordinatorContext> context) {
-//         [self.view layoutIfNeeded];
-//     } completion:nil];
-//}
 
 @end
