@@ -47,7 +47,7 @@ const CGFloat kCalibratedPortraitHeight = 763.0;
 //typedefs
 typedef enum {TOTAL,FIXED} Length_Type;
 
-#if 1 && defined(DEBUG)
+#if 0 && defined(DEBUG)
 #define SETTINGS_VC_LOG(format, ...) NSLog(@"LPHSettingsVC " format, ## __VA_ARGS__)
 #else
 #define SETTINGS_VC_LOG(format, ...)
